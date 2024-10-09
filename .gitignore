@@ -40,7 +40,10 @@ firebase.json
 test-firebase.json
 recaptcha.json
 test-recaptcha.json
-*.properties
+application.properties
+application-test.properties
+application-product.properties
+application-local.properties
 logback-local.xml
 logback-test.xml
 logback-product.xml
