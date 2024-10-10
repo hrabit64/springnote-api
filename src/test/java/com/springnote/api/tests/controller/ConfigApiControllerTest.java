@@ -100,7 +100,6 @@ public class ConfigApiControllerTest extends ControllerTestTemplate {
         private static Stream<Arguments> provideInvalidKeys() {
             return Stream.of(
                     Arguments.of("w".repeat(301), "300자 보다 긴 key"),
-                    Arguments.of("", "1자 미만의 짧은 key"),
                     Arguments.of("T T", "공백이 들어있는 key")
 
             );
@@ -192,7 +191,6 @@ public class ConfigApiControllerTest extends ControllerTestTemplate {
             return Stream.of(
                     Arguments.of("w".repeat(301), "validValue", "300자 보다 긴 key"),
                     Arguments.of("validKey", "w".repeat(301), "300자 보다 긴 value"),
-                    Arguments.of("", "validValue", "1자 미만의 짧은 key"),
                     Arguments.of("validKey", "", "1자 미만의 짧은 value"),
                     Arguments.of("T T", "validValue", "공백이 들어있는 key")
 

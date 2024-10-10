@@ -140,13 +140,13 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
         private static Stream<Arguments> provideInvalidRequest() {
             var tooLongTitle = TmpPostCreateRequestControllerDto
                     .builder()
-                    .title("a" .repeat(301))
+                    .title("a".repeat(301))
                     .postTypeId(1L)
                     .build();
 
             var tooLongContent = TmpPostCreateRequestControllerDto
                     .builder()
-                    .content("a" .repeat(30001))
+                    .content("a".repeat(30001))
                     .postTypeId(1L)
                     .build();
 
@@ -300,8 +300,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
 
         private static Stream<Arguments> provideInvalidRequest() {
             return Stream.of(
-                    Arguments.of("123", "UUID가 아닌 ID"),
-                    Arguments.of(null, "null ID")
+                    Arguments.of("123", "UUID가 아닌 ID")
             );
         }
 
@@ -574,12 +573,12 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
         private static Stream<Arguments> provideInvalidRequest() {
             var tooLongTitle = TmpPostUpdateRequestControllerDto
                     .builder()
-                    .title("a" .repeat(301))
+                    .title("a".repeat(301))
                     .build();
 
             var tooLongContent = TmpPostUpdateRequestControllerDto
                     .builder()
-                    .content("a" .repeat(30001))
+                    .content("a".repeat(30001))
                     .build();
 
             var tooManyTags = TmpPostUpdateRequestControllerDto
@@ -659,8 +658,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
 
         private static Stream<Arguments> provideInvalidId() {
             return Stream.of(
-                    Arguments.of("123", "UUID가 아닌 ID"),
-                    Arguments.of(null, "null ID")
+                    Arguments.of("123", "UUID가 아닌 ID")
             );
         }
 

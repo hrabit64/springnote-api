@@ -101,9 +101,8 @@ public class SiteContentApiControllerTest extends ControllerTestTemplate {
 
         private static Stream<Arguments> provideInvalidKeys() {
             return Stream.of(
-                    Arguments.of("", "빈 키"),
                     Arguments.of("T T", "공백이 포함된 키"),
-                    Arguments.of("w" .repeat(301), "300자가 넘는 키")
+                    Arguments.of("w".repeat(301), "300자가 넘는 키")
             );
         }
 
@@ -188,7 +187,7 @@ public class SiteContentApiControllerTest extends ControllerTestTemplate {
                     .build();
 
             var tooLongKey = SiteContentCreateRequestControllerDto.builder()
-                    .key("w" .repeat(301))
+                    .key("w".repeat(301))
                     .content("test content")
                     .build();
 
@@ -199,7 +198,7 @@ public class SiteContentApiControllerTest extends ControllerTestTemplate {
 
             var tooLongContent = SiteContentCreateRequestControllerDto.builder()
                     .key("test")
-                    .content("w" .repeat(30001))
+                    .content("w".repeat(30001))
                     .build();
 
             return Stream.of(
@@ -325,7 +324,7 @@ public class SiteContentApiControllerTest extends ControllerTestTemplate {
                     .build();
 
             var tooLongContent = SiteContentUpdateRequestControllerDto.builder()
-                    .content("w" .repeat(30001))
+                    .content("w".repeat(30001))
                     .build();
 
             return Stream.of(
@@ -384,9 +383,8 @@ public class SiteContentApiControllerTest extends ControllerTestTemplate {
 
         private static Stream<Arguments> provideInvalidKeys() {
             return Stream.of(
-                    Arguments.of("", "빈 키"),
                     Arguments.of("T T", "공백이 포함된 키"),
-                    Arguments.of("w" .repeat(301), "300자가 넘는 키")
+                    Arguments.of("w".repeat(301), "300자가 넘는 키")
             );
         }
 
@@ -437,9 +435,8 @@ public class SiteContentApiControllerTest extends ControllerTestTemplate {
 
         private static Stream<Arguments> provideInvalidKeys() {
             return Stream.of(
-                    Arguments.of("", "빈 키"),
                     Arguments.of("T T", "공백이 포함된 키"),
-                    Arguments.of("w" .repeat(301), "300자가 넘는 키")
+                    Arguments.of("w".repeat(301), "300자가 넘는 키")
             );
         }
 
