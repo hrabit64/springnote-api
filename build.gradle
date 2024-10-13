@@ -139,19 +139,13 @@ dependencies {
 }
 tasks.withType(GenerateSwaggerUI) {
     dependsOn 'openapi3'
-//    doFirst {
-//        def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
-//
-//        def securitySchemesContent = "  securitySchemes:\n" +   \
-//                                       "    APIKey:\n" +   \
-//                                       "      type: apiKey\n" +   \
-//                                       "      name: Authorization\n" +   \
-//                                       "      in: header\n" +  \
-//                                       "security:\n" +
-//                "  - APIKey: []  # Apply the security scheme here"
-//
-//        swaggerUIFile.append securitySchemesContent
-//    }
+}
+openapi3 {
+    server = 'https://api.springnote.blog'
+    title = 'SpringNote API'
+    description = 'SpringNote API 문서'
+    version = '1.0.0'
+    format = 'yaml'
 }
 
 bootJar {
@@ -166,14 +160,15 @@ tasks.register('stopAndRemoveMariadbContainers', Exec) {
     ignoreExitValue = true
 }
 
-test.finalizedBy(stopAndRemoveMariadbContainers)
 
 test {
     useJUnitPlatform()
-    maxParallelForks = 1
     systemProperty 'spring.profiles.active', 'test'
     testLogging {
         events "passed", "skipped", "failed"
     }
 }
+
+test.finalizedBy(stopAndRemoveMariadbContainers)
+test.finalizedBy('openapi3')
 

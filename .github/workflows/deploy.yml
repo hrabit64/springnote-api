@@ -1,0 +1,152 @@
+name: Spring Note API Deploy
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  run-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: setup tmp dir
+        run: mkdir -p tmp
+
+      - name: get secrets
+        uses: actions/checkout@v3
+        with:
+          repository: hrabit64/Springnote-secret
+          ref: main
+          path: "./tmp"
+          token: ${{ secrets.TOKEN }}
+
+      - name: move secrets
+        run: mv ./tmp/* src/main/resources/
+
+      - name: get test resources
+        uses: actions/checkout@v3
+        with:
+          repository: hrabit64/Springnote-secret
+          ref: test
+          path: "./tmp"
+          token: ${{ secrets.TOKEN }}
+
+      - name: move test resources
+        run: mv ./tmp/* src/test/resources/
+
+      - name: remove tmp dir
+        run: rm -rf tmp
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build with Gradle
+        continue-on-error: true
+        id: build
+        run: ./gradlew build
+
+      - name: Archive build reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-report
+          path: ./build/reports/tests/test
+
+      - name: Fail if build failed
+        if: ${{ steps.build.outcome == 'failure' }}
+        run: exit 1
+
+      - name: Create Deploy folder
+        run: mkdir -p deploy
+
+      - name: Copy build artifacts
+        run: cp -r build/libs deploy/
+
+      - name: Copy Dockerfile
+        run: cp Dockerfile deploy/
+
+      - name: Copy deploy scripts
+        run: cp ./sh/deploy.sh deploy/
+
+      - name: Archive build
+        uses: actions/upload-artifact@v4
+        with:
+          name: springnote-build
+          path: ./deploy
+
+      - name: Archive Docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: springnote-docs
+          path: ./build/api-spec
+
+  create-docs:
+    runs-on: ubuntu-latest
+    needs: run-build
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: springboot-docs
+
+      - name: Setup ReDoc
+        run: |
+          npm install -g redoc-cli
+
+      - name: Create Output folder
+        run: mkdir -p docs
+
+      - name: Generate API Docs
+        run: redoc-cli bundle springboot-docs/openapi3.yaml -o docs/index.html
+
+      - name: Cd to docs
+        run: cd docs
+
+      - name: init git
+        run: git init
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Add remote
+        run: |
+          git remote add origin https://github.com/hrabit64/springnote-api
+
+      - name: Checkout existing branch
+        run: |
+          git checkout docs || git checkout --orphan docs
+
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Update Api Docs from GitHub Actions"
+
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          git push origin docs

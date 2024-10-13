@@ -1,23 +1,14 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
-
 name: Spring Note API Test
 
 on:
   push:
     branches: [ "api/dev" ]
-  pull_request:
-    branches: [ "api/main" ]
 
 permissions:
   contents: read
 
 jobs:
-  setup-test:
+  run-test:
 
     runs-on: ubuntu-latest
 
@@ -71,10 +62,16 @@ jobs:
 
       - name: Test with Gradle
         continue-on-error: true
+        id: test
         run: ./gradlew test
 
       - name: Archive build reports
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: build-report
           path: ./build/reports/tests/test
+
+      - name: Fail if tests failed
+        if: ${{ steps.test.outcome == 'failure' }}
+        run: exit 1
