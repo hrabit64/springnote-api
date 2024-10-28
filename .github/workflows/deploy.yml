@@ -1,7 +1,7 @@
 name: Spring Note API Deploy
 
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
 
 permissions:
@@ -150,3 +150,33 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
           git push origin docs
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ run-build, create-docs ]
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: springnote-build
+
+      - name: Push File to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: .
+          target: /home/springnote-deploy-agent/api
+
+      - name: Run Deploy Script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd /home/springnote-deploy-agent/api
+            docker build -t springnote-api .
+            docker compose up -d
+
