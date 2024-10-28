@@ -108,16 +108,20 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: springnote-docs
+          path: .
+
+      - name: show files
+        run: ls -la
 
       - name: Setup ReDoc
         run: |
           npm install -g redoc-cli
 
       - name: Create Output folder
-        run: mkdir -p docs
+        run: mkdir -p ./docs
 
       - name: Generate API Docs
-        run: redoc-cli bundle springboot-docs/openapi3.yaml -o docs/index.html
+        run: redoc-cli bundle ./openapi3.yaml -o ./docs/index.html
 
       - name: Cd to docs
         run: cd docs
@@ -159,6 +163,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: springnote-build
+          path: .
+
+      - name: show files
+        run: ls -la
 
       - name: Push File to Server
         uses: appleboy/scp-action@master
