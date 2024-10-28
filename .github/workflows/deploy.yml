@@ -133,6 +133,7 @@ jobs:
         run: |
           git config --global user.name "hrabit64"
           git config --global user.email "hzser123@gmail.com"
+          git config --global url.https://${{ secrets.TOKEN }}@github.com/.insteadOf https://github.com/
 
       - name: Add remote
         run: |
