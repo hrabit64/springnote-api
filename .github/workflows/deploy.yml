@@ -154,7 +154,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push origin docs
+          git push -f origin docs
 
   deploy:
     runs-on: ubuntu-latest
