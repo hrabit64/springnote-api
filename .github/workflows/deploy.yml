@@ -1,7 +1,7 @@
 name: Spring Note API Deploy
 
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
 
 permissions:
