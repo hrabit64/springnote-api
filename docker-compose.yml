@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  springnote-api:
+    image: springnote-api:latest
+    container_name: springnote-api
+    networks:
+      - springnote_net
+    volumes:
+      - springnote_image:/app/images
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+
+networks:
+  springnote_net:
+    external: true
+
+volumes:
+  springnote_image:
+    external: true
