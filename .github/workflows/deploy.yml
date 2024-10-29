@@ -176,6 +176,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
+          port: ${{ secrets.PORT }}
           source: .
           target: /home/springnote-deploy-agent/api
 
@@ -186,6 +187,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /home/springnote-deploy-agent/api
             docker build -t springnote-api .
