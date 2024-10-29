@@ -3,6 +3,7 @@ services:
   springnote-api:
     image: springnote-api:latest
     container_name: springnote-api
+    restart: always
     networks:
       - springnote_net
     volumes:
