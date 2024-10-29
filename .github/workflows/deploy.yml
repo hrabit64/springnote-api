@@ -85,9 +85,14 @@ jobs:
       - name: Copy Dockerfile
         run: cp Dockerfile deploy/
 
+      - name: Copy docker-compose
+        run: cp docker-compose.yml deploy/
+
       - name: Copy deploy scripts
         run: cp ./sh/deploy.sh deploy/
 
+      - name: Copy Redoc python
+        run: cp ./sh/fix_redoc.py ./build/api-spec
       - name: Archive build
         uses: actions/upload-artifact@v4
         with:
@@ -120,8 +125,11 @@ jobs:
       - name: Create Output folder
         run: mkdir -p ./docs
 
+      - name: Fix Redoc
+        run: python3 ./fix_redoc.py  ./openapi3.yaml  > openapi-fixed.yaml
+
       - name: Generate API Docs
-        run: redoc-cli bundle ./openapi3.yaml -o ./docs/index.html
+        run: redoc-cli bundle ./openapi-fixed.yaml -o ./docs/index.html
 
       - name: Cd to docs
         run: cd docs
