@@ -1,0 +1,3175 @@
+openapi: 3.0.1
+info:
+  title: SpringNote API
+  description: SpringNote API 문서
+  version: 1.0.0
+servers:
+- url: https://api.springnote.blog
+tags: []
+paths:
+  /api/v1/bad-word:
+    get:
+      tags:
+      - BadWord API
+      summary: "금칙어 정보를 조회합니다. (AUTH-LEVEL : ADMIN)"
+      description: |+
+        * 사용 가능 쿼리 파라미터 (대소문자 구분 없음)
+
+        |  키  |                 설명                  |        제약        |
+        | :--: | :-----------------------------------: | :----------------: |
+        | type |     true 비속어, false  허용단어      | 1 종류만 입력 가능 |
+        | word | 해당 word를 포함하는 단어를 찾습니다. | 공백이 없는 2~10자 |
+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 100까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | id;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |   금칙어 id  |
+        |      word       |  금칙어 단어  |
+        |     type      |  금칙어 유형  |
+
+      operationId: badWord/getBadWords
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/BadWord.PagedResponse'
+              examples:
+                badWord/getBadWords:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "bad_words" : [ {
+                          "id" : 1,
+                          "word" : "word",
+                          "is_bad_word" : true,
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/bad-word/1"
+                            },
+                            "delete" : {
+                              "href" : "http://localhost:8080/api/v1/bad-word/1"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/bad-word?page=0&size=20&sort=id,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+    post:
+      tags:
+      - BadWord API
+      summary: "금칙어를 생성합니다. (AUTH-LEVEL : ADMIN)"
+      description: "금칙어를 생성합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/createBadWord
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/BadWord.Create'
+            examples:
+              badWord/createBadWord:
+                value: |-
+                  {
+                    "word" : "15자이하",
+                    "is_bad_word" : true
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/BadWord.Response'
+              examples:
+                badWord/createBadWord:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "word" : "word",
+                      "is_bad_word" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/bad-word/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/bad-word/1"
+                        }
+                      }
+                    }
+  /api/v1/image:
+    get:
+      tags:
+      - Image API
+      summary: "업로드된 이미지 정보를 조회합니다. (AUTH-LEVEL : ADMIN)"
+      description: |+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 100까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | createdDate;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |     ID   |
+        |      postId      |  포스트 ID  |
+        |     createdAt    |  생성일 |
+
+      operationId: image/getImages
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image.PageResponse'
+              examples:
+                image/getImages:
+                  value: |-
+                    {
+                      "content" : [ {
+                        "id" : 1,
+                        "converted_name" : "convertedName.jpg",
+                        "width" : 100,
+                        "height" : 100,
+                        "created_at" : "2002-08-28T00:00:00",
+                        "format" : "webp",
+                        "post_id" : 1
+                      } ],
+                      "pageable" : {
+                        "pageNumber" : 0,
+                        "pageSize" : 20,
+                        "sort" : {
+                          "empty" : false,
+                          "sorted" : true,
+                          "unsorted" : false
+                        },
+                        "offset" : 0,
+                        "paged" : true,
+                        "unpaged" : false
+                      },
+                      "totalElements" : 1,
+                      "totalPages" : 1,
+                      "last" : true,
+                      "size" : 20,
+                      "number" : 0,
+                      "sort" : {
+                        "empty" : false,
+                        "sorted" : true,
+                        "unsorted" : false
+                      },
+                      "numberOfElements" : 1,
+                      "first" : true,
+                      "empty" : false
+                    }
+    post:
+      tags:
+      - Image API
+      summary: "이미지를 업로드합니다. (AUTH-LEVEL : ADMIN)"
+      description: "이미지를 업로드합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: image/uploadImage
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Image.CreateRequest'
+            examples:
+              image/uploadImage:
+                value: |-
+                  {
+                    "image" : "Fuw2zk5DkTGgN3TbznEhWOW9f2G/oloxX/VTJ4URW3N1pvzYm6aa3ATy4F9gzNurfWrd6ZJxDlN3dM+uXTAx2OixwSDsoby2YBPw",
+                    "postId" : null
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image.Response'
+              examples:
+                image/uploadImage:
+                  value: |-
+                    {
+                      "message" : "convertedName.jpg"
+                    }
+  /api/v1/post:
+    get:
+      tags:
+      - Post API
+      summary: "포스트를 조회합니다. (AUTH-LEVEL : NONE)"
+      description: |+
+        * 사용 가능 쿼리 파라미터 (대소문자 구분 없음)
+
+        |       키       |                             설명                             |                 제약                 |                기본값                |
+        | :------------: | :----------------------------------------------------------: | :----------------------------------: | :----------------------------------: |
+        |    postType    |                     포스트의 유형입니다.                     |                                      |                  x                   |
+        |     series     |                   포스트의 시리즈 입니다.                    |                                      |                  x                   |
+        |      tag       |                  포스트의 태그 정보 입니다.                  | 최대 10개 까지만 사용가능, 중복 불가 |                  x                   |
+        | isOnlyOpenPost | 공개된 포스트만 검색할지 여부입니다. true면 공개된 포스트만 검색합니다. *단  false 사용시에는 관리자 권한을 요구합니다.* |            1개만 사용가능            | 유저일경우 true, 관리자일 경우 false |
+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 100까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | createdDate;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |   포스트 ID   |
+        |      title       |  포스트 제목  |
+        |     content      |  포스트 본문  |
+        |      isOpen      |   공개 여부   |
+        |      series      |    시리즈     |
+        | lastModifiedDate | 마지막 수정일 |
+        |   createdDate    |    생성일     |
+
+        * 키워드 검색
+        제목, 본문, 제목 + 본문에 대한 키워드 검색을 지원합니다. 쿼리파라미터에 아래 키를 사용하면 키워드 검색을 수행할 수 있습니다. 이때 아래 두개의 키가 모두 입력되지 않았을 경우 에러가 발생합니다.
+
+        |     키     |                            설명                            |         제약          |
+        | :--------: | :--------------------------------------------------------: | :-------------------: |
+        |  keyword   |                       검색할 키워드                        |        2~20자         |
+        | searchMode | 검색 모드, TITLE(제목),CONTENT(본문),MIX(제목+본문) 중 1택 | 1개의 옵션만 설정가능 |
+
+      operationId: post/getPosts
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Post.PagedSimple'
+              examples:
+                post/getPosts:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "posts" : [ {
+                          "id" : 1,
+                          "title" : "title",
+                          "thumbnail" : "thumbnail",
+                          "series" : {
+                            "id" : 1,
+                            "name" : "name"
+                          },
+                          "tags" : [ {
+                            "id" : 1,
+                            "name" : "tag1"
+                          }, {
+                            "id" : 2,
+                            "name" : "tag2"
+                          } ],
+                          "post_type" : {
+                            "id" : 1,
+                            "name" : "name"
+                          },
+                          "created_at" : "2002-08-28T00:00:00",
+                          "last_updated_at" : "2002-08-28T00:00:00",
+                          "enabled" : true,
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/post/1"
+                            },
+                            "delete" : {
+                              "href" : "http://localhost:8080/api/v1/post/1"
+                            },
+                            "update" : {
+                              "href" : "http://localhost:8080/api/v1/post/1"
+                            },
+                            "update-status" : {
+                              "href" : "http://localhost:8080/api/v1/post/1/status"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post?page=0&size=20&sort=createdDate,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+    post:
+      tags:
+      - Post API
+      summary: "포스트를 생성합니다. (AUTH-LEVEL : ADMIN)"
+      description: "포스트를 생성합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: post/createPost
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Post.Create'
+            examples:
+              post/createPost:
+                value: |-
+                  {
+                    "series_id" : 1,
+                    "tags" : [ {
+                      "id" : 1
+                    }, {
+                      "id" : 2
+                    } ],
+                    "content" : "content",
+                    "title" : "title",
+                    "thumbnail" : "http://springnote.blog",
+                    "post_type_id" : 1,
+                    "enabled" : true
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+              examples:
+                post/createPost:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "title" : "title",
+                      "content" : {
+                        "plain_text" : "plainText",
+                        "editor_text" : "editorText"
+                      },
+                      "thumbnail" : "thumbnail",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "enabled" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update-status" : {
+                          "href" : "http://localhost:8080/api/v1/post/1/status"
+                        }
+                      }
+                    }
+  /api/v1/post-type:
+    get:
+      tags:
+      - PostType API
+      summary: 포스트 타입을 가져옵니다.
+      description: |+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 20까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | id;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |   타입 ID   |
+        |       name       |  이름  |
+
+      operationId: postType/getPostTypes
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/PostType.Response'
+              examples:
+                postType/getPostTypes:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "post_types" : [ {
+                          "id" : 1,
+                          "name" : "name"
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post-type?page=0&size=20&sort=id,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+  /api/v1/series:
+    get:
+      tags:
+      - Series API
+      summary: 시리즈를 조회합니다.
+      description: |+
+        * 사용 가능 쿼리 파라미터 (대소문자 구분 없음)
+
+        |       키       |                             설명                             |                 제약                 |                기본값                |
+        | :------------: | :----------------------------------------------------------: | :----------------------------------: | :----------------------------------: |
+        |    name    |                       검색할 이름.                             |                2~40자                   |                  x                   |
+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 50까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | id;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |   시리즈 ID    |
+        |      name       |  시리즈 제목  |
+
+      operationId: series/getSeries
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Series.PagedResponse'
+              examples:
+                series/getSeries:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "series" : [ {
+                          "id" : 1,
+                          "name" : "test",
+                          "description" : "test",
+                          "thumbnail" : "https://springnote.blog",
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/series/1"
+                            },
+                            "delete" : {
+                              "href" : "http://localhost:8080/api/v1/series/1"
+                            },
+                            "update" : {
+                              "href" : "http://localhost:8080/api/v1/series/1"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/series?page=0&size=20&sort=id,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+    post:
+      tags:
+      - Series API
+      summary: "시리즈를 생성합니다. (AUTH_LEVEL: ADMIN)"
+      description: "시리즈를 생성합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: series/createSeries
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Series.CreateRequest'
+            examples:
+              series/createSeries:
+                value: |-
+                  {
+                    "name" : "test",
+                    "description" : "test",
+                    "thumbnail" : "https://springnote.blog"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Series.Response'
+              examples:
+                series/createSeries:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "name" : "test",
+                      "description" : "test",
+                      "thumbnail" : "https://springnote.blog",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        }
+                      }
+                    }
+  /api/v1/site-content:
+    post:
+      tags:
+      - SiteContent API
+      summary: "사이트 콘텐츠를 생성합니다. (AUTH_LEVEL: ADMIN)"
+      description: "사이트 콘텐츠를 생성합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: siteContent/createSiteContent
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/SiteContent.CreateRequest'
+            examples:
+              siteContent/createSiteContent:
+                value: |-
+                  {
+                    "key" : "test",
+                    "content" : "test content"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/SiteContent.Response'
+              examples:
+                siteContent/createSiteContent:
+                  value: |-
+                    {
+                      "key" : "test",
+                      "content" : "test content",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/site-content/test"
+                        }
+                      }
+                    }
+  /api/v1/tag:
+    get:
+      tags:
+      - Tag API
+      summary: Tag 목록을 조회합니다.
+      description: |+
+        * 사용 가능 쿼리 파라미터 (대소문자 구분 없음)
+
+        |       키       |                             설명                             |                 제약                 |                기본값                |
+        | :------------: | :----------------------------------------------------------: | :----------------------------------: | :----------------------------------: |
+        |    name     |                     검색할 이름입니다.                    |                   2~100자                   |                  x                   |
+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 20까지        |        10      |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | id;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |   태그 ID   |
+        |      name       |  태그 이름  |
+
+      operationId: tag/getTags
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tag.PageResponse'
+              examples:
+                tag/getTags:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "tags" : [ {
+                          "id" : 1,
+                          "name" : "tag",
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/tag/1"
+                            },
+                            "delete" : {
+                              "href" : "http://localhost:8080/api/v1/tag/1"
+                            },
+                            "update" : {
+                              "href" : "http://localhost:8080/api/v1/tag/1"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tag?page=0&size=10&sort=id,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 10,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+    post:
+      tags:
+      - Tag API
+      summary: "새로운 태그를 생성합니다. (AUTH_LEVEL: ADMIN)"
+      description: "새로운 태그를 생성합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tag/createTag
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Tag.CreateRequest'
+            examples:
+              tag/createTag:
+                value: |-
+                  {
+                    "name" : "tag"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tag.Response'
+              examples:
+                tag/createTag:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "name" : "tag",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        }
+                      }
+                    }
+  /api/v1/tmp-post:
+    get:
+      tags:
+      - TmpPost API
+      summary: "임시 포스트 목록을 조회합니다. (AUTH_LEVEL: ADMIN)"
+      description: |+
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 50까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | createdDate;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        | lastModifiedDate | 마지막 수정일 |
+        |   createdDate    |    생성일     |
+
+      operationId: tmpPost/getTmpPostList
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/api-v1-tmp-post696516523'
+              examples:
+                tmpPost/getTmpPostList:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "tmp_posts" : [ {
+                          "id" : "180f87e1-ff25-4abc-abc4-12acb22167b4",
+                          "title" : "title",
+                          "content" : "content",
+                          "thumbnail" : "http://springnote.blog",
+                          "series" : {
+                            "id" : 1,
+                            "name" : "series"
+                          },
+                          "tags" : [ {
+                            "id" : 1,
+                            "name" : "tag1"
+                          }, {
+                            "id" : 2,
+                            "name" : "tag2"
+                          } ],
+                          "post_type" : {
+                            "id" : 1,
+                            "name" : "postType"
+                          },
+                          "created_at" : "2002-08-28T00:00:00",
+                          "last_updated_at" : "2002-08-28T00:00:00",
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/tmp-post/180f87e1-ff25-4abc-abc4-12acb22167b4"
+                            },
+                            "update" : {
+                              "href" : "http://localhost:8080/api/v1/tmp-post/180f87e1-ff25-4abc-abc4-12acb22167b4"
+                            },
+                            "delete" : {
+                              "href" : "http://localhost:8080/api/v1/tmp-post/180f87e1-ff25-4abc-abc4-12acb22167b4"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post?page=0&size=20&sort=createdDate,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+    post:
+      tags:
+      - TmpPost API
+      summary: "임시 포스트를 게시합니다. (AUTH_LEVEL: ADMIN)"
+      description: "임시 포스트를 게시합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/createTmpPost
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/TmpPost.CreateRequest'
+            examples:
+              tmpPost/createTmpPost:
+                value: |-
+                  {
+                    "series_id" : null,
+                    "tag_ids" : null,
+                    "content" : null,
+                    "title" : null,
+                    "thumbnail" : null,
+                    "post_type_id" : 1
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/TmpPost.Response'
+              examples:
+                tmpPost/createTmpPost:
+                  value: |-
+                    {
+                      "id" : "a3f4bda1-386e-4ed5-b25c-45c58ee2680a",
+                      "title" : "title",
+                      "content" : "content",
+                      "thumbnail" : "http://springnote.blog",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "series"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "postType"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/a3f4bda1-386e-4ed5-b25c-45c58ee2680a"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/a3f4bda1-386e-4ed5-b25c-45c58ee2680a"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/a3f4bda1-386e-4ed5-b25c-45c58ee2680a"
+                        }
+                      }
+                    }
+  /api/v1/bad-word/refresh:
+    post:
+      tags:
+      - BadWord API
+      summary: "금칙어 목록을 갱신합니다. (AUTH-LEVEL : ADMIN)"
+      description: "금칙어 목록을 갱신합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/refreshBadWords
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadWord.Refresh'
+              examples:
+                badWord/refreshBadWords:
+                  value: |-
+                    {
+                      "message" : "금칙어 목록을 갱신했습니다."
+                    }
+  /api/v1/bad-word/{id}:
+    get:
+      tags:
+      - BadWord API
+      summary: "해당하는 ID의 금칙어 정보를 조회합니다. (AUTH-LEVEL : ADMIN)"
+      description: "해당하는 ID의 금칙어 정보를 조회합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/getBadWordById
+      parameters:
+      - name: id
+        in: path
+        description: 금칙어 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/BadWord.Response'
+              examples:
+                badWord/getBadWordById:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "word" : "word",
+                      "is_bad_word" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/bad-word/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/bad-word/1"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - BadWord API
+      summary: "해당하는 ID의 금칙어 정보를 삭제합니다. (AUTH-LEVEL : ADMIN)"
+      description: "해당하는 ID의 금칙어 정보를 삭제합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/deleteBadWord
+      parameters:
+      - name: id
+        in: path
+        description: 금칙어 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/comment/{commentId}:
+    get:
+      tags:
+      - Comment API
+      summary: "댓글을 조회합니다. (AUTH_LEVEL: NONE)"
+      description: "댓글의 상세 정보를 조회합니다. 만약 댓글이 비활성화 되어있으면, 본문을 확인할 수 없습니다. 관리자의 경우 비\
+        활성화 여부와 상관없이 조회 가능합니다."
+      operationId: Comment/getById
+      parameters:
+      - name: commentId
+        in: path
+        description: 댓글 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+              examples:
+                Comment/getById:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "post_id" : 1,
+                      "content" : "test",
+                      "writer" : {
+                        "id" : "test",
+                        "name" : "test",
+                        "email" : "admin@springnote.blog",
+                        "profile_img" : "https://springnote.blog",
+                        "enabled" : true,
+                        "admin" : true
+                      },
+                      "created_date" : "2002-08-28T00:00:00",
+                      "last_modified_date" : "2002-08-28T00:00:00",
+                      "enabled" : false,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "disable" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1/status"
+                        }
+                      }
+                    }
+    put:
+      tags:
+      - Comment API
+      summary: "댓글을 수정합니다.(AUTH_LEVEL: USER)"
+      description: 자기 자신의 댓글만 수정 가능합니다.
+      operationId: Comment/update
+      parameters:
+      - name: commentId
+        in: path
+        description: 댓글 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Comment.Update'
+            examples:
+              Comment/update:
+                value: |-
+                  {
+                    "content" : "content",
+                    "im_not_bot" : null,
+                    "captcha_token" : "captchaToken"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+              examples:
+                Comment/update:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "post_id" : 1,
+                      "content" : "test",
+                      "writer" : {
+                        "id" : "test",
+                        "name" : "test",
+                        "email" : "admin@springnote.blog",
+                        "profile_img" : "https://springnote.blog",
+                        "enabled" : true,
+                        "admin" : true
+                      },
+                      "created_date" : "2002-08-28T00:00:00",
+                      "last_modified_date" : "2002-08-28T00:00:00",
+                      "enabled" : false,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "disable" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1/status"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - Comment API
+      summary: "댓글을 삭제합니다.(AUTH_LEVEL: ADMIN)"
+      description: 댓글을 삭제합니다.
+      operationId: Comment/delete
+      parameters:
+      - name: commentId
+        in: path
+        description: 댓글 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/config/{key}:
+    get:
+      tags:
+      - Config API
+      summary: "설정 값을 가져옵니다. (AUTH-LEVEL : ADMIN)"
+      description: "설정 값을 가져옵니다. (AUTH-LEVEL : ADMIN)"
+      operationId: config/getConfigByKey
+      parameters:
+      - name: key
+        in: path
+        description: 설정 키
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Config.Response'
+              examples:
+                config/getConfigByKey:
+                  value: |-
+                    {
+                      "key" : "key",
+                      "value" : "value",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/config/key"
+                        }
+                      }
+                    }
+    put:
+      tags:
+      - Config API
+      summary: "설정 값을 업데이트합니다. (AUTH-LEVEL : ADMIN)"
+      description: "설정 값을 업데이트합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: config/updateConfigByKey
+      parameters:
+      - name: key
+        in: path
+        description: 설정 키
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: query
+        description: 설정 값
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Config.Response'
+              examples:
+                config/updateConfigByKey:
+                  value: |-
+                    {
+                      "key" : "key",
+                      "value" : "value",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/config/key"
+                        }
+                      }
+                    }
+  /api/v1/image/{imageId}:
+    delete:
+      tags:
+      - Image API
+      summary: "이미지를 삭제합니다. (AUTH-LEVEL : ADMIN)"
+      description: "이미지를 삭제합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: image/deleteImage
+      parameters:
+      - name: imageId
+        in: path
+        description: 삭제할 이미지 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/post/{id}:
+    get:
+      tags:
+      - Post API
+      summary: "포스트 ID로 포스트를 조회합니다. (AUTH-LEVEL : NONE)"
+      description: 해당 하는 포스트 ID를 가진 포스트를 반환합니다. 이때 비활성화된 포스트는 관리자만 조회할 수 있습니다.
+      operationId: post/getPostById
+      parameters:
+      - name: id
+        in: path
+        description: "조회할 대상 포스트 ID, (1~4294967295)"
+        required: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+              examples:
+                post/getPostById:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "title" : "title",
+                      "content" : {
+                        "plain_text" : "plainText",
+                        "editor_text" : "editorText"
+                      },
+                      "thumbnail" : "thumbnail",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "enabled" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update-status" : {
+                          "href" : "http://localhost:8080/api/v1/post/1/status"
+                        }
+                      }
+                    }
+    put:
+      tags:
+      - Post API
+      summary: "포스트를 수정합니다. (AUTH-LEVEL : ADMIN)"
+      description: "포스트를 수정합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: post/updatePost
+      parameters:
+      - name: id
+        in: path
+        description: 수정할 포스트의 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Post.Update'
+            examples:
+              post/updatePost:
+                value: |-
+                  {
+                    "series_id" : 1,
+                    "tags" : [ {
+                      "id" : 1
+                    }, {
+                      "id" : 2
+                    } ],
+                    "content" : "content",
+                    "title" : "title",
+                    "thumbnail" : "http://springnote.blog",
+                    "enabled" : true
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+              examples:
+                post/updatePost:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "title" : "title",
+                      "content" : {
+                        "plain_text" : "plainText",
+                        "editor_text" : "editorText"
+                      },
+                      "thumbnail" : "thumbnail",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "enabled" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update-status" : {
+                          "href" : "http://localhost:8080/api/v1/post/1/status"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - Post API
+      summary: "포스트를 삭제합니다. (AUTH-LEVEL : ADMIN)"
+      description: "포스트를 삭제합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: post/deletePostById
+      parameters:
+      - name: id
+        in: path
+        description: 삭제할 포스트의 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/series/{seriesId}:
+    get:
+      tags:
+      - Series API
+      summary: 주어진 Id에 해당하는 시리즈를 조회합니다.
+      description: 주어진 Id에 해당하는 시리즈를 조회합니다.
+      operationId: series/getSeriesById
+      parameters:
+      - name: seriesId
+        in: path
+        description: 조회할 시리즈의 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Series.Response'
+              examples:
+                series/getSeriesById:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "name" : "test",
+                      "description" : "test",
+                      "thumbnail" : "https://springnote.blog",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        }
+                      }
+                    }
+    put:
+      tags:
+      - Series API
+      summary: "시리즈를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      description: "시리즈를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: series/updateSeries
+      parameters:
+      - name: seriesId
+        in: path
+        description: 수정할 시리즈의 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Series.UpdateRequest'
+            examples:
+              series/updateSeries:
+                value: |-
+                  {
+                    "name" : "test",
+                    "description" : "test",
+                    "thumbnail" : "https://springnote.blog"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Series.Response'
+              examples:
+                series/updateSeries:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "name" : "test",
+                      "description" : "test",
+                      "thumbnail" : "https://springnote.blog",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/series/1"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - Series API
+      summary: "시리즈를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      description: 주어진 id에 해당하는 시리즈를 삭제합니다. 이때 해당 시리즈에 속한 모든 포스트도 삭제됩니다.
+      operationId: series/deleteSeries
+      parameters:
+      - name: seriesId
+        in: path
+        description: 삭제할 시리즈의 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/site-content/{key}:
+    get:
+      tags:
+      - SiteContent API
+      summary: 사이트 콘텐츠 ID로 포스트를 조회합니다.
+      description: 사이트 콘텐츠 ID로 포스트를 조회합니다.
+      operationId: siteContent/getSiteContentByKey
+      parameters:
+      - name: key
+        in: path
+        description: 사이트 콘텐츠의 키
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/SiteContent.Response'
+              examples:
+                siteContent/getSiteContentByKey:
+                  value: |-
+                    {
+                      "key" : "test",
+                      "content" : "test content",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/site-content/test"
+                        }
+                      }
+                    }
+    put:
+      tags:
+      - SiteContent API
+      summary: "사이트 콘텐츠를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      description: "사이트 콘텐츠를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: siteContent/updateSiteContent
+      parameters:
+      - name: key
+        in: path
+        description: 사이트 콘텐츠의 키
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/SiteContent.UpdateRequest'
+            examples:
+              siteContent/updateSiteContent:
+                value: |-
+                  {
+                    "content" : "test content"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/SiteContent.Response'
+              examples:
+                siteContent/updateSiteContent:
+                  value: |-
+                    {
+                      "key" : "test",
+                      "content" : "test content",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/site-content/test"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - SiteContent API
+      summary: "사이트 콘텐츠를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      description: "사이트 콘텐츠를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: siteContent/deleteSiteContent
+      parameters:
+      - name: key
+        in: path
+        description: 사이트 콘텐츠의 키
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/tag/{id}:
+    put:
+      tags:
+      - Tag API
+      summary: "주어진 Id로 태그를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      description: "주어진 Id로 태그를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tag/updateTag
+      parameters:
+      - name: id
+        in: path
+        description: 수정할 태그 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Tag.UpdateRequest'
+            examples:
+              tag/updateTag:
+                value: |-
+                  {
+                    "name" : "tag"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tag.Response'
+              examples:
+                tag/updateTag:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "name" : "tag",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - Tag API
+      summary: "주어진 Id로 태그를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      description: "주어진 Id로 태그를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tag/deleteTag
+      parameters:
+      - name: id
+        in: path
+        description: 삭제할 태그 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/tag/{tagId}:
+    get:
+      tags:
+      - Tag API
+      summary: 주어진 Id로 태그를 조회합니다.
+      description: 주어진 Id로 태그를 조회합니다.
+      operationId: tag/getTagById
+      parameters:
+      - name: tagId
+        in: path
+        description: 조회할 태그 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tag.Response'
+              examples:
+                tag/getTagById:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "name" : "tag",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/tag/1"
+                        }
+                      }
+                    }
+  /api/v1/tmp-post/{tmpPostId}:
+    get:
+      tags:
+      - Series API
+      summary: "임시 포스트를 조회합니다. (AUTH_LEVEL: ADMIN)"
+      description: "임시 포스트를 조회합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/getTmpPostById
+      parameters:
+      - name: tmpPostId
+        in: path
+        description: 임시 포스트 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/TmpPost.Response'
+              examples:
+                tmpPost/getTmpPostById:
+                  value: |-
+                    {
+                      "id" : "78ce7de9-f296-473a-9fd1-42c6d5dd4de7",
+                      "title" : "title",
+                      "content" : "content",
+                      "thumbnail" : "http://springnote.blog",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "series"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "postType"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/78ce7de9-f296-473a-9fd1-42c6d5dd4de7"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/78ce7de9-f296-473a-9fd1-42c6d5dd4de7"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/78ce7de9-f296-473a-9fd1-42c6d5dd4de7"
+                        }
+                      }
+                    }
+    put:
+      tags:
+      - TmpPost API
+      summary: "임시 포스트를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      description: "임시 포스트를 수정합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/updateTmpPost
+      parameters:
+      - name: tmpPostId
+        in: path
+        description: 임시 포스트 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/TmpPost.UpdateRequest'
+            examples:
+              tmpPost/updateTmpPost:
+                value: |-
+                  {
+                    "series_id" : null,
+                    "tag_ids" : null,
+                    "content" : null,
+                    "title" : null,
+                    "thumbnail" : null
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/TmpPost.Response'
+              examples:
+                tmpPost/updateTmpPost:
+                  value: |-
+                    {
+                      "id" : "311bb744-266e-4ad5-9d43-bef83207351c",
+                      "title" : "title",
+                      "content" : "content",
+                      "thumbnail" : "http://springnote.blog",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "series"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "postType"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/311bb744-266e-4ad5-9d43-bef83207351c"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/311bb744-266e-4ad5-9d43-bef83207351c"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/tmp-post/311bb744-266e-4ad5-9d43-bef83207351c"
+                        }
+                      }
+                    }
+    delete:
+      tags:
+      - TmpPost API
+      summary: "임시 포스트를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      description: "임시 포스트를 삭제합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/deleteTmpPost
+      parameters:
+      - name: tmpPostId
+        in: path
+        description: 임시 포스트 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/comment/{commentId}/reply:
+    get:
+      tags:
+      - Comment API
+      summary: "해당 댓글에 대한 답글 목록을 반환합니다.(AUTH_LEVEL: NONE)"
+      description: |
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 50까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | createdDate;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |    댓글 id    |
+        |       user       |    작성자     |
+        |   createdDate    |    생성일     |
+        | lastModifiedDate | 마지막 수정일 |
+      operationId: Comment/getReply
+      parameters:
+      - name: commentId
+        in: path
+        description: 댓글 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.PagedResponse'
+              examples:
+                Comment/getReply:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "replies" : [ {
+                          "id" : 1,
+                          "post_id" : 1,
+                          "content" : "test",
+                          "writer" : {
+                            "id" : "test",
+                            "name" : "test",
+                            "email" : "admin@springnote.blog",
+                            "profile_img" : "https://springnote.blog",
+                            "enabled" : true,
+                            "admin" : true
+                          },
+                          "parent_id" : 1,
+                          "created_date" : "2002-08-28T00:00:00",
+                          "last_modified_date" : "2002-08-28T00:00:00",
+                          "enabled" : false,
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1"
+                            },
+                            "update" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1"
+                            },
+                            "disable" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1/status"
+                            },
+                            "parent" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1/reply?page=0&size=20&sort=createdDate,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+  /api/v1/comment/{commentId}/status:
+    put:
+      tags:
+      - Comment API
+      summary: "댓글의 상태를 수정합니다.(AUTH_LEVEL: USER)"
+      description: 유저는 댓글을 영구적으로 삭제할 수 없습니다. 따라서 해당 API로 댓글을 비활성화할 수 있습니다.
+      operationId: Comment/updateStatus
+      parameters:
+      - name: commentId
+        in: path
+        description: 댓글 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+              examples:
+                Comment/updateStatus:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "post_id" : 1,
+                      "content" : "test",
+                      "writer" : {
+                        "id" : "test",
+                        "name" : "test",
+                        "email" : "admin@springnote.blog",
+                        "profile_img" : "https://springnote.blog",
+                        "enabled" : true,
+                        "admin" : true
+                      },
+                      "created_date" : "2002-08-28T00:00:00",
+                      "last_modified_date" : "2002-08-28T00:00:00",
+                      "enabled" : false,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "disable" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1/status"
+                        }
+                      }
+                    }
+  /api/v1/post/title/{title}:
+    get:
+      tags:
+      - Post API
+      summary: "해당 제목을 가진 포스트가 있는지 검색합니다. (AUTH-LEVEL : ADMIN)"
+      description: "해당 제목을 가진 포스트가 있는지 검색합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: post/getTitleIsExist
+      parameters:
+      - name: title
+        in: path
+        description: "조회할 대상 포스트의 이름, 3~300자"
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post.TitleSearchResult'
+              examples:
+                post/getTitleIsExist:
+                  value: |-
+                    {
+                      "passed" : false
+                    }
+  /api/v1/post/{id}/status:
+    put:
+      tags:
+      - Post API
+      summary: "포스트의 상태를 수정합니다. (AUTH-LEVEL : ADMIN)"
+      description: "포스트의 상태를 수정합니다. (AUTH-LEVEL : ADMIN)"
+      operationId: post/updatePostStatus
+      parameters:
+      - name: id
+        in: path
+        description: 수정할 포스트의 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Post.UpdateStatus'
+            examples:
+              post/updatePostStatus:
+                value: |-
+                  {
+                    "enabled" : true
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+              examples:
+                post/updatePostStatus:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "title" : "title",
+                      "content" : {
+                        "plain_text" : "plainText",
+                        "editor_text" : "editorText"
+                      },
+                      "thumbnail" : "thumbnail",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "enabled" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update-status" : {
+                          "href" : "http://localhost:8080/api/v1/post/1/status"
+                        }
+                      }
+                    }
+  /api/v1/post/{postId}/comment:
+    get:
+      tags:
+      - Comment API
+      summary: "해당 포스트에 대한 댓글 목록을 반환합니다.(AUTH_LEVEL: NONE)"
+      description: |
+        * 페이징
+
+        해당 API는 페이징을 지원합니다.
+
+        |  키  |          설명           |            제약            |      기본값      |
+        | :--: | :---------------------: | :------------------------: | :--------------: |
+        | size |      페이징 사이즈      |        최대 50까지        |        20        |
+        | page | 페이지 넘버 *0부터 시작 |                            |        0         |
+        | sort |        정렬 옵션        | *아래 사용 가능 키만 가능* | createdDate;DESC |
+
+        사용 가능한 sort키는 아래와 같습니다. *모든 Sort 사용시 방향을 지정하지 않으면 ASC 로 동작합니다. (대소문자 구분 없음)*
+
+        |        키        |     설명      |
+        | :--------------: | :-----------: |
+        |        id        |    댓글 id    |
+        |       user       |    작성자     |
+        |   createdDate    |    생성일     |
+        | lastModifiedDate | 마지막 수정일 |
+      operationId: Comment/getCommentsWithPost
+      parameters:
+      - name: postId
+        in: path
+        description: 포스트 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.PagedResponse'
+              examples:
+                Comment/getCommentsWithPost:
+                  value: |-
+                    {
+                      "_embedded" : {
+                        "comments" : [ {
+                          "id" : 1,
+                          "post_id" : 1,
+                          "content" : "test",
+                          "writer" : {
+                            "id" : "test",
+                            "name" : "test",
+                            "email" : "admin@springnote.blog",
+                            "profile_img" : "https://springnote.blog",
+                            "enabled" : true,
+                            "admin" : true
+                          },
+                          "created_date" : "2002-08-28T00:00:00",
+                          "last_modified_date" : "2002-08-28T00:00:00",
+                          "reply_count" : 1,
+                          "enabled" : false,
+                          "_links" : {
+                            "self" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1"
+                            },
+                            "update" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1"
+                            },
+                            "disable" : {
+                              "href" : "http://localhost:8080/api/v1/comment/1/status"
+                            }
+                          }
+                        } ]
+                      },
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post/1/comment?page=0&size=20&sort=createdDate,desc"
+                        }
+                      },
+                      "page" : {
+                        "size" : 20,
+                        "totalElements" : 1,
+                        "totalPages" : 1,
+                        "number" : 0
+                      }
+                    }
+    post:
+      tags:
+      - Comment API
+      summary: "댓글을 생성합니다.(AUTH_LEVEL: USER)"
+      description: "댓글을 생성합니다.(AUTH_LEVEL: USER)"
+      operationId: comment/create
+      parameters:
+      - name: postId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Comment.Create'
+            examples:
+              comment/create:
+                value: |-
+                  {
+                    "content" : "content",
+                    "im_not_bot" : null,
+                    "captcha_token" : "captchaToken"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+              examples:
+                comment/create:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "post_id" : 1,
+                      "content" : "test",
+                      "writer" : {
+                        "id" : "test",
+                        "name" : "test",
+                        "email" : "admin@springnote.blog",
+                        "profile_img" : "https://springnote.blog",
+                        "enabled" : true,
+                        "admin" : true
+                      },
+                      "created_date" : "2002-08-28T00:00:00",
+                      "last_modified_date" : "2002-08-28T00:00:00",
+                      "enabled" : false,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "disable" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1/status"
+                        }
+                      }
+                    }
+  /api/v1/tmp-post/{tmpPostId}/publish:
+    post:
+      tags:
+      - TmpPost API
+      summary: "임시 포스트를 게시합니다. (AUTH_LEVEL: ADMIN)"
+      description: "임시 포스트를 게시합니다. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/publishTmpPost
+      parameters:
+      - name: tmpPostId
+        in: path
+        description: 임시 포스트 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Post.Response'
+              examples:
+                tmpPost/publishTmpPost:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "title" : "title",
+                      "content" : {
+                        "plain_text" : "plainText",
+                        "editor_text" : "editorText"
+                      },
+                      "thumbnail" : "thumbnail",
+                      "series" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "tags" : [ {
+                        "id" : 1,
+                        "name" : "tag1"
+                      }, {
+                        "id" : 2,
+                        "name" : "tag2"
+                      } ],
+                      "post_type" : {
+                        "id" : 1,
+                        "name" : "name"
+                      },
+                      "created_at" : "2002-08-28T00:00:00",
+                      "last_updated_at" : "2002-08-28T00:00:00",
+                      "enabled" : true,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "delete" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/post/1"
+                        },
+                        "update-status" : {
+                          "href" : "http://localhost:8080/api/v1/post/1/status"
+                        }
+                      }
+                    }
+  /api/v1/{postId}/comment/{commentId}/reply:
+    post:
+      tags:
+      - Comment API
+      summary: "답글을 생성합니다.(AUTH_LEVEL: USER)"
+      description: "답글을 생성합니다.(AUTH_LEVEL: USER)"
+      operationId: Comment/replyCreate
+      parameters:
+      - name: postId
+        in: path
+        description: 포스트 ID
+        required: true
+        schema:
+          type: string
+      - name: commentId
+        in: path
+        description: 댓글 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/Comment.ReplyCreate'
+            examples:
+              Comment/replyCreate:
+                value: |-
+                  {
+                    "content" : "content",
+                    "im_not_bot" : null,
+                    "captcha_token" : "captchaToken"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+              examples:
+                Comment/replyCreate:
+                  value: |-
+                    {
+                      "id" : 1,
+                      "post_id" : 1,
+                      "content" : "test",
+                      "writer" : {
+                        "id" : "test",
+                        "name" : "test",
+                        "email" : "admin@springnote.blog",
+                        "profile_img" : "https://springnote.blog",
+                        "enabled" : true,
+                        "admin" : true
+                      },
+                      "created_date" : "2002-08-28T00:00:00",
+                      "last_modified_date" : "2002-08-28T00:00:00",
+                      "enabled" : false,
+                      "_links" : {
+                        "self" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "update" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1"
+                        },
+                        "disable" : {
+                          "href" : "http://localhost:8080/api/v1/comment/1/status"
+                        }
+                      }
+                    }
+components:
+  schemas:
+    TmpPost.Response:
+      title: TmpPost.Response
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: 썸네일 이미지 URL
+        series:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 시리즈 이름
+            id:
+              type: number
+              description: 시리즈 ID
+        last_updated_at:
+          type: string
+          description: 포스트 최종 수정일 (yyyy-MM-dd`T`HH:mm:ss)
+        created_at:
+          type: string
+          description: 포스트 생성일 (yyyy-MM-dd`T`HH:mm:ss)
+        post_type:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 포스트 타입 이름
+            id:
+              type: number
+              description: 포스트 타입 ID
+        id:
+          type: string
+          description: 대상 포스트 ID
+        title:
+          type: string
+          description: 포스트 제목
+        content:
+          type: string
+          description: 본문
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 태그 이름
+              id:
+                type: number
+                description: 태그 ID
+    Config.Response:
+      title: Config.Response
+      type: object
+      properties:
+        value:
+          type: string
+          description: 설정 값
+        key:
+          type: string
+          description: 설정 키
+    Post.PagedSimple:
+      title: Post.PagedSimple
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            posts:
+              type: array
+              items:
+                type: object
+                properties:
+                  thumbnail:
+                    type: string
+                    description: 썸네일 이미지 URL
+                  series:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 시리즈 이름
+                      id:
+                        type: number
+                        description: 시리즈 ID
+                  last_updated_at:
+                    type: string
+                    description: 포스트 최종 수정일 (yyyy-MM-dd`T`HH:mm:ss)
+                  created_at:
+                    type: string
+                    description: 포스트 생성일 (yyyy-MM-dd`T`HH:mm:ss)
+                  post_type:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 포스트 타입 이름
+                      id:
+                        type: number
+                        description: 포스트 타입 ID
+                  id:
+                    type: number
+                    description: 대상 포스트 ID
+                  title:
+                    type: string
+                    description: 포스트 제목
+                  enabled:
+                    type: boolean
+                    description: "포스트 공개 여부 (0: 비공개, 1: 공개)"
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: 태그 이름
+                        id:
+                          type: number
+                          description: 태그 ID
+        page:
+          type: object
+          properties:
+            number:
+              type: number
+              description: 현재 페이지 번호
+            size:
+              type: number
+              description: 페이지 크기
+            totalPages:
+              type: number
+              description: 전체 페이지 수
+            totalElements:
+              type: number
+              description: 전체 요소 수
+    Comment.PagedResponse:
+      title: Comment.PagedResponse
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            comments:
+              type: array
+              items:
+                type: object
+                properties:
+                  post_id:
+                    type: number
+                    description: 포스트 ID
+                  last_modified_date:
+                    type: string
+                    description: 수정일
+                  writer:
+                    type: object
+                    properties:
+                      profile_img:
+                        type: string
+                        description: 작성자 프로필 이미지 URL
+                      name:
+                        type: string
+                        description: 작성자 이름
+                      admin:
+                        type: boolean
+                        description: 작성자 관리자 여부
+                      id:
+                        type: string
+                        description: 작성자 ID
+                      email:
+                        type: string
+                        description: 작성자 이메일
+                      enabled:
+                        type: boolean
+                        description: 작성자 활성화 여부
+                  id:
+                    type: number
+                    description: 댓글 ID
+                  created_date:
+                    type: string
+                    description: 작성일
+                  reply_count:
+                    type: number
+                    description: 답글 수
+                  enabled:
+                    type: boolean
+                    description: 활성화 여부
+                  content:
+                    type: string
+                    description: 댓글 본문
+        page:
+          type: object
+          properties:
+            number:
+              type: number
+              description: 현재 페이지 번호
+            size:
+              type: number
+              description: 페이지 크기
+            totalPages:
+              type: number
+              description: 전체 페이지 수
+            totalElements:
+              type: number
+              description: 전체 요소 수
+    BadWord.Response:
+      title: BadWord.Response
+      type: object
+      properties:
+        id:
+          type: number
+          description: 금칙어 ID
+        word:
+          type: string
+          description: 금칙어
+        is_bad_word:
+          type: boolean
+          description: 금칙어 여부
+    Series.Response:
+      title: Series.Response
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: 시리즈 썸네일
+        name:
+          type: string
+          description: 시리즈 이름
+        description:
+          type: string
+          description: 시리즈 설명
+        id:
+          type: number
+          description: 시리즈 ID
+    Post.Create:
+      title: Post.Create
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: "포스트의 썸네일 URL, 빈 문자열 가능"
+        post_type_id:
+          type: number
+          description: 포스트의 타입 ID
+        title:
+          type: string
+          description: "포스트의 제목, 3~300자"
+        enabled:
+          type: boolean
+          description: 포스트의 공개 여부
+        content:
+          type: string
+          description: "포스트의 내용, 3~30000자"
+        tags:
+          type: array
+          description: 포스트의 태그 ID 리스트
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                description: 포스트의 태그 ID
+        series_id:
+          type: number
+          description: "포스트의 시리즈 ID, 만약 시리즈가 필요 없는 포스트는 null"
+    Post.TitleSearchResult:
+      title: Post.TitleSearchResult
+      type: object
+      properties:
+        passed:
+          type: boolean
+          description: 중복되는 제목이 존재하는지 여부
+    BadWord.Refresh:
+      title: BadWord.Refresh
+      type: object
+      properties:
+        message:
+          type: string
+          description: 메시지
+    TmpPost.UpdateRequest:
+      title: TmpPost.UpdateRequest
+      type: object
+      properties: {}
+    TmpPost.CreateRequest:
+      title: TmpPost.CreateRequest
+      type: object
+      properties:
+        post_type_id:
+          type: number
+          description: 포스트 타입 ID
+    BadWord.Create:
+      title: BadWord.Create
+      type: object
+      properties:
+        word:
+          type: string
+          description: "공백 없는 단어 (2자 이상, 15자 이하)"
+        is_bad_word:
+          type: boolean
+          description: 금칙어 여부
+    Series.CreateRequest:
+      title: Series.CreateRequest
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: 시리즈 썸네일
+        name:
+          type: string
+          description: 시리즈 이름
+        description:
+          type: string
+          description: 시리즈 설명
+    Post.Update:
+      title: Post.Update
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: "포스트의 썸네일 URL, 빈 문자열 가능"
+        title:
+          type: string
+          description: "포스트의 제목, 3~300자"
+        enabled:
+          type: boolean
+          description: 포스트의 공개 여부
+        content:
+          type: string
+          description: "포스트의 내용, 3~30000자"
+        tags:
+          type: array
+          description: 포스트의 태그 ID 리스트
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                description: 포스트의 태그 ID
+        series_id:
+          type: number
+          description: "포스트의 시리즈 ID, 만약 시리즈가 필요 없는 포스트는 null"
+    Post.Detail:
+      title: Post.Detail
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: 썸네일 이미지 URL
+        series:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 시리즈 이름
+            id:
+              type: number
+              description: 시리즈 ID
+        last_updated_at:
+          type: string
+          description: 포스트 최종 수정일 (yyyy-MM-dd`T`HH:mm:ss)
+        created_at:
+          type: string
+          description: 포스트 생성일 (yyyy-MM-dd`T`HH:mm:ss)
+        post_type:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 포스트 타입 이름
+            id:
+              type: number
+              description: 포스트 타입 ID
+        id:
+          type: number
+          description: 대상 포스트 ID
+        title:
+          type: string
+          description: 포스트 제목
+        enabled:
+          type: boolean
+          description: "포스트 공개 여부 (0: 비공개, 1: 공개)"
+        content:
+          type: object
+          properties:
+            plain_text:
+              type: string
+              description: 포스트 본문 - 일반 텍스트(순수 텍스트만)
+            editor_text:
+              type: string
+              description: 포스트 본문 - 에디터 텍스트(마크다운)
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 태그 이름
+              id:
+                type: number
+                description: 태그 ID
+    Series.PagedResponse:
+      title: Series.PagedResponse
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                type: object
+                properties:
+                  thumbnail:
+                    type: string
+                    description: 시리즈 썸네일
+                  name:
+                    type: string
+                    description: 시리즈 이름
+                  description:
+                    type: string
+                    description: 시리즈 설명
+                  id:
+                    type: number
+                    description: 시리즈 ID
+        page:
+          type: object
+          properties:
+            number:
+              type: number
+              description: 현재 페이지 번호
+            size:
+              type: number
+              description: 페이지 사이즈
+            totalPages:
+              type: number
+              description: 전체 페이지 수
+            totalElements:
+              type: number
+              description: 전체 요소 수
+    Image.CreateRequest:
+      title: Image.CreateRequest
+      type: object
+      properties:
+        image:
+          type: string
+          description: "이미지 파일 (BASE64 인코딩,5MB 이하)"
+        postId:
+          type: number
+          description: 사용중인 포스트
+    SiteContent.CreateRequest:
+      title: SiteContent.CreateRequest
+      type: object
+      properties:
+        content:
+          type: string
+          description: 사이트 콘텐츠의 내용 (1~30000자)
+        key:
+          type: string
+          description: 사이트 콘텐츠의 키 (공백 없이  1~300자)
+    Comment.Response:
+      title: Comment.Response
+      type: object
+      properties:
+        post_id:
+          type: number
+          description: 포스트 ID
+        last_modified_date:
+          type: string
+          description: 수정일
+        created_date:
+          type: string
+          description: 작성일
+        writer:
+          type: object
+          properties:
+            profile_img:
+              type: string
+              description: 작성자 프로필 이미지
+            name:
+              type: string
+              description: 작성자 이름
+            admin:
+              type: boolean
+              description: 작성자 관리자 여부
+            id:
+              type: string
+              description: 작성자 ID
+            enabled:
+              type: boolean
+              description: 작성자 활성화 여부
+            email:
+              type: string
+              description: 작성자 이메일
+        id:
+          type: number
+          description: 답글 ID
+        enabled:
+          type: boolean
+          description: 활성화 여부
+        content:
+          type: string
+          description: 답글 본문
+    Comment.Create:
+      title: Comment.Create
+      type: object
+      properties:
+        captcha_token:
+          type: string
+          description: 캡차 토큰
+        im_not_bot:
+          type: boolean
+          description: honeypot
+        content:
+          type: string
+          description: 댓글 본문 2~1000자
+    Image.Response:
+      title: Image.Response
+      type: object
+      properties:
+        message:
+          type: string
+          description: 업로드된 이미지 이름
+    Comment.Update:
+      title: Comment.Update
+      type: object
+      properties:
+        captcha_token:
+          type: string
+          description: 캡차 토큰
+        im_not_bot:
+          type: boolean
+          description: honeypot
+        content:
+          type: string
+          description: 댓글 본문 2~1000자
+    BadWord.PagedResponse:
+      title: BadWord.PagedResponse
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            bad_words:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: 금칙어 ID
+                  word:
+                    type: string
+                    description: 금칙어
+                  is_bad_word:
+                    type: boolean
+                    description: 금칙어 여부
+        page:
+          type: object
+          properties:
+            number:
+              type: number
+              description: 현재 페이지 번호
+            size:
+              type: number
+              description: 페이지 크기
+            totalPages:
+              type: number
+              description: 전체 페이지 수
+            totalElements:
+              type: number
+              description: 전체 요소 수
+    api-v1-tmp-post696516523:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            tmp_posts:
+              type: array
+              items:
+                type: object
+                properties:
+                  thumbnail:
+                    type: string
+                    description: 썸네일 이미지 URL
+                  series:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 시리즈 이름
+                      id:
+                        type: number
+                        description: 시리즈 ID
+                  last_updated_at:
+                    type: string
+                    description: 포스트 최종 수정일 (yyyy-MM-dd`T`HH:mm:ss)
+                  created_at:
+                    type: string
+                    description: 포스트 생성일 (yyyy-MM-dd`T`HH:mm:ss)
+                  post_type:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 포스트 타입 이름
+                      id:
+                        type: number
+                        description: 포스트 타입 ID
+                  id:
+                    type: string
+                    description: 대상 포스트 ID
+                  title:
+                    type: string
+                    description: 포스트 제목
+                  content:
+                    type: string
+                    description: 포스트 본문
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: 태그 이름
+                        id:
+                          type: number
+                          description: 태그 ID
+        page:
+          type: object
+          properties:
+            number:
+              type: number
+              description: 현재 페이지 번호
+            size:
+              type: number
+              description: 페이지 크기
+            totalPages:
+              type: number
+              description: 전체 페이지 수
+            totalElements:
+              type: number
+              description: 전체 요소 수
+    Tag.UpdateRequest:
+      title: Tag.UpdateRequest
+      type: object
+      properties:
+        name:
+          type: string
+          description: 태그 이름 (2~100자)
+    Tag.PageResponse:
+      title: Tag.PageResponse
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            tags:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 태그 이름
+                  id:
+                    type: number
+                    description: 태그 ID
+        page:
+          type: object
+          properties:
+            number:
+              type: number
+              description: 현재 페이지 번호
+            size:
+              type: number
+              description: 페이지 크기
+            totalPages:
+              type: number
+              description: 전체 페이지 수
+            totalElements:
+              type: number
+              description: 전체 요소 수
+    Comment.ReplyCreate:
+      title: Comment.ReplyCreate
+      type: object
+      properties:
+        captcha_token:
+          type: string
+          description: 캡차 토큰
+        im_not_bot:
+          type: boolean
+          description: honeypot
+        content:
+          type: string
+          description: 답글 본문 2~1000자
+    Series.UpdateRequest:
+      title: Series.UpdateRequest
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: 시리즈 썸네일
+        name:
+          type: string
+          description: 시리즈 이름
+        description:
+          type: string
+          description: 시리즈 설명
+    Tag.Response:
+      title: Tag.Response
+      type: object
+      properties:
+        name:
+          type: string
+          description: 태그 이름
+        id:
+          type: number
+          description: 태그 ID
+    Post.UpdateStatus:
+      title: Post.UpdateStatus
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: 포스트의 공개 여부
+    Tag.CreateRequest:
+      title: Tag.CreateRequest
+      type: object
+      properties:
+        name:
+          type: string
+          description: 태그 이름 (2~100자)
+    SiteContent.Response:
+      title: SiteContent.Response
+      type: object
+      properties:
+        content:
+          type: string
+          description: 사이트 콘텐츠의 내용
+        key:
+          type: string
+          description: 사이트 콘텐츠의 키
+    PostType.Response:
+      title: PostType.Response
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            post_types:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 포스트 타입 이름
+                  id:
+                    type: number
+                    description: 포스트 타입 ID
+    Image.PageResponse:
+      title: Image.PageResponse
+      type: object
+      properties:
+        content:
+          type: array
+          description: 이미지 목록
+          items:
+            type: object
+            properties:
+              post_id:
+                type: number
+                description: 사용중인 포스트 ID
+              format:
+                type: string
+                description: 이미지 형식
+              width:
+                type: number
+                description: 이미지 너비
+              created_at:
+                type: string
+                description: 생성 시간
+              id:
+                type: number
+                description: 이미지 ID
+              height:
+                type: number
+                description: 이미지 높이
+              converted_name:
+                type: string
+                description: 변환된 이미지 이름
+    SiteContent.UpdateRequest:
+      title: SiteContent.UpdateRequest
+      type: object
+      properties:
+        content:
+          type: string
+          description: 사이트 콘텐츠의 내용 (1~30000자)
+    Post.Response:
+      title: Post.Response
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          description: 썸네일 이미지 URL
+        series:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 시리즈 이름
+            id:
+              type: number
+              description: 시리즈 ID
+        last_updated_at:
+          type: string
+          description: 포스트 최종 수정일 (yyyy-MM-dd`T`HH:mm:ss)
+        created_at:
+          type: string
+          description: 포스트 생성일 (yyyy-MM-dd`T`HH:mm:ss)
+        post_type:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 포스트 타입 이름
+            id:
+              type: number
+              description: 포스트 타입 ID
+        id:
+          type: number
+          description: 대상 포스트 ID
+        title:
+          type: string
+          description: 포스트 제목
+        enabled:
+          type: boolean
+          description: "포스트 공개 여부 (0: 비공개, 1: 공개)"
+        content:
+          type: object
+          properties:
+            plain_text:
+              type: string
+              description: 포스트 본문 - 일반 텍스트(순수 텍스트만)
+            editor_text:
+              type: string
+              description: 포스트 본문 - 에디터 텍스트(마크다운)
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 태그 이름
+              id:
+                type: number
+                description: 태그 ID
