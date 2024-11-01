@@ -1,4 +1,4 @@
-![example workflow](https://github.com//hrabit64/springnote/actions/workflows/test.yml/badge.svg)
+![test](https://github.com//hrabit64/springnote/actions/workflows/test.yml/badge.svg) ![deploy](https://github.com//hrabit64/springnote/actions/workflows/deploy.yml/badge.svg)
 
 # Springnote - API
 

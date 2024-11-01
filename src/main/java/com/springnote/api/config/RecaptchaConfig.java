@@ -1,6 +1,7 @@
 package com.springnote.api.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import java.io.IOException;
 @Profile("!test")
 @Configuration
 public class RecaptchaConfig {
+
     @Value("${springnote.recaptcah.config.name}")
     private String recaptchaConfigName;
 
@@ -27,7 +29,11 @@ public class RecaptchaConfig {
     @Getter
     private String secretKey;
 
-    public RecaptchaConfig() throws IOException {
+    public RecaptchaConfig() {
+    }
+
+    @PostConstruct
+    public void init() throws IOException {
         //load recaptcha.json
         var config = new ClassPathResource(recaptchaConfigName).getInputStream();
         var mapper = new ObjectMapper();
