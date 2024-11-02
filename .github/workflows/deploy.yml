@@ -120,7 +120,7 @@ jobs:
 
       - name: Setup ReDoc
         run: |
-          npm i -g @redocly/cli@latest
+          npm i -g redoc-cli
 
       - name: Create Output folder
         run: mkdir -p ./docs
