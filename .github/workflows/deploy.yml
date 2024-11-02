@@ -120,16 +120,19 @@ jobs:
 
       - name: Setup ReDoc
         run: |
-          npm install -g redoc-cli
+          npm i -g @redocly/cli@latest
 
       - name: Create Output folder
         run: mkdir -p ./docs
 
       - name: Fix Redoc
-        run: python3 ./fix_redoc.py  ./openapi3.yaml  > openapi-fixed.yaml
+        run: python3 ./fix_redoc.py  ./openapi3.yaml  > openapi.yaml
 
       - name: Generate API Docs
-        run: redoc-cli bundle ./openapi-fixed.yaml -o ./docs/index.html
+        run: redoc-cli bundle ./openapi.yaml -o ./docs/index.html
+
+      - name: clean up
+        run: rm openapi3.yaml fix_redoc.py
 
       - name: Cd to docs
         run: cd docs

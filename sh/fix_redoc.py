@@ -5,11 +5,13 @@ import sys
 import yaml
 import json
 
+fix_targets = ["application/json", "application/hal+json","application/json;charset=UTF-8"]
+
 def fix_examples(res: dict):
     for key, value in res.items():
         if isinstance(value, dict):
             fix_examples(value)
-        if key == "application/json":
+        if key in fix_targets:
             for example_name, content in value["examples"].items():
                 try:
                     content["value"] = json.loads(content["value"])
