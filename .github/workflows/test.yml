@@ -2,7 +2,8 @@ name: Spring Note API Test
 
 on:
   push:
-    branches: [ "api/dev" ]
+    branches:
+      - '**/dev'
 
 permissions:
   contents: read
