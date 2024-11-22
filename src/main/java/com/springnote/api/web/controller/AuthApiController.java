@@ -4,6 +4,7 @@ package com.springnote.api.web.controller;
 import com.springnote.api.aop.auth.AuthLevel;
 import com.springnote.api.aop.auth.EnableAuthentication;
 import com.springnote.api.config.AuthConfig;
+import com.springnote.api.dto.user.common.UserSimpleResponseCommonDto;
 import com.springnote.api.dto.user.service.UserCreateRequestServiceDto;
 import com.springnote.api.security.auth.AuthManager;
 import com.springnote.api.security.auth.TokenHeaderUtils;
@@ -75,5 +76,19 @@ public class AuthApiController {
         if (user.getName() == null || user.getName().isEmpty()) {
             throw new IllegalArgumentException("유저 생성 시도중 받은 name이 비어있습니다.");
         }
+    }
+
+    @EnableAuthentication(AuthLevel.USER)
+    @GetMapping
+    public ResponseEntity<UserSimpleResponseCommonDto> getSelfInfo() {
+
+        return ResponseEntity.ok(
+                UserSimpleResponseCommonDto.builder()
+                        .uid(userContext.getUid())
+                        .displayName(userContext.getDisplayName())
+                        .isAdmin(userContext.isAdmin())
+                        .build()
+        );
+
     }
 }

@@ -94,7 +94,7 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
 
             // then
             result.andExpect(status().isOk())
-                    .andDo(document("post/updatePostStatus",
+                    .andDo(document("auth/register",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             resource(ResourceSnippetParameters.builder()
@@ -282,5 +282,52 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
 
     }
 
+    @DisplayName("getSelfInfo")
+    @Nested
+    class getSelfInfo {
+
+        @DisplayName("정상적인 유저가 요청하면 유저 정보를 반환한다.")
+        @Test
+        void it_returns_user_info_when_user_request_is_valid() throws Exception {
+            // given
+            createUserContextReturns(userContext, AuthLevel.USER);
+
+            var testUid = "testUid";
+            var testDisplayName = "testDisplayName";
+            var testIsAdmin = false;
+
+            doReturn(testUid).when(userContext).getUid();
+            doReturn(testDisplayName).when(userContext).getDisplayName();
+            doReturn(testIsAdmin).when(userContext).isAdmin();
+
+            // when
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/auth"));
+
+            // then
+            result.andExpect(status().isOk())
+                    .andDo(document("auth/getSelfInfo",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .tag("Auth API")
+                                    .summary("자신의 정보를 반환합니다. (AUTH-LEVEL : USER)")
+                                    .build())
+                    ));
+        }
+
+        @DisplayName("유저가 로그인 되어있지 않으면 예외를 던진다.")
+        @Test
+        void it_throws_exception_when_user_is_not_logged_in() throws Exception {
+            // given
+            createUserContextReturns(userContext, AuthLevel.NONE);
+
+            // when
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/auth"));
+
+            // then
+            result.andExpect(status().isForbidden());
+        }
+
+    }
 
 }
