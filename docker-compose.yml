@@ -7,7 +7,7 @@ services:
     networks:
       - springnote_net
     environment:
-      - USE_PROFILE=production
+      - USE_PROFILE=product
     labels:
       logging: "promtail"
       logging_jobname: "containerlogs"
