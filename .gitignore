@@ -44,6 +44,7 @@ application.properties
 application-test.properties
 application-product.properties
 application-local.properties
+application-liveTest.properties
 logback-local.xml
 logback-test.xml
 logback-product.xml
