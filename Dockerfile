@@ -3,6 +3,6 @@ ENV TZ=Asia/Seoul
 WORKDIR /app
 COPY ./libs/*.jar app.jar
 EXPOSE 8080
-RUN mkdir ./images
+ENV	USE_PROFILE product
 
-ENTRYPOINT ["java","-Dspring.profiles.active=product","-Duser.timezone=Asia/Seoul","-jar","/app/app.jar"]a","-Dspring.profiles.active=product","-Duser.timezone=Asia/Seoul","-jar","/app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=${USE_PROFILE}","-Duser.timezone=Asia/Seoul","-jar","/app/app.jar"]

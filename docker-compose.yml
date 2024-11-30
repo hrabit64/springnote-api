@@ -6,8 +6,20 @@ services:
     restart: always
     networks:
       - springnote_net
-    volumes:
-      - springnote_image:/app/images
+    environment:
+      - USE_PROFILE=production
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+
+  springnote-test:
+    image: springnote-api:latest
+    container_name: springnote-test
+    restart: always
+    networks:
+      - springnote_net
+    environment:
+      - USE_PROFILE=liveTest
     labels:
       logging: "promtail"
       logging_jobname: "containerlogs"
@@ -16,6 +28,3 @@ networks:
   springnote_net:
     external: true
 
-volumes:
-  springnote_image:
-    external: true
