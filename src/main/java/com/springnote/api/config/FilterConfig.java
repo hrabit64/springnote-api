@@ -25,24 +25,6 @@ public class FilterConfig {
         return new ReReadableRequestFilter();
     }
 
-//    @DependsOn("generalRateLimitConfig")
-//    @Bean
-//    public RateLimitFilter generalRateLimitFilter() {
-//        return new RateLimitFilter(
-//                generalRateLimitConfig.getRateLimitBuketName(),
-//                generalRateLimitConfig.getRateLimitResetTime(),
-//                generalRateLimitConfig.getRateLimitMaxCount(),
-//                generalRateLimitConfig.getRateLimitDisadvantageWrite(),
-//                generalRateLimitConfig.getRateLimitDisadvantageView()
-//        );
-//    }
-
-//    @DependsOn("commentConfig")
-//    @Bean
-//    public RateLimitFilter commentRateLimitFilter() {
-//        return new RateLimitFilter(commentConfig.getRateLimitBuketName(), commentConfig.getRateLimitResetTime(), commentConfig.getRateLimitMaxCount());
-//    }
-
     @DependsOn({"requestContext", "jsonUtil"})
     @Bean
     public RequestResponseLoggingFilter requestResponseLoggingFilter(RequestContext requestContext, JsonUtil jsonUtil) {
@@ -53,6 +35,11 @@ public class FilterConfig {
     @Bean
     public SetupRequestContextFilter setupRequestContextFilter(RequestContext requestContext) {
         return new SetupRequestContextFilter(requestContext);
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        return new CorsFilter();
     }
 
     @DependsOn("reReadableRequestFilter")
@@ -66,18 +53,6 @@ public class FilterConfig {
         return filterRegistrationBean;
     }
 
-//
-//    @DependsOn("generalRateLimitFilter")
-//    @Bean
-//    public FilterRegistrationBean<RateLimitFilter> generalRateLimitFilterRegistration(RateLimitFilter generalRateLimitFilter) {
-//        var filterRegistrationBean = new FilterRegistrationBean<>(generalRateLimitFilter);
-//        filterRegistrationBean.addUrlPatterns("/*");
-//        filterRegistrationBean.setName("GeneralRateLimitFilter");
-//        filterRegistrationBean.setOrder(2); // 필터 실행 순서
-//
-//        return filterRegistrationBean;
-//    }
-//
 
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilterRegistration(CorsFilter corsFilter) {
