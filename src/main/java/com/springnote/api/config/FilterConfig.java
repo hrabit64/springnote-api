@@ -1,5 +1,6 @@
 package com.springnote.api.config;
 
+import com.springnote.api.filter.CorsFilter;
 import com.springnote.api.filter.RequestResponseLoggingFilter;
 import com.springnote.api.filter.SetupRequestContextFilter;
 import com.springnote.api.filter.reReadableRequest.ReReadableRequestFilter;
@@ -64,6 +65,7 @@ public class FilterConfig {
 
         return filterRegistrationBean;
     }
+
 //
 //    @DependsOn("generalRateLimitFilter")
 //    @Bean
@@ -76,6 +78,16 @@ public class FilterConfig {
 //        return filterRegistrationBean;
 //    }
 //
+
+    @Bean
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistration(CorsFilter corsFilter) {
+        var filterRegistrationBean = new FilterRegistrationBean<>(corsFilter);
+        filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.setName("CorsFilter");
+        filterRegistrationBean.setOrder(2); // 필터 실행 순서
+
+        return filterRegistrationBean;
+    }
 
     @Bean
     public FilterRegistrationBean<ShallowEtagHeaderFilter> shallowEtagHeaderFilter() {
