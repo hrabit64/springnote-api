@@ -32,8 +32,8 @@ public class MarkdownHelper {
         var document = parser.parse(markdownString);
         var htmlText = renderer.render(document);
         var plainText = Jsoup.parse(htmlText).text();
-        var result = plainText.replaceAll("\\n", "").replaceAll("\\r", "");
-        log.debug("plainText: {}", result);
+        var result = plainText.replaceAll("[^가-힣a-zA-Z0-9.\\s]", "");
+
 
         return result;
     }
