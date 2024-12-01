@@ -1,5 +1,6 @@
 package com.springnote.api.config;
 
+import com.springnote.api.filter.CorsFilter;
 import com.springnote.api.filter.RequestResponseLoggingFilter;
 import com.springnote.api.filter.SetupRequestContextFilter;
 import com.springnote.api.filter.reReadableRequest.ReReadableRequestFilter;
@@ -24,24 +25,6 @@ public class FilterConfig {
         return new ReReadableRequestFilter();
     }
 
-//    @DependsOn("generalRateLimitConfig")
-//    @Bean
-//    public RateLimitFilter generalRateLimitFilter() {
-//        return new RateLimitFilter(
-//                generalRateLimitConfig.getRateLimitBuketName(),
-//                generalRateLimitConfig.getRateLimitResetTime(),
-//                generalRateLimitConfig.getRateLimitMaxCount(),
-//                generalRateLimitConfig.getRateLimitDisadvantageWrite(),
-//                generalRateLimitConfig.getRateLimitDisadvantageView()
-//        );
-//    }
-
-//    @DependsOn("commentConfig")
-//    @Bean
-//    public RateLimitFilter commentRateLimitFilter() {
-//        return new RateLimitFilter(commentConfig.getRateLimitBuketName(), commentConfig.getRateLimitResetTime(), commentConfig.getRateLimitMaxCount());
-//    }
-
     @DependsOn({"requestContext", "jsonUtil"})
     @Bean
     public RequestResponseLoggingFilter requestResponseLoggingFilter(RequestContext requestContext, JsonUtil jsonUtil) {
@@ -54,6 +37,11 @@ public class FilterConfig {
         return new SetupRequestContextFilter(requestContext);
     }
 
+    @Bean
+    public CorsFilter corsFilter() {
+        return new CorsFilter();
+    }
+
     @DependsOn("reReadableRequestFilter")
     @Bean
     public FilterRegistrationBean<ReReadableRequestFilter> reReadableRequestFilterRegistration(ReReadableRequestFilter reReadableRequestFilter) {
@@ -64,18 +52,17 @@ public class FilterConfig {
 
         return filterRegistrationBean;
     }
-//
-//    @DependsOn("generalRateLimitFilter")
-//    @Bean
-//    public FilterRegistrationBean<RateLimitFilter> generalRateLimitFilterRegistration(RateLimitFilter generalRateLimitFilter) {
-//        var filterRegistrationBean = new FilterRegistrationBean<>(generalRateLimitFilter);
-//        filterRegistrationBean.addUrlPatterns("/*");
-//        filterRegistrationBean.setName("GeneralRateLimitFilter");
-//        filterRegistrationBean.setOrder(2); // 필터 실행 순서
-//
-//        return filterRegistrationBean;
-//    }
-//
+
+
+    @Bean
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistration(CorsFilter corsFilter) {
+        var filterRegistrationBean = new FilterRegistrationBean<>(corsFilter);
+        filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.setName("CorsFilter");
+        filterRegistrationBean.setOrder(2); // 필터 실행 순서
+
+        return filterRegistrationBean;
+    }
 
     @Bean
     public FilterRegistrationBean<ShallowEtagHeaderFilter> shallowEtagHeaderFilter() {
