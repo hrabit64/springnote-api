@@ -110,7 +110,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
                                             fieldWithPath("post_type_id").description("포스트 타입 ID"),
                                             fieldWithPath("series_id").description("시리즈 ID"),
                                             fieldWithPath("tag_ids").description("태그 ID 목록"),
-                                            fieldWithPath("content").description("본문 30000자 이내"),
+                                            fieldWithPath("content").description("본문 65535자 이내"),
                                             fieldWithPath("title").description("제목 300자 이내"),
                                             fieldWithPath("thumbnail").description("썸네일 주소")
                                     )
@@ -146,7 +146,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
 
             var tooLongContent = TmpPostCreateRequestControllerDto
                     .builder()
-                    .content("a".repeat(30001))
+                    .content("a".repeat(65536))
                     .postTypeId(1L)
                     .build();
 
@@ -190,7 +190,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
 
             return Stream.of(
                     Arguments.of(tooLongTitle, "300자가 넘는 제목"),
-                    Arguments.of(tooLongContent, "30000자가 넘는 본문"),
+                    Arguments.of(tooLongContent, "65535자가 넘는 본문"),
                     Arguments.of(invalidPostTypeId, "0인 postTypeId"),
                     Arguments.of(tooLargePostTypeId, "TINYINT의 최대 값보다 큰 postTypeId"),
                     Arguments.of(noPostTypeId, "postTypeId가 없는 요청"),
@@ -545,7 +545,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
                                     .requestFields(
                                             fieldWithPath("series_id").description("시리즈 ID").optional(),
                                             fieldWithPath("tag_ids").description("태그 ID 목록").optional(),
-                                            fieldWithPath("content").description("본문 30000자 이내"),
+                                            fieldWithPath("content").description("본문 65535자 이내"),
                                             fieldWithPath("title").description("제목 300자 이내"),
                                             fieldWithPath("thumbnail").description("썸네일 주소")
                                     )
@@ -578,7 +578,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
 
             var tooLongContent = TmpPostUpdateRequestControllerDto
                     .builder()
-                    .content("a".repeat(30001))
+                    .content("a".repeat(65536))
                     .build();
 
             var tooManyTags = TmpPostUpdateRequestControllerDto
@@ -605,7 +605,7 @@ public class TmpPostApiControllerTest extends ControllerTestTemplate {
 
             return Stream.of(
                     Arguments.of(tooLongTitle, "300자가 넘는 제목"),
-                    Arguments.of(tooLongContent, "30000자가 넘는 본문"),
+                    Arguments.of(tooLongContent, "65535자가 넘는 본문"),
                     Arguments.of(tooManyTags, "태그가 10개 초과인 요청"),
                     Arguments.of(invalidThumbnail, "유효하지 않은 썸네일 주소")
             );

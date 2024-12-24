@@ -845,7 +845,7 @@ public class PostApiControllerTest extends ControllerTestTemplate {
                                     .requestFields(
                                             fieldWithPath("series_id").type(NUMBER).description("포스트의 시리즈 ID, 만약 시리즈가 필요 없는 포스트는 null").optional(),
                                             fieldWithPath("title").type(STRING).description("포스트의 제목, 3~300자"),
-                                            fieldWithPath("content").type(STRING).description("포스트의 내용, 3~30000자"),
+                                            fieldWithPath("content").type(STRING).description("포스트의 내용, 3~65535자"),
                                             fieldWithPath("tags").type(ARRAY).description("포스트의 태그 ID 리스트"),
                                             fieldWithPath("tags[].id").type(NUMBER).description("포스트의 태그 ID"),
                                             fieldWithPath("enabled").type(BOOLEAN).description("포스트의 공개 여부"),
@@ -924,7 +924,7 @@ public class PostApiControllerTest extends ControllerTestTemplate {
             tooShortContent.setContent("a");
 
             var tooLongContent = copyPostCreateRequestControllerDto(base);
-            tooLongContent.setContent("a".repeat(30001));
+            tooLongContent.setContent("a".repeat(65536));
 
             var invalidThumbnail = copyPostCreateRequestControllerDto(base);
             invalidThumbnail.setThumbnail("a".repeat(301));
@@ -943,7 +943,7 @@ public class PostApiControllerTest extends ControllerTestTemplate {
                     Arguments.of(tooShortTitle, "제목이 2자 미만인 경우"),
                     Arguments.of(tooLongTitle, "제목이 300자를 초과하는 경우"),
                     Arguments.of(tooShortContent, "내용이 2자 미만인 경우"),
-                    Arguments.of(tooLongContent, "내용이 30000자를 초과하는 경우"),
+                    Arguments.of(tooLongContent, "내용이 65535자를 초과하는 경우"),
                     Arguments.of(invalidThumbnail, "썸네일이 300자를 초과하는 경우"),
                     Arguments.of(nullIsEnabled, "공개 여부가 null 인 경우")
             );
@@ -1061,7 +1061,7 @@ public class PostApiControllerTest extends ControllerTestTemplate {
                                     .requestFields(
                                             fieldWithPath("series_id").type(NUMBER).description("포스트의 시리즈 ID, 만약 시리즈가 필요 없는 포스트는 null").optional(),
                                             fieldWithPath("title").type(STRING).description("포스트의 제목, 3~300자"),
-                                            fieldWithPath("content").type(STRING).description("포스트의 내용, 3~30000자"),
+                                            fieldWithPath("content").type(STRING).description("포스트의 내용, 3~65535자"),
                                             fieldWithPath("tags").type(ARRAY).description("포스트의 태그 ID 리스트"),
                                             fieldWithPath("tags[].id").type(NUMBER).description("포스트의 태그 ID"),
                                             fieldWithPath("enabled").type(BOOLEAN).description("포스트의 공개 여부"),
@@ -1166,7 +1166,7 @@ public class PostApiControllerTest extends ControllerTestTemplate {
             tooShortContent.setContent("a");
 
             var tooLongContent = copyPostUpdateRequestControllerDto(base);
-            tooLongContent.setContent("a".repeat(30001));
+            tooLongContent.setContent("a".repeat(65536));
 
             var invalidThumbnail = copyPostUpdateRequestControllerDto(base);
             invalidThumbnail.setThumbnail("a".repeat(301));
@@ -1183,7 +1183,7 @@ public class PostApiControllerTest extends ControllerTestTemplate {
                     Arguments.of(tooShortTitle, "제목이 2자 미만인 경우"),
                     Arguments.of(tooLongTitle, "제목이 300자를 초과하는 경우"),
                     Arguments.of(tooShortContent, "내용이 2자 미만인 경우"),
-                    Arguments.of(tooLongContent, "내용이 30000자를 초과하는 경우"),
+                    Arguments.of(tooLongContent, "내용이 65535자를 초과하는 경우"),
                     Arguments.of(invalidThumbnail, "썸네일이 300자를 초과하는 경우"),
                     Arguments.of(nullIsEnabled, "공개 여부가 null 인 경우")
             );

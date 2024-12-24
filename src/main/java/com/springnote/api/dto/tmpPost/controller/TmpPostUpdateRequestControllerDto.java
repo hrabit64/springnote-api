@@ -31,7 +31,7 @@ public class TmpPostUpdateRequestControllerDto {
     @ListSizeCheck(min = 0, max = 10, message = "태그는 최대 10개까지 설정할 수 있습니다.", nullable = true)
     private List<PostTagId> tagIds;
 
-    @Size(max = 30000, message = "본문은 30000자 이하여야 합니다.")
+    @Size(max = 65535, message = "본문은 65535자 이하여야 합니다.")
     private String content;
 
     @Size(max = 300, message = "제목은 300자 이하여야 합니다.")

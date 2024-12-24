@@ -39,7 +39,7 @@ public class PostUpdateRequestControllerDto {
     @ListSizeCheck(min = 0, max = 10, message = "태그는 최대 10개까지 설정할 수 있습니다.", nullable = true)
     private List<PostTagId> tags = new LinkedList<PostTagId>();
 
-    @Size(min = 3, max = 30000, message = "본문은 3자 이상, 30000자 이하여야 합니다.")
+    @Size(min = 3, max = 65535, message = "본문은 3자 이상, 65535자 이하여야 합니다.")
     @NotEmpty(message = "본문을 입력해주세요.")
     private String content;
 
