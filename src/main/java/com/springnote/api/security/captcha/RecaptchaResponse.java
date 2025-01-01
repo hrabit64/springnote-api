@@ -1,16 +1,18 @@
 package com.springnote.api.security.captcha;
 
 //{
-//        "success": true|false,
-//        "challenge_ts": timestamp,  // timestamp of the challenge load (ISO format yyyy-MM-dd'T'HH:mm:ssZZ)
-//        "hostname": string,         // the hostname of the site where the reCAPTCHA was solved
-//        "error-codes": [...]        // optional
+//        "success": true,
+//        "challenge_ts": "2025-01-01T11:26:25Z",
+//        "hostname": "client-dev.hrabit64.shop",
+//        "score": 0.9,
+//        "action": "register"
 //        }
 public record RecaptchaResponse(
         boolean success,
         String challenge_ts,
         String hostname,
-        String[] error_codes
+        double score,
+        String action
 ) {
 
 }
