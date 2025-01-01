@@ -48,6 +48,7 @@ application-liveTest.properties
 logback-local.xml
 logback-test.xml
 logback-product.xml
+logback-liveTest.xml
 datasets/
 
 clean.sql
