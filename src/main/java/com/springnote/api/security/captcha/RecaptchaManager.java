@@ -25,11 +25,9 @@ public class RecaptchaManager implements CaptchaManager {
             throw e;
         }
 
-        log.debug("Recaptcha  response: {}" ,response);
+        log.debug("Recaptcha response: {}" ,response);
 
-        if (!response.success()) {
-            return false;
-        } else return !(response.score() < 0.5);
+        return response.success();
     }
 
     private RecaptchaResponse getResponse(String token) {
