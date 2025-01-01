@@ -3,6 +3,7 @@ package com.springnote.api.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
-
+@Slf4j
 @Profile("!test")
 @Configuration
 public class RecaptchaConfig {
@@ -29,8 +30,6 @@ public class RecaptchaConfig {
     @Getter
     private String secretKey;
 
-    public RecaptchaConfig() {
-    }
 
     @PostConstruct
     public void init() throws IOException {
