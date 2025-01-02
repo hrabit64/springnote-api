@@ -27,7 +27,7 @@ public class ReplyCreateRequestControllerDto {
     @EnableHoneypot
     private Boolean imNotBot;
 
-    @CheckCaptcha
+
     @NotEmpty(message = "캡차 토큰을 입력해주세요.")
     private String captchaToken;
 
