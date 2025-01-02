@@ -14,5 +14,6 @@ import lombok.*;
 public class UserSimpleResponseCommonDto {
     private String uid;
     private String displayName;
+    private String profileImg;
     private boolean isAdmin;
 }

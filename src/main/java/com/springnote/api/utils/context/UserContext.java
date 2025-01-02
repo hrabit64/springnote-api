@@ -1,6 +1,7 @@
 package com.springnote.api.utils.context;
 
 import com.springnote.api.dto.user.common.UserResponseCommonDto;
+import com.springnote.api.dto.user.common.UserSimpleResponseCommonDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.annotation.Scope;
@@ -23,28 +24,40 @@ public class UserContext {
     private boolean isAdmin = false;
     private String uid;
     private String displayName;
+    private String profileImg;
 
 
     public boolean isAuthed() {
         return uid != null;
     }
 
-    public void init(boolean isAdmin, String uid, String displayName) {
-        this.isAdmin = isAdmin;
-        this.uid = uid;
-        this.displayName = displayName;
-    }
+//    public void init(boolean isAdmin, String uid, String displayName) {
+//        this.isAdmin = isAdmin;
+//        this.uid = uid;
+//        this.displayName = displayName;
+//    }
 
     public void init(UserResponseCommonDto userResponseCommonDto) {
         this.uid = userResponseCommonDto.getId();
         this.displayName = userResponseCommonDto.getName();
         this.isAdmin = userResponseCommonDto.isAdmin();
+        this.profileImg = userResponseCommonDto.getProfileImg();
+
     }
 
     public void init() {
         this.uid = null;
         this.displayName = null;
         this.isAdmin = false;
+        this.profileImg = null;
     }
 
+    public UserSimpleResponseCommonDto toDto() {
+        return UserSimpleResponseCommonDto.builder()
+                .uid(uid)
+                .displayName(displayName)
+                .profileImg(profileImg)
+                .isAdmin(isAdmin)
+                .build();
+    }
 }
