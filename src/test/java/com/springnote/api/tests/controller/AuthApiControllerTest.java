@@ -3,6 +3,7 @@ package com.springnote.api.tests.controller;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.springnote.api.aop.auth.AuthLevel;
 import com.springnote.api.config.AuthConfig;
+import com.springnote.api.dto.user.common.UserSimpleResponseCommonDto;
 import com.springnote.api.dto.user.service.UserCreateRequestServiceDto;
 import com.springnote.api.security.auth.AuthManager;
 import com.springnote.api.security.auth.AuthUserInfo;
@@ -300,10 +301,18 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
             var testIsAdmin = false;
             var testProfileImage = "testProfileImage";
 
-            doReturn(testUid).when(userContext).getUid();
-            doReturn(testDisplayName).when(userContext).getDisplayName();
-            doReturn(testIsAdmin).when(userContext).isAdmin();
-            doReturn(testProfileImage).when(userContext).getProfileImg();
+//            doReturn(testUid).when(userContext).getUid();
+//            doReturn(testDisplayName).when(userContext).getDisplayName();
+//            doReturn(testIsAdmin).when(userContext).isAdmin();
+//            doReturn(testProfileImage).when(userContext).getProfileImg();
+//
+            doReturn(UserSimpleResponseCommonDto
+                    .builder()
+                    .uid(testUid)
+                    .displayName(testDisplayName)
+                    .isAdmin(testIsAdmin)
+                    .profileImg(testProfileImage)
+                    .build()).when(userContext).toDto();
 
 
             // when
