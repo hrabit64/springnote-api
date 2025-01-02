@@ -210,7 +210,7 @@ public class CommentApiController {
 
     private void checkCaptcha(String captchaToken) {
         if(!captchaManager.verify(captchaToken)) {
-            throw new ValidationException("캡차 인증에 실패했습니다.", ValidationErrorCode.BAD_PERMISSION);
+            throw new ValidationException("캡차 인증에 실패했습니다.", ValidationErrorCode.BAD_ARGS);
         }
     }
 
