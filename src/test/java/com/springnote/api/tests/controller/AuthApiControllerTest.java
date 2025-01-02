@@ -295,10 +295,13 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
             var testUid = "testUid";
             var testDisplayName = "testDisplayName";
             var testIsAdmin = false;
+            var testProfileImage = "testProfileImage";
 
             doReturn(testUid).when(userContext).getUid();
             doReturn(testDisplayName).when(userContext).getDisplayName();
             doReturn(testIsAdmin).when(userContext).isAdmin();
+            doReturn(testProfileImage).when(userContext).getProfileImg();
+
 
             // when
             var result = mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/auth"));

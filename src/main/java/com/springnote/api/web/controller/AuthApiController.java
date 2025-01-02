@@ -83,11 +83,7 @@ public class AuthApiController {
     public ResponseEntity<UserSimpleResponseCommonDto> getSelfInfo() {
 
         return ResponseEntity.ok(
-                UserSimpleResponseCommonDto.builder()
-                        .uid(userContext.getUid())
-                        .displayName(userContext.getDisplayName())
-                        .isAdmin(userContext.isAdmin())
-                        .build()
+                userContext.toDto()
         );
 
     }
