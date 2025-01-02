@@ -13,12 +13,14 @@ import com.springnote.api.dto.comment.common.ReplyResponseCommonDto;
 import com.springnote.api.dto.comment.controller.CommentCreateRequestControllerDto;
 import com.springnote.api.dto.comment.controller.CommentUpdateRequestControllerDto;
 import com.springnote.api.dto.comment.controller.ReplyCreateRequestControllerDto;
+import com.springnote.api.security.captcha.CaptchaManager;
 import com.springnote.api.service.CommentService;
 import com.springnote.api.utils.context.RequestContext;
 import com.springnote.api.utils.context.UserContext;
 import com.springnote.api.utils.exception.validation.ValidationErrorCode;
 import com.springnote.api.utils.exception.validation.ValidationException;
 import com.springnote.api.utils.type.DBTypeSize;
+import com.springnote.api.utils.validation.bot.CheckCaptcha;
 import com.springnote.api.utils.validation.pageable.size.PageableSizeCheck;
 import com.springnote.api.utils.validation.pageable.sort.PageableSortKeyCheck;
 import jakarta.validation.Valid;
@@ -54,6 +56,7 @@ public class CommentApiController {
     private final UserContext userContext;
     private final RequestContext requestContext;
     private final CommentConfig commentConfig;
+    private final CaptchaManager captchaManager;
 
     @EnableAuthentication(AuthLevel.NONE)
     @GetMapping("/post/{postId}/comment")
@@ -102,8 +105,9 @@ public class CommentApiController {
 
             @RequestBody @Valid CommentCreateRequestControllerDto requestDto
     ) {
-
+        checkCaptcha(requestDto.getCaptchaToken());
         checkCommentCanWrite();
+
         var comment = commentService.create(requestDto.toServiceDto(postId, requestContext.getIp()));
 
         return commentAssembler.toModel(comment);
@@ -124,7 +128,9 @@ public class CommentApiController {
 
             @RequestBody @Valid ReplyCreateRequestControllerDto requestDto
     ) {
+        checkCaptcha(requestDto.getCaptchaToken());
         checkCommentCanWrite();
+
 
         var comment = commentService.createReply(requestDto.toServiceDto(postId, commentId, requestContext.getIp()));
         return commentAssembler.toModel(comment);
@@ -141,7 +147,9 @@ public class CommentApiController {
 
             @RequestBody @Valid CommentUpdateRequestControllerDto requestDto
     ) {
+        checkCaptcha(requestDto.getCaptchaToken());
         checkCommentCanWrite();
+
         var data = commentService.update(requestDto.toServiceDto(commentId));
         return commentAssembler.toModel(data);
     }
@@ -200,5 +208,10 @@ public class CommentApiController {
         }
     }
 
+    private void checkCaptcha(String captchaToken) {
+        if(!captchaManager.verify(captchaToken)) {
+            throw new ValidationException("캡차 인증에 실패했습니다.", ValidationErrorCode.BAD_ARGS);
+        }
+    }
 
 }
