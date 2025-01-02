@@ -326,7 +326,7 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
                             resource(ResourceSnippetParameters.builder()
                                     .tag("Auth API")
                                     .responseFields(
-                                            fieldWithPath("uid").type(NUMBER).description("유저 uid"),
+                                            fieldWithPath("uid").type(STRING).description("유저 uid"),
                                             fieldWithPath("display_name").type(STRING).description("유저 이름"),
                                             fieldWithPath("profile_img").type(STRING).description("프로필 이미지"),
                                             fieldWithPath("admin").type(BOOLEAN).description("관리자 여부")
