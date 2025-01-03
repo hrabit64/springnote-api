@@ -24,29 +24,36 @@ public class SetupRequestContextFilter implements Filter {
         chain.doFilter(request, response);
 
     }
+//
+//    private String getIp(HttpServletRequest httpRequest) {
+//        var ip = httpRequest.getHeader("X-Forwarded-For");
+//
+//        if (ip != null && !ip.isEmpty() && !"unknown".equalsIgnoreCase(ip)) {
+//            // X-Forwarded-For 헤더에서 첫 번째 IP 주소 추출
+//            ip = ip.split(",")[0].trim();
+//        } else {
+//            ip = httpRequest.getHeader("Proxy-Client-IP");
+//
+//            if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+//                ip = httpRequest.getHeader("WL-Proxy-Client-IP");
+//            }
+//
+//            if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+//                ip = httpRequest.getHeader("HTTP_CLIENT_IP");
+//            }
+//
+//            if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+//                ip = httpRequest.getHeader("HTTP_X_FORWARDED_FOR");
+//            }
+//
+//            if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+//                ip = httpRequest.getRemoteAddr();
+//            }
+//        }
+//        return ip;
+//    }
 
     private String getIp(HttpServletRequest httpRequest) {
-        var ip = httpRequest.getHeader("X-Forwarded-For");
-
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getHeader("Proxy-Client-IP");
-        }
-
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getHeader("WL-Proxy-Client-IP");
-        }
-
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getHeader("HTTP_CLIENT_IP");
-        }
-
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = httpRequest.getRemoteAddr();
-        }
-        return ip;
+        return httpRequest.getRemoteAddr();
     }
 }
