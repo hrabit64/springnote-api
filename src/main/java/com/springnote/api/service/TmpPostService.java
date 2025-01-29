@@ -70,13 +70,6 @@ public class TmpPostService {
         var targetPostType = fetchPostTypeById(requestDto);
         // 추후 게시글 생성시 검증에서만 통과하면 문제 없음.
 
-//
-//        if (isViolateNeedSeriesPolicy(targetPostType, requestDto.getSeriesId())) {
-//            throw new BusinessException(
-//                    "해당 게시글 타입의 시리즈 정책에 맞지 않는 요청입니다. 해당 게시글 타입의 시리즈 정책은 ("
-//                            + ((targetPostType.isNeedSeries()) ? "시리즈 필수" : "시리즈 불필요") + ") 입니다.",
-//                    BusinessErrorCode.POLICY_VIOLATE);
-//        }
 
         // 시리즈 검증
         var targetSeries = (requestDto.getSeriesId() != null)
@@ -138,15 +131,6 @@ public class TmpPostService {
     @Transactional
     public TmpPostResponseCommonDto update(TmpPostUpdateRequestServiceDto requestDto) {
         var targetTmpPost = fetchTmpPostById(requestDto.getId());
-
-        // 임시 포스트는 검증하지 않음.
-        // 추후 게시글 생성시 검증에서만 통과하면 문제 없음.
-//        if (isViolateNeedSeriesPolicy(targetTmpPost.getPostType(), requestDto.getSeriesId())) {
-//            throw new BusinessException(
-//                    "해당 게시글 타입의 시리즈 정책에 맞지 않는 요청입니다. 해당 게시글 타입의 시리즈 정책은 ("
-//                            + ((targetTmpPost.getPostType().isNeedSeries()) ? "시리즈 필수" : "시리즈 불필요") + ") 입니다.",
-//                    BusinessErrorCode.POLICY_VIOLATE);
-//        }
 
         updateSeries(targetTmpPost, requestDto.getSeriesId());
         updatePostTag(targetTmpPost, requestDto.getTagIds());
