@@ -51,6 +51,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import com.springnote.api.utils.uuid.UuidUtils;
 
 @DisplayName("Service Test - TmpPostService")
 public class TmpPostServiceTest extends ServiceTestTemplate {
@@ -78,6 +79,9 @@ public class TmpPostServiceTest extends ServiceTestTemplate {
 
     @Mock
     private PostService postService;
+
+    @Mock
+    private UuidUtils uuidUtils;
 
     @DisplayName("TmpPostService.getById")
     @Nested
@@ -180,6 +184,7 @@ public class TmpPostServiceTest extends ServiceTestTemplate {
                     .postTypeId(1L)
                     .tagIds(List.of(1L, 2L))
                     .build();
+
             var isNeedSeries = requestDto.getSeriesId() != null;
             var targetPostType = createSeriesPostType(isNeedSeries);
 
@@ -199,9 +204,10 @@ public class TmpPostServiceTest extends ServiceTestTemplate {
             );
 
             doReturn(targetTags).when(tagRepository).findTagsByIdIn(eq(requestDto.getTagIds()));
-
+            doReturn("test").when(uuidUtils).generateUuid();
             var targetTmpPost = TmpPost
                     .builder()
+                    .id("test")
                     .title(requestDto.getTitle())
                     .content(requestDto.getContent())
                     .thumbnail(requestDto.getThumbnail())
@@ -212,7 +218,6 @@ public class TmpPostServiceTest extends ServiceTestTemplate {
                     .build();
 
             var savedTmpPost = copyTmpPost(targetTmpPost);
-            savedTmpPost.setId("savedId");
 
             doReturn(savedTmpPost).when(tmpPostRepository).save(targetTmpPost);
 
