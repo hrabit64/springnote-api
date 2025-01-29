@@ -27,6 +27,7 @@ import lombok.*;
 public class TmpPostTag implements PostAndTag {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TMP_POST_TAG_PK", nullable = false)
     private Long id;
 
