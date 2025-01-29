@@ -26,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.springnote.api.utils.uuid.UuidUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +42,7 @@ public class TmpPostService {
     private final PostTypeRepository postTypeRepository;
     private final TagComparator<TmpPostTag> tagComparator;
     private final PostService postService;
+    private final UuidUtils uuidUtils;
 
     @Transactional(readOnly = true)
     public TmpPostResponseCommonDto getById(String id) {
@@ -85,6 +87,7 @@ public class TmpPostService {
         List<Tag> tags = getTagsWithValidation(requestDto);
 
         var tmpPost = requestDto.toEntity(targetSeries, targetPostType);
+        tmpPost.setId(uuidUtils.generateUuid());
 
         var savedTmpPost = tmpPostRepository.save(tmpPost);
 
