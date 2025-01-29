@@ -177,7 +177,7 @@ public class TmpPostService {
                 .content(targetTmpPost.getContent())
                 .title(targetTmpPost.getTitle())
                 .thumbnail(targetTmpPost.getThumbnail())
-                .seriesId(targetTmpPost.getSeries().getId())
+                .seriesId((targetTmpPost.getSeries()== null) ? null : targetTmpPost.getSeries().getId())
                 .tagIds(targetTmpPost.getTmpPostTags().stream().map(tmpPostTag -> tmpPostTag.getTag().getId()).toList())
                 .postTypeId(targetTmpPost.getPostType().getId())
                 .isEnabled(true)
@@ -227,9 +227,7 @@ public class TmpPostService {
 
     }
 
-    private boolean isViolateNeedSeriesPolicy(PostType postType, Long seriesId) {
-        return (postType.isNeedSeries() && seriesId == null) || (!postType.isNeedSeries() && seriesId != null);
-    }
+  
 
     private boolean isExistAllTag(List<Long> tagIds, List<Tag> tags) {
         return tagIds.size() == tags.size();
@@ -283,7 +281,9 @@ public class TmpPostService {
 
     private boolean isNeedUpdateSeries(TmpPost tmpPost, Long newId) {
         if (!tmpPost.getPostType().isNeedSeries()) return false;
-        return !tmpPost.getSeries().getId().equals(newId);
+        if(tmpPost.getSeries() == null && newId == null) return false;
+
+        return tmpPost.getSeries() == null || !tmpPost.getSeries().getId().equals(newId);
     }
 
 
