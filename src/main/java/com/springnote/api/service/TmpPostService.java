@@ -219,6 +219,12 @@ public class TmpPostService {
 
     private void updateSeries(TmpPost targetPost, Long newSeriesId) {
         if (isNeedUpdateSeries(targetPost, newSeriesId)) {
+
+            if(newSeriesId == null) {
+                targetPost.setSeries(null);
+                return;
+            }
+            
             var newSeries = seriesRepository.findById(newSeriesId).orElseThrow(
                     () -> new BusinessException(
                             ExceptionMessageFormatter.createItemNotFoundMessage(newSeriesId.toString(), "시리즈"),

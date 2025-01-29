@@ -179,9 +179,11 @@ public class PostService {
     @Transactional
     public PostDetailResponseCommonDto delete(Long id) {
         var targetPost = fetchPostById(id);
-
-        contentRepository.delete(targetPost.getContent());
+        var targetContent = targetPost.getContent();
+        
         postRepository.delete(targetPost);
+        contentRepository.delete(targetContent);
+      
 
         return new PostDetailResponseCommonDto(targetPost);
     }
@@ -286,6 +288,7 @@ public class PostService {
 
     private void updateSeries(Post targetPost, Long newSeriesId) {
         if (isNeedUpdateSeries(targetPost.getPostType().isNeedSeries(), targetPost.getSeries(), newSeriesId)) {
+      
             var newSeries = getSeriesById(newSeriesId);
             targetPost.setSeries(newSeries);
         }
