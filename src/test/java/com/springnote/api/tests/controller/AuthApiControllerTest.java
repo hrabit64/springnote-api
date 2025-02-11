@@ -389,9 +389,10 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
         void it_throws_exception_when_user_is_not_logged_in() throws Exception {
             // given
             createUserContextReturns(userContext, AuthLevel.NONE);
+            doReturn(true).when(captchaManager).verify("captchaToken");
 
             // when
-            var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth"));
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth?captchaToken=captchaToken"));
 
             // then
             result.andExpect(status().isForbidden());
@@ -421,7 +422,7 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
             var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth?captchaToken=captchaToken"));
 
             // then
-            result.andExpect(status().isForbidden());
+            result.andExpect(status().isBadRequest());
         }
     }
 
