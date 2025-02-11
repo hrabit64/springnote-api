@@ -31,4 +31,14 @@ public class FirebaseAuthManager implements AuthManager {
             return null;
         }
     }
+
+    @Override
+    public boolean deactive(String id) {
+        try {
+            firebaseAuth.deleteUser(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

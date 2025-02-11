@@ -27,6 +27,11 @@ public class TestFirebaseAuthManager implements AuthManager {
         }
     }
 
+    @Override
+    public boolean deactive(String id) {
+        return false;
+    }
+
     private TestFirebaseToken getWithToken(String token) {
         for (var testFirebaseToken : TestFirebaseToken.values()) {
             if (TestFirebaseToken.NOT_VALID.getToken().equalsIgnoreCase(token)) {
