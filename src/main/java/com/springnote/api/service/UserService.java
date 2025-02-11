@@ -4,11 +4,13 @@ import com.springnote.api.domain.user.User;
 import com.springnote.api.domain.user.UserRepository;
 import com.springnote.api.dto.user.common.UserResponseCommonDto;
 import com.springnote.api.dto.user.service.UserCreateRequestServiceDto;
+import com.springnote.api.security.auth.AuthManager;
 import com.springnote.api.utils.exception.business.BusinessErrorCode;
 import com.springnote.api.utils.exception.business.BusinessException;
 import com.springnote.api.utils.formatter.ExceptionMessageFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AuthManager authManager;
 
     @Cacheable(value = "user", key = "#id")
     @Transactional(readOnly = true)
@@ -47,5 +50,20 @@ public class UserService {
         );
     }
 
+    @CacheEvict(value = "user", key = "#id")
+    @Transactional
+    public void deleteUser(String id) {
+        var targetUser = fetchUserById(id);
+        userRepository.delete(targetUser);
+        var result = authManager.deactive(id);
+
+        if (!result) {
+            log.error("Failed to delete user from firebase");
+            throw new BusinessException(
+                    "Failed to delete user from firebase",
+                    BusinessErrorCode.SERVER_ERROR
+            );
+        }
+    }
 
 }

@@ -14,6 +14,7 @@ public enum BusinessErrorCode implements ErrorCode {
     POLICY_VIOLATE(400, "PolicyViolate"),
     ITEM_CONFLICT(409, "ItemConflict"),
     NOT_VALID_ITEM(400, "NotValidItem"),
+    SERVER_ERROR(500, "ServerError"),
     FORBIDDEN(403, "Forbidden");
 
     private final Integer statusCode;

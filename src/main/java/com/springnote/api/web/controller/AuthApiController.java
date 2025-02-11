@@ -87,4 +87,16 @@ public class AuthApiController {
         );
 
     }
+
+    @EnableAuthentication(AuthLevel.USER)
+    @DeleteMapping
+    public ResponseEntity<Void> deleteSelf(
+            @NotEmpty
+            @CheckCaptcha
+            @RequestParam(name = "captchaToken", required = true)
+            String captchaToken
+    ) {
+        userService.deleteUser(userContext.getUid());
+        return ResponseEntity.ok().build();
+    }
 }

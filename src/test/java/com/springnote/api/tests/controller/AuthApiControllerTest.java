@@ -351,4 +351,79 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
 
     }
 
+
+    @DisplayName("deleteSelf")
+    @Nested
+    class deleteSelf {
+
+        @DisplayName("정상적인 유저가 요청하면 회원 탈퇴에 성공한다.")
+        @Test
+        void it_deletes_user_when_user_request_is_valid() throws Exception {
+            // given
+            createUserContextReturns(userContext, AuthLevel.USER);
+            var testUid = "testUid";
+            doReturn(testUid).when(userContext).getUid();
+            doReturn(true).when(captchaManager).verify("captchaToken");
+
+            // when
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth?captchaToken=captchaToken"));
+
+            // then
+            result.andExpect(status().isOk())
+                    .andDo(document("auth/deleteSelf",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .tag("Auth API")
+                                    .queryParameters(
+                                            parameterWithName("captchaToken").description("캡차 토큰")
+                                    )
+                                    .summary("회원 탈퇴 합니다. (AUTH-LEVEL : USER)")
+                                    .build())
+                    ));
+            verify(userService).deleteUser(testUid);
+        }
+
+        @DisplayName("유저가 로그인 되어있지 않으면 예외를 던진다.")
+        @Test
+        void it_throws_exception_when_user_is_not_logged_in() throws Exception {
+            // given
+            createUserContextReturns(userContext, AuthLevel.NONE);
+
+            // when
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth"));
+
+            // then
+            result.andExpect(status().isForbidden());
+        }
+
+        @DisplayName("캡차 토큰이 없으면 예외를 던진다.")
+        @Test
+        void it_throws_exception_when_captcha_token_is_empty() throws Exception {
+            // given
+            createUserContextReturns(userContext, AuthLevel.USER);
+
+            // when
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth"));
+
+            // then
+            result.andExpect(status().isBadRequest());
+        }
+
+        @DisplayName("캡차 토큰이 유효하지 않으면 예외를 던진다.")
+        @Test
+        void it_throws_exception_when_captcha_token_is_invalid() throws Exception {
+            // given
+            createUserContextReturns(userContext, AuthLevel.USER);
+            doReturn(false).when(captchaManager).verify("captchaToken");
+
+            // when
+            var result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/v1/auth?captchaToken=captchaToken"));
+
+            // then
+            result.andExpect(status().isForbidden());
+        }
+    }
+
+
 }
