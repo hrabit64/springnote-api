@@ -44,7 +44,9 @@ public class EnableAuthAspect {
 
         var tokenInfo = authManager.authenticate(token);
 
+
         if (!validateToken(tokenInfo, authLevel)) return;
+        userContext.setFbInfo(tokenInfo.getUid(), tokenInfo.getEmail());
 
         if (!validateUser(tokenInfo, authLevel)) return;
 

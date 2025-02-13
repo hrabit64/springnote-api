@@ -26,6 +26,10 @@ public class UserContext {
     private String displayName;
     private String profileImg;
 
+    // 실제 로직에서 사용하는 사용자 정보가 아닌, 단순 firebase 정보임
+    private String fbUid;
+    private String fbEmail;
+
 
     public boolean isAuthed() {
         return uid != null;
@@ -59,5 +63,10 @@ public class UserContext {
                 .profileImg(profileImg)
                 .isAdmin(isAdmin)
                 .build();
+    }
+
+    public void setFbInfo(String fbUid, String fbEmail) {
+        this.fbUid = fbUid;
+        this.fbEmail = fbEmail;
     }
 }
