@@ -300,18 +300,15 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
             var testDisplayName = "testDisplayName";
             var testIsAdmin = false;
             var testProfileImage = "testProfileImage";
+            var testEnabled = true;
 
-//            doReturn(testUid).when(userContext).getUid();
-//            doReturn(testDisplayName).when(userContext).getDisplayName();
-//            doReturn(testIsAdmin).when(userContext).isAdmin();
-//            doReturn(testProfileImage).when(userContext).getProfileImg();
-//
             doReturn(UserSimpleResponseCommonDto
                     .builder()
                     .uid(testUid)
                     .displayName(testDisplayName)
                     .isAdmin(testIsAdmin)
                     .profileImg(testProfileImage)
+                    .isEnabled(testEnabled)
                     .build()).when(userContext).toDto();
 
 
@@ -329,7 +326,8 @@ public class AuthApiControllerTest extends ControllerTestTemplate {
                                             fieldWithPath("uid").type(STRING).description("유저 uid"),
                                             fieldWithPath("display_name").type(STRING).description("유저 이름"),
                                             fieldWithPath("profile_img").type(STRING).description("프로필 이미지"),
-                                            fieldWithPath("admin").type(BOOLEAN).description("관리자 여부")
+                                            fieldWithPath("admin").type(BOOLEAN).description("관리자 여부"),
+                                            fieldWithPath("enabled").type(BOOLEAN).description("계정 활성화 여부")
                                     )
                                     .summary("자신의 정보를 반환합니다. (AUTH-LEVEL : USER)")
                                     .build())

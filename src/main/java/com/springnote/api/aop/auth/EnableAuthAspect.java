@@ -36,6 +36,7 @@ public class EnableAuthAspect {
     public void beforeAuthCheck(JoinPoint joinPoint, EnableAuthentication enableAuthentication) {
         var request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         var authLevel = enableAuthentication.value();
+        var isAllowDisableUser = enableAuthentication.isAllowDisableUser();
         var tokenHeader = request.getHeader("Authorization");
 
         if (!validateTokenHeader(tokenHeader, authLevel)) return;
@@ -48,7 +49,7 @@ public class EnableAuthAspect {
         if (!validateToken(tokenInfo, authLevel)) return;
         userContext.setFbInfo(tokenInfo.getUid(), tokenInfo.getEmail());
 
-        if (!validateUser(tokenInfo, authLevel)) return;
+        if (!validateUser(tokenInfo, authLevel, isAllowDisableUser)) return;
 
         checkRole(authLevel);
 
@@ -65,14 +66,14 @@ public class EnableAuthAspect {
         checkRole(authLevel);
     }
 
-    private boolean validateUser(AuthUserInfo tokenInfo, AuthLevel authLevel) {
+    private boolean validateUser(AuthUserInfo tokenInfo, AuthLevel authLevel, boolean isAllowDisableUser) {
         UserResponseCommonDto user;
         try {
             user = userService.getUser(tokenInfo.getUid());
         } catch (BusinessException e) {
             return false;
         }
-        if (!user.isEnabled()) {
+        if (!user.isEnabled() && !isAllowDisableUser) {
             setNotAuthenticated(authLevel);
             return false;
         } else {

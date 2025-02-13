@@ -32,7 +32,7 @@ public class AuthApiController {
     private final AuthConfig authConfig;
 
 
-    @EnableAuthentication(AuthLevel.NONE)
+    @EnableAuthentication(value = AuthLevel.NONE, isAllowDisableUser = true)
     @PostMapping
     public ResponseEntity<Void> register(
             @NotEmpty
@@ -81,7 +81,7 @@ public class AuthApiController {
         }
     }
 
-    @EnableAuthentication(AuthLevel.USER)
+    @EnableAuthentication(value = AuthLevel.USER, isAllowDisableUser = true)
     @GetMapping
     public ResponseEntity<UserSimpleResponseCommonDto> getSelfInfo() {
 
