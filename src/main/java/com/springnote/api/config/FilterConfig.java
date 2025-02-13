@@ -1,10 +1,11 @@
 package com.springnote.api.config;
 
 import com.springnote.api.filter.CorsFilter;
-import com.springnote.api.filter.RequestResponseLoggingFilter;
+import com.springnote.api.filter.logging.RequestResponseLoggingFilter;
 import com.springnote.api.filter.SetupRequestContextFilter;
 import com.springnote.api.filter.reReadableRequest.ReReadableRequestFilter;
 import com.springnote.api.utils.context.RequestContext;
+import com.springnote.api.utils.context.UserContext;
 import com.springnote.api.utils.json.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -27,8 +28,8 @@ public class FilterConfig {
 
     @DependsOn({"requestContext", "jsonUtil"})
     @Bean
-    public RequestResponseLoggingFilter requestResponseLoggingFilter(RequestContext requestContext, JsonUtil jsonUtil) {
-        return new RequestResponseLoggingFilter(requestContext, jsonUtil);
+    public RequestResponseLoggingFilter requestResponseLoggingFilter(RequestContext requestContext, UserContext userContext, JsonUtil jsonUtil) {
+        return new RequestResponseLoggingFilter(requestContext, jsonUtil, userContext);
     }
 
     @DependsOn("userContext")
