@@ -25,6 +25,7 @@ public class UserContext {
     private String uid;
     private String displayName;
     private String profileImg;
+    private boolean isEnabled;
 
     // 실제 로직에서 사용하는 사용자 정보가 아닌, 단순 firebase 정보임
     private String fbUid;
@@ -46,6 +47,7 @@ public class UserContext {
         this.displayName = userResponseCommonDto.getName();
         this.isAdmin = userResponseCommonDto.isAdmin();
         this.profileImg = userResponseCommonDto.getProfileImg();
+        this.isEnabled = userResponseCommonDto.isEnabled();
 
     }
 
@@ -54,6 +56,7 @@ public class UserContext {
         this.displayName = null;
         this.isAdmin = false;
         this.profileImg = null;
+        this.isEnabled = false;
     }
 
     public UserSimpleResponseCommonDto toDto() {
@@ -62,6 +65,7 @@ public class UserContext {
                 .displayName(displayName)
                 .profileImg(profileImg)
                 .isAdmin(isAdmin)
+                .isEnabled(isEnabled)
                 .build();
     }
 

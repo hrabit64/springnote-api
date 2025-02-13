@@ -16,4 +16,5 @@ public class UserSimpleResponseCommonDto {
     private String displayName;
     private String profileImg;
     private boolean isAdmin;
+    private boolean isEnabled;
 }
