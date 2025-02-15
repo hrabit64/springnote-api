@@ -1,0 +1,2873 @@
+components:
+  schemas:
+    BadWord.Create:
+      properties:
+        is_bad_word:
+          description: "\uAE08\uCE59\uC5B4 \uC5EC\uBD80"
+          type: boolean
+        word:
+          description: "\uACF5\uBC31 \uC5C6\uB294 \uB2E8\uC5B4 (2\uC790 \uC774\uC0C1\
+            , 15\uC790 \uC774\uD558)"
+          type: string
+      title: BadWord.Create
+      type: object
+    BadWord.PagedResponse:
+      properties:
+        _embedded:
+          properties:
+            bad_words:
+              items:
+                properties:
+                  id:
+                    description: "\uAE08\uCE59\uC5B4 ID"
+                    type: number
+                  is_bad_word:
+                    description: "\uAE08\uCE59\uC5B4 \uC5EC\uBD80"
+                    type: boolean
+                  word:
+                    description: "\uAE08\uCE59\uC5B4"
+                    type: string
+                type: object
+              type: array
+          type: object
+        page:
+          properties:
+            number:
+              description: "\uD604\uC7AC \uD398\uC774\uC9C0 \uBC88\uD638"
+              type: number
+            size:
+              description: "\uD398\uC774\uC9C0 \uD06C\uAE30"
+              type: number
+            totalElements:
+              description: "\uC804\uCCB4 \uC694\uC18C \uC218"
+              type: number
+            totalPages:
+              description: "\uC804\uCCB4 \uD398\uC774\uC9C0 \uC218"
+              type: number
+          type: object
+      title: BadWord.PagedResponse
+      type: object
+    BadWord.Refresh:
+      properties:
+        message:
+          description: "\uBA54\uC2DC\uC9C0"
+          type: string
+      title: BadWord.Refresh
+      type: object
+    BadWord.Response:
+      properties:
+        id:
+          description: "\uAE08\uCE59\uC5B4 ID"
+          type: number
+        is_bad_word:
+          description: "\uAE08\uCE59\uC5B4 \uC5EC\uBD80"
+          type: boolean
+        word:
+          description: "\uAE08\uCE59\uC5B4"
+          type: string
+      title: BadWord.Response
+      type: object
+    Comment.Create:
+      properties:
+        captcha_token:
+          description: "\uCEA1\uCC28 \uD1A0\uD070"
+          type: string
+        content:
+          description: "\uB313\uAE00 \uBCF8\uBB38 2~1000\uC790"
+          type: string
+        im_not_bot:
+          description: honeypot
+          type: boolean
+      title: Comment.Create
+      type: object
+    Comment.PagedResponse:
+      properties:
+        _embedded:
+          properties:
+            comments:
+              items:
+                properties:
+                  content:
+                    description: "\uB313\uAE00 \uBCF8\uBB38"
+                    type: string
+                  created_date:
+                    description: "\uC791\uC131\uC77C"
+                    type: string
+                  enabled:
+                    description: "\uD65C\uC131\uD654 \uC5EC\uBD80"
+                    type: boolean
+                  id:
+                    description: "\uB313\uAE00 ID"
+                    type: number
+                  last_modified_date:
+                    description: "\uC218\uC815\uC77C"
+                    type: string
+                  post_id:
+                    description: "\uD3EC\uC2A4\uD2B8 ID"
+                    type: number
+                  reply_count:
+                    description: "\uB2F5\uAE00 \uC218"
+                    type: number
+                  writer:
+                    properties:
+                      admin:
+                        description: "\uC791\uC131\uC790 \uAD00\uB9AC\uC790 \uC5EC\
+                          \uBD80"
+                        type: boolean
+                      email:
+                        description: "\uC791\uC131\uC790 \uC774\uBA54\uC77C"
+                        type: string
+                      enabled:
+                        description: "\uC791\uC131\uC790 \uD65C\uC131\uD654 \uC5EC\
+                          \uBD80"
+                        type: boolean
+                      id:
+                        description: "\uC791\uC131\uC790 ID"
+                        type: string
+                      name:
+                        description: "\uC791\uC131\uC790 \uC774\uB984"
+                        type: string
+                      profile_img:
+                        description: "\uC791\uC131\uC790 \uD504\uB85C\uD544 \uC774\
+                          \uBBF8\uC9C0 URL"
+                        type: string
+                    type: object
+                type: object
+              type: array
+          type: object
+        page:
+          properties:
+            number:
+              description: "\uD604\uC7AC \uD398\uC774\uC9C0 \uBC88\uD638"
+              type: number
+            size:
+              description: "\uD398\uC774\uC9C0 \uD06C\uAE30"
+              type: number
+            totalElements:
+              description: "\uC804\uCCB4 \uC694\uC18C \uC218"
+              type: number
+            totalPages:
+              description: "\uC804\uCCB4 \uD398\uC774\uC9C0 \uC218"
+              type: number
+          type: object
+      title: Comment.PagedResponse
+      type: object
+    Comment.ReplyCreate:
+      properties:
+        captcha_token:
+          description: "\uCEA1\uCC28 \uD1A0\uD070"
+          type: string
+        content:
+          description: "\uB2F5\uAE00 \uBCF8\uBB38 2~1000\uC790"
+          type: string
+        im_not_bot:
+          description: honeypot
+          type: boolean
+      title: Comment.ReplyCreate
+      type: object
+    Comment.Response:
+      properties:
+        content:
+          description: "\uB2F5\uAE00 \uBCF8\uBB38"
+          type: string
+        created_date:
+          description: "\uC791\uC131\uC77C"
+          type: string
+        enabled:
+          description: "\uD65C\uC131\uD654 \uC5EC\uBD80"
+          type: boolean
+        id:
+          description: "\uB2F5\uAE00 ID"
+          type: number
+        last_modified_date:
+          description: "\uC218\uC815\uC77C"
+          type: string
+        post_id:
+          description: "\uD3EC\uC2A4\uD2B8 ID"
+          type: number
+        writer:
+          properties:
+            admin:
+              description: "\uC791\uC131\uC790 \uAD00\uB9AC\uC790 \uC5EC\uBD80"
+              type: boolean
+            email:
+              description: "\uC791\uC131\uC790 \uC774\uBA54\uC77C"
+              type: string
+            enabled:
+              description: "\uC791\uC131\uC790 \uD65C\uC131\uD654 \uC5EC\uBD80"
+              type: boolean
+            id:
+              description: "\uC791\uC131\uC790 ID"
+              type: string
+            name:
+              description: "\uC791\uC131\uC790 \uC774\uB984"
+              type: string
+            profile_img:
+              description: "\uC791\uC131\uC790 \uD504\uB85C\uD544 \uC774\uBBF8\uC9C0"
+              type: string
+          type: object
+      title: Comment.Response
+      type: object
+    Comment.Update:
+      properties:
+        captcha_token:
+          description: "\uCEA1\uCC28 \uD1A0\uD070"
+          type: string
+        content:
+          description: "\uB313\uAE00 \uBCF8\uBB38 2~1000\uC790"
+          type: string
+        im_not_bot:
+          description: honeypot
+          type: boolean
+      title: Comment.Update
+      type: object
+    Config.Response:
+      properties:
+        key:
+          description: "\uC124\uC815 \uD0A4"
+          type: string
+        value:
+          description: "\uC124\uC815 \uAC12"
+          type: string
+      title: Config.Response
+      type: object
+    Post.Create:
+      properties:
+        content:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uB0B4\uC6A9, 3~65535\uC790"
+          type: string
+        enabled:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uACF5\uAC1C \uC5EC\uBD80"
+          type: boolean
+        post_type_id:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uD0C0\uC785 ID"
+          type: number
+        series_id:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uC2DC\uB9AC\uC988 ID, \uB9CC\uC57D\
+            \ \uC2DC\uB9AC\uC988\uAC00 \uD544\uC694 \uC5C6\uB294 \uD3EC\uC2A4\uD2B8\
+            \uB294 null"
+          type: number
+        tags:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uD0DC\uADF8 ID \uB9AC\uC2A4\uD2B8"
+          items:
+            properties:
+              id:
+                description: "\uD3EC\uC2A4\uD2B8\uC758 \uD0DC\uADF8 ID"
+                type: number
+            type: object
+          type: array
+        thumbnail:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uC378\uB124\uC77C URL, \uBE48 \uBB38\
+            \uC790\uC5F4 \uAC00\uB2A5"
+          type: string
+        title:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uC81C\uBAA9, 3~300\uC790"
+          type: string
+      title: Post.Create
+      type: object
+    Post.Detail:
+      properties:
+        content:
+          properties:
+            editor_text:
+              description: "\uD3EC\uC2A4\uD2B8 \uBCF8\uBB38 - \uC5D0\uB514\uD130 \uD14D\
+                \uC2A4\uD2B8(\uB9C8\uD06C\uB2E4\uC6B4)"
+              type: string
+            plain_text:
+              description: "\uD3EC\uC2A4\uD2B8 \uBCF8\uBB38 - \uC77C\uBC18 \uD14D\uC2A4\
+                \uD2B8(\uC21C\uC218 \uD14D\uC2A4\uD2B8\uB9CC)"
+              type: string
+          type: object
+        created_at:
+          description: "\uD3EC\uC2A4\uD2B8 \uC0DD\uC131\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+          type: string
+        enabled:
+          description: "\uD3EC\uC2A4\uD2B8 \uACF5\uAC1C \uC5EC\uBD80 (0: \uBE44\uACF5\
+            \uAC1C, 1: \uACF5\uAC1C)"
+          type: boolean
+        id:
+          description: "\uB300\uC0C1 \uD3EC\uC2A4\uD2B8 ID"
+          type: number
+        last_updated_at:
+          description: "\uD3EC\uC2A4\uD2B8 \uCD5C\uC885 \uC218\uC815\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+          type: string
+        post_type:
+          properties:
+            id:
+              description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+              type: number
+            name:
+              description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 \uC774\uB984"
+              type: string
+          type: object
+        series:
+          properties:
+            id:
+              description: "\uC2DC\uB9AC\uC988 ID"
+              type: number
+            name:
+              description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+              type: string
+          type: object
+        tags:
+          items:
+            properties:
+              id:
+                description: "\uD0DC\uADF8 ID"
+                type: number
+              name:
+                description: "\uD0DC\uADF8 \uC774\uB984"
+                type: string
+            type: object
+          type: array
+        thumbnail:
+          description: "\uC378\uB124\uC77C \uC774\uBBF8\uC9C0 URL"
+          type: string
+        title:
+          description: "\uD3EC\uC2A4\uD2B8 \uC81C\uBAA9"
+          type: string
+      title: Post.Detail
+      type: object
+    Post.PagedSimple:
+      properties:
+        _embedded:
+          properties:
+            posts:
+              items:
+                properties:
+                  created_at:
+                    description: "\uD3EC\uC2A4\uD2B8 \uC0DD\uC131\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+                    type: string
+                  enabled:
+                    description: "\uD3EC\uC2A4\uD2B8 \uACF5\uAC1C \uC5EC\uBD80 (0:\
+                      \ \uBE44\uACF5\uAC1C, 1: \uACF5\uAC1C)"
+                    type: boolean
+                  id:
+                    description: "\uB300\uC0C1 \uD3EC\uC2A4\uD2B8 ID"
+                    type: number
+                  last_updated_at:
+                    description: "\uD3EC\uC2A4\uD2B8 \uCD5C\uC885 \uC218\uC815\uC77C\
+                      \ (yyyy-MM-dd`T`HH:mm:ss)"
+                    type: string
+                  post_type:
+                    properties:
+                      id:
+                        description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+                        type: number
+                      name:
+                        description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 \uC774\uB984"
+                        type: string
+                    type: object
+                  series:
+                    properties:
+                      id:
+                        description: "\uC2DC\uB9AC\uC988 ID"
+                        type: number
+                      name:
+                        description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+                        type: string
+                    type: object
+                  tags:
+                    items:
+                      properties:
+                        id:
+                          description: "\uD0DC\uADF8 ID"
+                          type: number
+                        name:
+                          description: "\uD0DC\uADF8 \uC774\uB984"
+                          type: string
+                      type: object
+                    type: array
+                  thumbnail:
+                    description: "\uC378\uB124\uC77C \uC774\uBBF8\uC9C0 URL"
+                    type: string
+                  title:
+                    description: "\uD3EC\uC2A4\uD2B8 \uC81C\uBAA9"
+                    type: string
+                type: object
+              type: array
+          type: object
+        page:
+          properties:
+            number:
+              description: "\uD604\uC7AC \uD398\uC774\uC9C0 \uBC88\uD638"
+              type: number
+            size:
+              description: "\uD398\uC774\uC9C0 \uD06C\uAE30"
+              type: number
+            totalElements:
+              description: "\uC804\uCCB4 \uC694\uC18C \uC218"
+              type: number
+            totalPages:
+              description: "\uC804\uCCB4 \uD398\uC774\uC9C0 \uC218"
+              type: number
+          type: object
+      title: Post.PagedSimple
+      type: object
+    Post.Response:
+      properties:
+        content:
+          properties:
+            editor_text:
+              description: "\uD3EC\uC2A4\uD2B8 \uBCF8\uBB38 - \uC5D0\uB514\uD130 \uD14D\
+                \uC2A4\uD2B8(\uB9C8\uD06C\uB2E4\uC6B4)"
+              type: string
+            plain_text:
+              description: "\uD3EC\uC2A4\uD2B8 \uBCF8\uBB38 - \uC77C\uBC18 \uD14D\uC2A4\
+                \uD2B8(\uC21C\uC218 \uD14D\uC2A4\uD2B8\uB9CC)"
+              type: string
+          type: object
+        created_at:
+          description: "\uD3EC\uC2A4\uD2B8 \uC0DD\uC131\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+          type: string
+        enabled:
+          description: "\uD3EC\uC2A4\uD2B8 \uACF5\uAC1C \uC5EC\uBD80 (0: \uBE44\uACF5\
+            \uAC1C, 1: \uACF5\uAC1C)"
+          type: boolean
+        id:
+          description: "\uB300\uC0C1 \uD3EC\uC2A4\uD2B8 ID"
+          type: number
+        last_updated_at:
+          description: "\uD3EC\uC2A4\uD2B8 \uCD5C\uC885 \uC218\uC815\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+          type: string
+        post_type:
+          properties:
+            id:
+              description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+              type: number
+            name:
+              description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 \uC774\uB984"
+              type: string
+          type: object
+        series:
+          properties:
+            id:
+              description: "\uC2DC\uB9AC\uC988 ID"
+              type: number
+            name:
+              description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+              type: string
+          type: object
+        tags:
+          items:
+            properties:
+              id:
+                description: "\uD0DC\uADF8 ID"
+                type: number
+              name:
+                description: "\uD0DC\uADF8 \uC774\uB984"
+                type: string
+            type: object
+          type: array
+        thumbnail:
+          description: "\uC378\uB124\uC77C \uC774\uBBF8\uC9C0 URL"
+          type: string
+        title:
+          description: "\uD3EC\uC2A4\uD2B8 \uC81C\uBAA9"
+          type: string
+      title: Post.Response
+      type: object
+    Post.TitleSearchResult:
+      properties:
+        passed:
+          description: "\uC911\uBCF5\uB418\uB294 \uC81C\uBAA9\uC774 \uC874\uC7AC\uD558\
+            \uB294\uC9C0 \uC5EC\uBD80"
+          type: boolean
+      title: Post.TitleSearchResult
+      type: object
+    Post.Update:
+      properties:
+        content:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uB0B4\uC6A9, 3~65535\uC790"
+          type: string
+        enabled:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uACF5\uAC1C \uC5EC\uBD80"
+          type: boolean
+        series_id:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uC2DC\uB9AC\uC988 ID, \uB9CC\uC57D\
+            \ \uC2DC\uB9AC\uC988\uAC00 \uD544\uC694 \uC5C6\uB294 \uD3EC\uC2A4\uD2B8\
+            \uB294 null"
+          type: number
+        tags:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uD0DC\uADF8 ID \uB9AC\uC2A4\uD2B8"
+          items:
+            properties:
+              id:
+                description: "\uD3EC\uC2A4\uD2B8\uC758 \uD0DC\uADF8 ID"
+                type: number
+            type: object
+          type: array
+        thumbnail:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uC378\uB124\uC77C URL, \uBE48 \uBB38\
+            \uC790\uC5F4 \uAC00\uB2A5"
+          type: string
+        title:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uC81C\uBAA9, 3~300\uC790"
+          type: string
+      title: Post.Update
+      type: object
+    Post.UpdateStatus:
+      properties:
+        enabled:
+          description: "\uD3EC\uC2A4\uD2B8\uC758 \uACF5\uAC1C \uC5EC\uBD80"
+          type: boolean
+      title: Post.UpdateStatus
+      type: object
+    PostType.Response:
+      properties:
+        _embedded:
+          properties:
+            post_types:
+              items:
+                properties:
+                  id:
+                    description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+                    type: number
+                  name:
+                    description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 \uC774\uB984"
+                    type: string
+                type: object
+              type: array
+          type: object
+      title: PostType.Response
+      type: object
+    Series.CreateRequest:
+      properties:
+        description:
+          description: "\uC2DC\uB9AC\uC988 \uC124\uBA85"
+          type: string
+        name:
+          description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+          type: string
+        thumbnail:
+          description: "\uC2DC\uB9AC\uC988 \uC378\uB124\uC77C"
+          type: string
+      title: Series.CreateRequest
+      type: object
+    Series.PagedResponse:
+      properties:
+        _embedded:
+          properties:
+            series:
+              items:
+                properties:
+                  description:
+                    description: "\uC2DC\uB9AC\uC988 \uC124\uBA85"
+                    type: string
+                  id:
+                    description: "\uC2DC\uB9AC\uC988 ID"
+                    type: number
+                  name:
+                    description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+                    type: string
+                  thumbnail:
+                    description: "\uC2DC\uB9AC\uC988 \uC378\uB124\uC77C"
+                    type: string
+                type: object
+              type: array
+          type: object
+        page:
+          properties:
+            number:
+              description: "\uD604\uC7AC \uD398\uC774\uC9C0 \uBC88\uD638"
+              type: number
+            size:
+              description: "\uD398\uC774\uC9C0 \uC0AC\uC774\uC988"
+              type: number
+            totalElements:
+              description: "\uC804\uCCB4 \uC694\uC18C \uC218"
+              type: number
+            totalPages:
+              description: "\uC804\uCCB4 \uD398\uC774\uC9C0 \uC218"
+              type: number
+          type: object
+      title: Series.PagedResponse
+      type: object
+    Series.Response:
+      properties:
+        description:
+          description: "\uC2DC\uB9AC\uC988 \uC124\uBA85"
+          type: string
+        id:
+          description: "\uC2DC\uB9AC\uC988 ID"
+          type: number
+        name:
+          description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+          type: string
+        thumbnail:
+          description: "\uC2DC\uB9AC\uC988 \uC378\uB124\uC77C"
+          type: string
+      title: Series.Response
+      type: object
+    Series.UpdateRequest:
+      properties:
+        description:
+          description: "\uC2DC\uB9AC\uC988 \uC124\uBA85"
+          type: string
+        name:
+          description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+          type: string
+        thumbnail:
+          description: "\uC2DC\uB9AC\uC988 \uC378\uB124\uC77C"
+          type: string
+      title: Series.UpdateRequest
+      type: object
+    SiteContent.CreateRequest:
+      properties:
+        content:
+          description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uB0B4\uC6A9 (1~30000\uC790\
+            )"
+          type: string
+        key:
+          description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uD0A4 (\uACF5\
+            \uBC31 \uC5C6\uC774  1~300\uC790)"
+          type: string
+      title: SiteContent.CreateRequest
+      type: object
+    SiteContent.Response:
+      properties:
+        content:
+          description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uB0B4\uC6A9"
+          type: string
+        key:
+          description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uD0A4"
+          type: string
+      title: SiteContent.Response
+      type: object
+    SiteContent.UpdateRequest:
+      properties:
+        content:
+          description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uB0B4\uC6A9 (1~30000\uC790\
+            )"
+          type: string
+      title: SiteContent.UpdateRequest
+      type: object
+    Tag.CreateRequest:
+      properties:
+        name:
+          description: "\uD0DC\uADF8 \uC774\uB984 (2~100\uC790)"
+          type: string
+      title: Tag.CreateRequest
+      type: object
+    Tag.PageResponse:
+      properties:
+        _embedded:
+          properties:
+            tags:
+              items:
+                properties:
+                  id:
+                    description: "\uD0DC\uADF8 ID"
+                    type: number
+                  name:
+                    description: "\uD0DC\uADF8 \uC774\uB984"
+                    type: string
+                type: object
+              type: array
+          type: object
+        page:
+          properties:
+            number:
+              description: "\uD604\uC7AC \uD398\uC774\uC9C0 \uBC88\uD638"
+              type: number
+            size:
+              description: "\uD398\uC774\uC9C0 \uD06C\uAE30"
+              type: number
+            totalElements:
+              description: "\uC804\uCCB4 \uC694\uC18C \uC218"
+              type: number
+            totalPages:
+              description: "\uC804\uCCB4 \uD398\uC774\uC9C0 \uC218"
+              type: number
+          type: object
+      title: Tag.PageResponse
+      type: object
+    Tag.Response:
+      properties:
+        id:
+          description: "\uD0DC\uADF8 ID"
+          type: number
+        name:
+          description: "\uD0DC\uADF8 \uC774\uB984"
+          type: string
+      title: Tag.Response
+      type: object
+    Tag.UpdateRequest:
+      properties:
+        name:
+          description: "\uD0DC\uADF8 \uC774\uB984 (2~100\uC790)"
+          type: string
+      title: Tag.UpdateRequest
+      type: object
+    TmpPost.CreateRequest:
+      properties:
+        post_type_id:
+          description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+          type: number
+      title: TmpPost.CreateRequest
+      type: object
+    TmpPost.Response:
+      properties:
+        content:
+          description: "\uBCF8\uBB38"
+          type: string
+        created_at:
+          description: "\uD3EC\uC2A4\uD2B8 \uC0DD\uC131\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+          type: string
+        id:
+          description: "\uB300\uC0C1 \uD3EC\uC2A4\uD2B8 ID"
+          type: string
+        last_updated_at:
+          description: "\uD3EC\uC2A4\uD2B8 \uCD5C\uC885 \uC218\uC815\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+          type: string
+        post_type:
+          properties:
+            id:
+              description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+              type: number
+            name:
+              description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 \uC774\uB984"
+              type: string
+          type: object
+        series:
+          properties:
+            id:
+              description: "\uC2DC\uB9AC\uC988 ID"
+              type: number
+            name:
+              description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+              type: string
+          type: object
+        tags:
+          items:
+            properties:
+              id:
+                description: "\uD0DC\uADF8 ID"
+                type: number
+              name:
+                description: "\uD0DC\uADF8 \uC774\uB984"
+                type: string
+            type: object
+          type: array
+        thumbnail:
+          description: "\uC378\uB124\uC77C \uC774\uBBF8\uC9C0 URL"
+          type: string
+        title:
+          description: "\uD3EC\uC2A4\uD2B8 \uC81C\uBAA9"
+          type: string
+      title: TmpPost.Response
+      type: object
+    TmpPost.UpdateRequest:
+      properties: {}
+      title: TmpPost.UpdateRequest
+      type: object
+    api-v1-auth-761373127:
+      properties:
+        admin:
+          description: "\uAD00\uB9AC\uC790 \uC5EC\uBD80"
+          type: boolean
+        display_name:
+          description: "\uC720\uC800 \uC774\uB984"
+          type: string
+        enabled:
+          description: "\uACC4\uC815 \uD65C\uC131\uD654 \uC5EC\uBD80"
+          type: boolean
+        profile_img:
+          description: "\uD504\uB85C\uD544 \uC774\uBBF8\uC9C0"
+          type: string
+        uid:
+          description: "\uC720\uC800 uid"
+          type: string
+      type: object
+    api-v1-tmp-post696516523:
+      properties:
+        _embedded:
+          properties:
+            tmp_posts:
+              items:
+                properties:
+                  content:
+                    description: "\uD3EC\uC2A4\uD2B8 \uBCF8\uBB38"
+                    type: string
+                  created_at:
+                    description: "\uD3EC\uC2A4\uD2B8 \uC0DD\uC131\uC77C (yyyy-MM-dd`T`HH:mm:ss)"
+                    type: string
+                  id:
+                    description: "\uB300\uC0C1 \uD3EC\uC2A4\uD2B8 ID"
+                    type: string
+                  last_updated_at:
+                    description: "\uD3EC\uC2A4\uD2B8 \uCD5C\uC885 \uC218\uC815\uC77C\
+                      \ (yyyy-MM-dd`T`HH:mm:ss)"
+                    type: string
+                  post_type:
+                    properties:
+                      id:
+                        description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 ID"
+                        type: number
+                      name:
+                        description: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785 \uC774\uB984"
+                        type: string
+                    type: object
+                  series:
+                    properties:
+                      id:
+                        description: "\uC2DC\uB9AC\uC988 ID"
+                        type: number
+                      name:
+                        description: "\uC2DC\uB9AC\uC988 \uC774\uB984"
+                        type: string
+                    type: object
+                  tags:
+                    items:
+                      properties:
+                        id:
+                          description: "\uD0DC\uADF8 ID"
+                          type: number
+                        name:
+                          description: "\uD0DC\uADF8 \uC774\uB984"
+                          type: string
+                      type: object
+                    type: array
+                  thumbnail:
+                    description: "\uC378\uB124\uC77C \uC774\uBBF8\uC9C0 URL"
+                    type: string
+                  title:
+                    description: "\uD3EC\uC2A4\uD2B8 \uC81C\uBAA9"
+                    type: string
+                type: object
+              type: array
+          type: object
+        page:
+          properties:
+            number:
+              description: "\uD604\uC7AC \uD398\uC774\uC9C0 \uBC88\uD638"
+              type: number
+            size:
+              description: "\uD398\uC774\uC9C0 \uD06C\uAE30"
+              type: number
+            totalElements:
+              description: "\uC804\uCCB4 \uC694\uC18C \uC218"
+              type: number
+            totalPages:
+              description: "\uC804\uCCB4 \uD398\uC774\uC9C0 \uC218"
+              type: number
+          type: object
+      type: object
+info:
+  description: "SpringNote API \uBB38\uC11C"
+  title: SpringNote API
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  /api/v1/auth:
+    delete:
+      description: "\uD68C\uC6D0 \uD0C8\uD1F4 \uD569\uB2C8\uB2E4. (AUTH-LEVEL : USER)"
+      operationId: auth/deleteSelf
+      parameters:
+      - description: "\uCEA1\uCC28 \uD1A0\uD070"
+        in: query
+        name: captchaToken
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+      summary: "\uD68C\uC6D0 \uD0C8\uD1F4 \uD569\uB2C8\uB2E4. (AUTH-LEVEL : USER)"
+      tags:
+      - Auth API
+    get:
+      description: "\uC790\uC2E0\uC758 \uC815\uBCF4\uB97C \uBC18\uD658\uD569\uB2C8\
+        \uB2E4. (AUTH-LEVEL : USER)"
+      operationId: auth/getSelfInfo
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                auth/getSelfInfo:
+                  value:
+                    admin: false
+                    display_name: testDisplayName
+                    enabled: true
+                    profile_img: testProfileImage
+                    uid: testUid
+              schema:
+                $ref: '#/components/schemas/api-v1-auth-761373127'
+          description: '200'
+      summary: "\uC790\uC2E0\uC758 \uC815\uBCF4\uB97C \uBC18\uD658\uD569\uB2C8\uB2E4\
+        . (AUTH-LEVEL : USER)"
+      tags:
+      - Auth API
+    post:
+      description: "\uD68C\uC6D0 \uAC00\uC785 \uD569\uB2C8\uB2E4. (AUTH-LEVEL : NONE)"
+      operationId: auth/register
+      parameters:
+      - description: "\uCEA1\uCC28 \uD1A0\uD070"
+        in: query
+        name: captchaToken
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+      summary: "\uD68C\uC6D0 \uAC00\uC785 \uD569\uB2C8\uB2E4. (AUTH-LEVEL : NONE)"
+      tags:
+      - Auth API
+  /api/v1/bad-word:
+    get:
+      description: "* \uC0AC\uC6A9 \uAC00\uB2A5 \uCFFC\uB9AC \uD30C\uB77C\uBBF8\uD130\
+        \ (\uB300\uC18C\uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)\n\n|  \uD0A4  |   \
+        \              \uC124\uBA85                  |        \uC81C\uC57D       \
+        \ |\n| :--: | :-----------------------------------: | :----------------: |\n\
+        | type |     true \uBE44\uC18D\uC5B4, false  \uD5C8\uC6A9\uB2E8\uC5B4    \
+        \  | 1 \uC885\uB958\uB9CC \uC785\uB825 \uAC00\uB2A5 |\n| word | \uD574\uB2F9\
+        \ word\uB97C \uD3EC\uD568\uD558\uB294 \uB2E8\uC5B4\uB97C \uCC3E\uC2B5\uB2C8\
+        \uB2E4. | \uACF5\uBC31\uC774 \uC5C6\uB294 2~10\uC790 |\n\n* \uD398\uC774\uC9D5\
+        \n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\uC744 \uC9C0\uC6D0\uD569\uB2C8\
+        \uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85           |            \uC81C\
+        \uC57D            |      \uAE30\uBCF8\uAC12      |\n| :--: | :---------------------:\
+        \ | :------------------------: | :--------------: |\n| size |      \uD398\uC774\
+        \uC9D5 \uC0AC\uC774\uC988      |        \uCD5C\uB300 100\uAE4C\uC9C0     \
+        \   |        20        |\n| page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\
+        \uD130 \uC2DC\uC791 |                            |        0         |\n| sort\
+        \ |        \uC815\uB82C \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\
+        \uB2A5 \uD0A4\uB9CC \uAC00\uB2A5* | id;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\
+        \uD55C sort\uD0A4\uB294 \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\
+        \uB4E0 Sort \uC0AC\uC6A9\uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0\
+        \ \uC54A\uC73C\uBA74 ASC \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\
+        \uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\
+        \uBA85      |\n| :--------------: | :-----------: |\n|        id        |\
+        \   \uAE08\uCE59\uC5B4 id  |\n|      word       |  \uAE08\uCE59\uC5B4 \uB2E8\
+        \uC5B4  |\n|     type      |  \uAE08\uCE59\uC5B4 \uC720\uD615  |\n\n"
+      operationId: badWord/getBadWords
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                badWord/getBadWords:
+                  value:
+                    _embedded:
+                      bad_words:
+                      - _links:
+                          delete:
+                            href: http://localhost:8080/api/v1/bad-word/1
+                          self:
+                            href: http://localhost:8080/api/v1/bad-word/1
+                        id: 1
+                        is_bad_word: true
+                        word: word
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/bad-word?page=0&size=20&sort=id,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/BadWord.PagedResponse'
+          description: '200'
+      summary: "\uAE08\uCE59\uC5B4 \uC815\uBCF4\uB97C \uC870\uD68C\uD569\uB2C8\uB2E4\
+        . (AUTH-LEVEL : ADMIN)"
+      tags:
+      - BadWord API
+    post:
+      description: "\uAE08\uCE59\uC5B4\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      operationId: badWord/createBadWord
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              badWord/createBadWord:
+                value:
+                  is_bad_word: true
+                  word: "15\uC790\uC774\uD558"
+            schema:
+              $ref: '#/components/schemas/BadWord.Create'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                badWord/createBadWord:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/bad-word/1
+                      self:
+                        href: http://localhost:8080/api/v1/bad-word/1
+                    id: 1
+                    is_bad_word: true
+                    word: word
+              schema:
+                $ref: '#/components/schemas/BadWord.Response'
+          description: '200'
+      summary: "\uAE08\uCE59\uC5B4\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      tags:
+      - BadWord API
+  /api/v1/bad-word/refresh:
+    post:
+      description: "\uAE08\uCE59\uC5B4 \uBAA9\uB85D\uC744 \uAC31\uC2E0\uD569\uB2C8\
+        \uB2E4. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/refreshBadWords
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                badWord/refreshBadWords:
+                  value:
+                    message: "\uAE08\uCE59\uC5B4 \uBAA9\uB85D\uC744 \uAC31\uC2E0\uD588\
+                      \uC2B5\uB2C8\uB2E4."
+              schema:
+                $ref: '#/components/schemas/BadWord.Refresh'
+          description: '200'
+      summary: "\uAE08\uCE59\uC5B4 \uBAA9\uB85D\uC744 \uAC31\uC2E0\uD569\uB2C8\uB2E4\
+        . (AUTH-LEVEL : ADMIN)"
+      tags:
+      - BadWord API
+  /api/v1/bad-word/{id}:
+    delete:
+      description: "\uD574\uB2F9\uD558\uB294 ID\uC758 \uAE08\uCE59\uC5B4 \uC815\uBCF4\
+        \uB97C \uC0AD\uC81C\uD569\uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/deleteBadWord
+      parameters:
+      - description: "\uAE08\uCE59\uC5B4 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uD574\uB2F9\uD558\uB294 ID\uC758 \uAE08\uCE59\uC5B4 \uC815\uBCF4\uB97C\
+        \ \uC0AD\uC81C\uD569\uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      tags:
+      - BadWord API
+    get:
+      description: "\uD574\uB2F9\uD558\uB294 ID\uC758 \uAE08\uCE59\uC5B4 \uC815\uBCF4\
+        \uB97C \uC870\uD68C\uD569\uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      operationId: badWord/getBadWordById
+      parameters:
+      - description: "\uAE08\uCE59\uC5B4 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                badWord/getBadWordById:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/bad-word/1
+                      self:
+                        href: http://localhost:8080/api/v1/bad-word/1
+                    id: 1
+                    is_bad_word: true
+                    word: word
+              schema:
+                $ref: '#/components/schemas/BadWord.Response'
+          description: '200'
+      summary: "\uD574\uB2F9\uD558\uB294 ID\uC758 \uAE08\uCE59\uC5B4 \uC815\uBCF4\uB97C\
+        \ \uC870\uD68C\uD569\uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      tags:
+      - BadWord API
+  /api/v1/comment/{commentId}:
+    delete:
+      description: "\uB313\uAE00\uC744 \uC0AD\uC81C\uD569\uB2C8\uB2E4."
+      operationId: Comment/delete
+      parameters:
+      - description: "\uB313\uAE00 ID"
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uB313\uAE00\uC744 \uC0AD\uC81C\uD569\uB2C8\uB2E4.(AUTH_LEVEL: ADMIN)"
+      tags:
+      - Comment API
+    get:
+      description: "\uB313\uAE00\uC758 \uC0C1\uC138 \uC815\uBCF4\uB97C \uC870\uD68C\
+        \uD569\uB2C8\uB2E4. \uB9CC\uC57D \uB313\uAE00\uC774 \uBE44\uD65C\uC131\uD654\
+        \ \uB418\uC5B4\uC788\uC73C\uBA74, \uBCF8\uBB38\uC744 \uD655\uC778\uD560 \uC218\
+        \ \uC5C6\uC2B5\uB2C8\uB2E4. \uAD00\uB9AC\uC790\uC758 \uACBD\uC6B0 \uBE44\uD65C\
+        \uC131\uD654 \uC5EC\uBD80\uC640 \uC0C1\uAD00\uC5C6\uC774 \uC870\uD68C \uAC00\
+        \uB2A5\uD569\uB2C8\uB2E4."
+      operationId: Comment/getById
+      parameters:
+      - description: "\uB313\uAE00 ID"
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                Comment/getById:
+                  value:
+                    _links:
+                      disable:
+                        href: http://localhost:8080/api/v1/comment/1/status
+                      self:
+                        href: http://localhost:8080/api/v1/comment/1
+                      update:
+                        href: http://localhost:8080/api/v1/comment/1
+                    content: test
+                    created_date: '2002-08-28T00:00:00'
+                    enabled: false
+                    id: 1
+                    last_modified_date: '2002-08-28T00:00:00'
+                    post_id: 1
+                    writer:
+                      admin: true
+                      email: admin@springnote.blog
+                      enabled: true
+                      id: test
+                      name: test
+                      profile_img: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+          description: '200'
+      summary: "\uB313\uAE00\uC744 \uC870\uD68C\uD569\uB2C8\uB2E4. (AUTH_LEVEL: NONE)"
+      tags:
+      - Comment API
+    put:
+      description: "\uC790\uAE30 \uC790\uC2E0\uC758 \uB313\uAE00\uB9CC \uC218\uC815\
+        \ \uAC00\uB2A5\uD569\uB2C8\uB2E4."
+      operationId: Comment/update
+      parameters:
+      - description: "\uB313\uAE00 ID"
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              Comment/update:
+                value:
+                  captcha_token: captchaToken
+                  content: content
+                  im_not_bot: null
+            schema:
+              $ref: '#/components/schemas/Comment.Update'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                Comment/update:
+                  value:
+                    _links:
+                      disable:
+                        href: http://localhost:8080/api/v1/comment/1/status
+                      self:
+                        href: http://localhost:8080/api/v1/comment/1
+                      update:
+                        href: http://localhost:8080/api/v1/comment/1
+                    content: test
+                    created_date: '2002-08-28T00:00:00'
+                    enabled: false
+                    id: 1
+                    last_modified_date: '2002-08-28T00:00:00'
+                    post_id: 1
+                    writer:
+                      admin: true
+                      email: admin@springnote.blog
+                      enabled: true
+                      id: test
+                      name: test
+                      profile_img: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+          description: '200'
+      summary: "\uB313\uAE00\uC744 \uC218\uC815\uD569\uB2C8\uB2E4.(AUTH_LEVEL: USER)"
+      tags:
+      - Comment API
+  /api/v1/comment/{commentId}/reply:
+    get:
+      description: "* \uD398\uC774\uC9D5\n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\
+        \uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85\
+        \           |            \uC81C\uC57D            |      \uAE30\uBCF8\uAC12\
+        \      |\n| :--: | :---------------------: | :------------------------: |\
+        \ :--------------: |\n| size |      \uD398\uC774\uC9D5 \uC0AC\uC774\uC988\
+        \      |        \uCD5C\uB300 50\uAE4C\uC9C0        |        20        |\n\
+        | page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\uD130 \uC2DC\uC791 |   \
+        \                         |        0         |\n| sort |        \uC815\uB82C\
+        \ \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\uB2A5 \uD0A4\uB9CC\
+        \ \uAC00\uB2A5* | createdDate;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\uD55C sort\uD0A4\
+        \uB294 \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\uB4E0 Sort \uC0AC\
+        \uC6A9\uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74\
+        \ ASC \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\uBB38\uC790 \uAD6C\
+        \uBD84 \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\uBA85      |\n\
+        | :--------------: | :-----------: |\n|        id        |    \uB313\uAE00\
+        \ id    |\n|       user       |    \uC791\uC131\uC790     |\n|   createdDate\
+        \    |    \uC0DD\uC131\uC77C     |\n| lastModifiedDate | \uB9C8\uC9C0\uB9C9\
+        \ \uC218\uC815\uC77C |\n"
+      operationId: Comment/getReply
+      parameters:
+      - description: "\uB313\uAE00 ID"
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                Comment/getReply:
+                  value:
+                    _embedded:
+                      replies:
+                      - _links:
+                          disable:
+                            href: http://localhost:8080/api/v1/comment/1/status
+                          parent:
+                            href: http://localhost:8080/api/v1/comment/1
+                          self:
+                            href: http://localhost:8080/api/v1/comment/1
+                          update:
+                            href: http://localhost:8080/api/v1/comment/1
+                        content: test
+                        created_date: '2002-08-28T00:00:00'
+                        enabled: false
+                        id: 1
+                        last_modified_date: '2002-08-28T00:00:00'
+                        parent_id: 1
+                        post_id: 1
+                        writer:
+                          admin: true
+                          email: admin@springnote.blog
+                          enabled: true
+                          id: test
+                          name: test
+                          profile_img: https://springnote.blog
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/comment/1/reply?page=0&size=20&sort=createdDate,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/Comment.PagedResponse'
+          description: '200'
+      summary: "\uD574\uB2F9 \uB313\uAE00\uC5D0 \uB300\uD55C \uB2F5\uAE00 \uBAA9\uB85D\
+        \uC744 \uBC18\uD658\uD569\uB2C8\uB2E4.(AUTH_LEVEL: NONE)"
+      tags:
+      - Comment API
+  /api/v1/comment/{commentId}/status:
+    put:
+      description: "\uC720\uC800\uB294 \uB313\uAE00\uC744 \uC601\uAD6C\uC801\uC73C\
+        \uB85C \uC0AD\uC81C\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uB530\uB77C\uC11C\
+        \ \uD574\uB2F9 API\uB85C \uB313\uAE00\uC744 \uBE44\uD65C\uC131\uD654\uD560\
+        \ \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      operationId: Comment/updateStatus
+      parameters:
+      - description: "\uB313\uAE00 ID"
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                Comment/updateStatus:
+                  value:
+                    _links:
+                      disable:
+                        href: http://localhost:8080/api/v1/comment/1/status
+                      self:
+                        href: http://localhost:8080/api/v1/comment/1
+                      update:
+                        href: http://localhost:8080/api/v1/comment/1
+                    content: test
+                    created_date: '2002-08-28T00:00:00'
+                    enabled: false
+                    id: 1
+                    last_modified_date: '2002-08-28T00:00:00'
+                    post_id: 1
+                    writer:
+                      admin: true
+                      email: admin@springnote.blog
+                      enabled: true
+                      id: test
+                      name: test
+                      profile_img: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+          description: '200'
+      summary: "\uB313\uAE00\uC758 \uC0C1\uD0DC\uB97C \uC218\uC815\uD569\uB2C8\uB2E4\
+        .(AUTH_LEVEL: USER)"
+      tags:
+      - Comment API
+  /api/v1/config/{key}:
+    get:
+      description: "\uC124\uC815 \uAC12\uC744 \uAC00\uC838\uC635\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      operationId: config/getConfigByKey
+      parameters:
+      - description: "\uC124\uC815 \uD0A4"
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                config/getConfigByKey:
+                  value:
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/config/key
+                    key: key
+                    value: value
+              schema:
+                $ref: '#/components/schemas/Config.Response'
+          description: '200'
+      summary: "\uC124\uC815 \uAC12\uC744 \uAC00\uC838\uC635\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      tags:
+      - Config API
+    put:
+      description: "\uC124\uC815 \uAC12\uC744 \uC5C5\uB370\uC774\uD2B8\uD569\uB2C8\
+        \uB2E4. (AUTH-LEVEL : ADMIN)"
+      operationId: config/updateConfigByKey
+      parameters:
+      - description: "\uC124\uC815 \uD0A4"
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+      - description: "\uC124\uC815 \uAC12"
+        in: query
+        name: value
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                config/updateConfigByKey:
+                  value:
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/config/key
+                    key: key
+                    value: value
+              schema:
+                $ref: '#/components/schemas/Config.Response'
+          description: '200'
+      summary: "\uC124\uC815 \uAC12\uC744 \uC5C5\uB370\uC774\uD2B8\uD569\uB2C8\uB2E4\
+        . (AUTH-LEVEL : ADMIN)"
+      tags:
+      - Config API
+  /api/v1/post:
+    get:
+      description: "* \uC0AC\uC6A9 \uAC00\uB2A5 \uCFFC\uB9AC \uD30C\uB77C\uBBF8\uD130\
+        \ (\uB300\uC18C\uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)\n\n|       \uD0A4 \
+        \      |                             \uC124\uBA85                        \
+        \     |                 \uC81C\uC57D                 |                \uAE30\
+        \uBCF8\uAC12                |\n| :------------: | :----------------------------------------------------------:\
+        \ | :----------------------------------: | :----------------------------------:\
+        \ |\n|    postType    |                     \uD3EC\uC2A4\uD2B8\uC758 \uC720\
+        \uD615\uC785\uB2C8\uB2E4.                     |                          \
+        \            |                  x                   |\n|     series     |\
+        \                   \uD3EC\uC2A4\uD2B8\uC758 \uC2DC\uB9AC\uC988 \uC785\uB2C8\
+        \uB2E4.                    |                                      |      \
+        \            x                   |\n|      tag       |                  \uD3EC\
+        \uC2A4\uD2B8\uC758 \uD0DC\uADF8 \uC815\uBCF4 \uC785\uB2C8\uB2E4.         \
+        \         | \uCD5C\uB300 10\uAC1C \uAE4C\uC9C0\uB9CC \uC0AC\uC6A9\uAC00\uB2A5\
+        , \uC911\uBCF5 \uBD88\uAC00 |                  x                   |\n| isOnlyOpenPost\
+        \ | \uACF5\uAC1C\uB41C \uD3EC\uC2A4\uD2B8\uB9CC \uAC80\uC0C9\uD560\uC9C0 \uC5EC\
+        \uBD80\uC785\uB2C8\uB2E4. true\uBA74 \uACF5\uAC1C\uB41C \uD3EC\uC2A4\uD2B8\
+        \uB9CC \uAC80\uC0C9\uD569\uB2C8\uB2E4. *\uB2E8  false \uC0AC\uC6A9\uC2DC\uC5D0\
+        \uB294 \uAD00\uB9AC\uC790 \uAD8C\uD55C\uC744 \uC694\uAD6C\uD569\uB2C8\uB2E4\
+        .* |            1\uAC1C\uB9CC \uC0AC\uC6A9\uAC00\uB2A5            | \uC720\
+        \uC800\uC77C\uACBD\uC6B0 true, \uAD00\uB9AC\uC790\uC77C \uACBD\uC6B0 false\
+        \ |\n\n* \uD398\uC774\uC9D5\n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\uC744\
+        \ \uC9C0\uC6D0\uD569\uB2C8\uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85  \
+        \         |            \uC81C\uC57D            |      \uAE30\uBCF8\uAC12 \
+        \     |\n| :--: | :---------------------: | :------------------------: | :--------------:\
+        \ |\n| size |      \uD398\uC774\uC9D5 \uC0AC\uC774\uC988      |        \uCD5C\
+        \uB300 100\uAE4C\uC9C0        |        20        |\n| page | \uD398\uC774\uC9C0\
+        \ \uB118\uBC84 *0\uBD80\uD130 \uC2DC\uC791 |                            |\
+        \        0         |\n| sort |        \uC815\uB82C \uC635\uC158        | *\uC544\
+        \uB798 \uC0AC\uC6A9 \uAC00\uB2A5 \uD0A4\uB9CC \uAC00\uB2A5* | createdDate;DESC\
+        \ |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\uD55C sort\uD0A4\uB294 \uC544\uB798\uC640\
+        \ \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\uB4E0 Sort \uC0AC\uC6A9\uC2DC \uBC29\uD5A5\
+        \uC744 \uC9C0\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74 ASC \uB85C \uB3D9\uC791\
+        \uD569\uB2C8\uB2E4. (\uB300\uC18C\uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)*\n\
+        \n|        \uD0A4        |     \uC124\uBA85      |\n| :--------------: | :-----------:\
+        \ |\n|        id        |   \uD3EC\uC2A4\uD2B8 ID   |\n|      title      \
+        \ |  \uD3EC\uC2A4\uD2B8 \uC81C\uBAA9  |\n|     content      |  \uD3EC\uC2A4\
+        \uD2B8 \uBCF8\uBB38  |\n|      isOpen      |   \uACF5\uAC1C \uC5EC\uBD80 \
+        \  |\n|      series      |    \uC2DC\uB9AC\uC988     |\n| lastModifiedDate\
+        \ | \uB9C8\uC9C0\uB9C9 \uC218\uC815\uC77C |\n|   createdDate    |    \uC0DD\
+        \uC131\uC77C     |\n\n* \uD0A4\uC6CC\uB4DC \uAC80\uC0C9\n\uC81C\uBAA9, \uBCF8\
+        \uBB38, \uC81C\uBAA9 + \uBCF8\uBB38\uC5D0 \uB300\uD55C \uD0A4\uC6CC\uB4DC\
+        \ \uAC80\uC0C9\uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4. \uCFFC\uB9AC\uD30C\uB77C\
+        \uBBF8\uD130\uC5D0 \uC544\uB798 \uD0A4\uB97C \uC0AC\uC6A9\uD558\uBA74 \uD0A4\
+        \uC6CC\uB4DC \uAC80\uC0C9\uC744 \uC218\uD589\uD560 \uC218 \uC788\uC2B5\uB2C8\
+        \uB2E4. \uC774\uB54C \uC544\uB798 \uB450\uAC1C\uC758 \uD0A4\uAC00 \uBAA8\uB450\
+        \ \uC785\uB825\uB418\uC9C0 \uC54A\uC558\uC744 \uACBD\uC6B0 \uC5D0\uB7EC\uAC00\
+        \ \uBC1C\uC0DD\uD569\uB2C8\uB2E4.\n\n|     \uD0A4     |                  \
+        \          \uC124\uBA85                            |         \uC81C\uC57D\
+        \          |\n| :--------: | :--------------------------------------------------------:\
+        \ | :-------------------: |\n|  keyword   |                       \uAC80\uC0C9\
+        \uD560 \uD0A4\uC6CC\uB4DC                        |        2~20\uC790     \
+        \    |\n| searchMode | \uAC80\uC0C9 \uBAA8\uB4DC, TITLE(\uC81C\uBAA9),CONTENT(\uBCF8\
+        \uBB38),MIX(\uC81C\uBAA9+\uBCF8\uBB38) \uC911 1\uD0DD | 1\uAC1C\uC758 \uC635\
+        \uC158\uB9CC \uC124\uC815\uAC00\uB2A5 |\n\n"
+      operationId: post/getPosts
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                post/getPosts:
+                  value:
+                    _embedded:
+                      posts:
+                      - _links:
+                          delete:
+                            href: http://localhost:8080/api/v1/post/1
+                          self:
+                            href: http://localhost:8080/api/v1/post/1
+                          update:
+                            href: http://localhost:8080/api/v1/post/1
+                          update-status:
+                            href: http://localhost:8080/api/v1/post/1/status
+                        created_at: '2002-08-28T00:00:00'
+                        enabled: true
+                        id: 1
+                        last_updated_at: '2002-08-28T00:00:00'
+                        post_type:
+                          id: 1
+                          name: name
+                        series:
+                          id: 1
+                          name: name
+                        tags:
+                        - id: 1
+                          name: tag1
+                        - id: 2
+                          name: tag2
+                        thumbnail: thumbnail
+                        title: title
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/post?page=0&size=20&sort=createdDate,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/Post.PagedSimple'
+          description: '200'
+      summary: "\uD3EC\uC2A4\uD2B8\uB97C \uC870\uD68C\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : NONE)"
+      tags:
+      - Post API
+    post:
+      description: "\uD3EC\uC2A4\uD2B8\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      operationId: post/createPost
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              post/createPost:
+                value:
+                  content: content
+                  enabled: true
+                  post_type_id: 1
+                  series_id: 1
+                  tags:
+                  - id: 1
+                  - id: 2
+                  thumbnail: http://springnote.blog
+                  title: title
+            schema:
+              $ref: '#/components/schemas/Post.Create'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                post/createPost:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/post/1
+                      self:
+                        href: http://localhost:8080/api/v1/post/1
+                      update:
+                        href: http://localhost:8080/api/v1/post/1
+                      update-status:
+                        href: http://localhost:8080/api/v1/post/1/status
+                    content:
+                      editor_text: editorText
+                      plain_text: plainText
+                    created_at: '2002-08-28T00:00:00'
+                    enabled: true
+                    id: 1
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: name
+                    series:
+                      id: 1
+                      name: name
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: thumbnail
+                    title: title
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+          description: '200'
+      summary: "\uD3EC\uC2A4\uD2B8\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      tags:
+      - Post API
+  /api/v1/post-type:
+    get:
+      description: "* \uD398\uC774\uC9D5\n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\
+        \uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85\
+        \           |            \uC81C\uC57D            |      \uAE30\uBCF8\uAC12\
+        \      |\n| :--: | :---------------------: | :------------------------: |\
+        \ :--------------: |\n| size |      \uD398\uC774\uC9D5 \uC0AC\uC774\uC988\
+        \      |        \uCD5C\uB300 20\uAE4C\uC9C0        |        20        |\n\
+        | page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\uD130 \uC2DC\uC791 |   \
+        \                         |        0         |\n| sort |        \uC815\uB82C\
+        \ \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\uB2A5 \uD0A4\uB9CC\
+        \ \uAC00\uB2A5* | id;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\uD55C sort\uD0A4\uB294\
+        \ \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\uB4E0 Sort \uC0AC\uC6A9\
+        \uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74 ASC\
+        \ \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\uBB38\uC790 \uAD6C\uBD84\
+        \ \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\uBA85      |\n| :--------------:\
+        \ | :-----------: |\n|        id        |   \uD0C0\uC785 ID   |\n|       name\
+        \       |  \uC774\uB984  |\n\n"
+      operationId: postType/getPostTypes
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                postType/getPostTypes:
+                  value:
+                    _embedded:
+                      post_types:
+                      - id: 1
+                        name: name
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/post-type?page=0&size=20&sort=id,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/PostType.Response'
+          description: '200'
+      summary: "\uD3EC\uC2A4\uD2B8 \uD0C0\uC785\uC744 \uAC00\uC838\uC635\uB2C8\uB2E4\
+        ."
+      tags:
+      - PostType API
+  /api/v1/post/title/{title}:
+    get:
+      description: "\uD574\uB2F9 \uC81C\uBAA9\uC744 \uAC00\uC9C4 \uD3EC\uC2A4\uD2B8\
+        \uAC00 \uC788\uB294\uC9C0 \uAC80\uC0C9\uD569\uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      operationId: post/getTitleIsExist
+      parameters:
+      - description: "\uC870\uD68C\uD560 \uB300\uC0C1 \uD3EC\uC2A4\uD2B8\uC758 \uC774\
+          \uB984, 3~300\uC790"
+        in: path
+        name: title
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                post/getTitleIsExist:
+                  value:
+                    passed: false
+              schema:
+                $ref: '#/components/schemas/Post.TitleSearchResult'
+          description: '200'
+      summary: "\uD574\uB2F9 \uC81C\uBAA9\uC744 \uAC00\uC9C4 \uD3EC\uC2A4\uD2B8\uAC00\
+        \ \uC788\uB294\uC9C0 \uAC80\uC0C9\uD569\uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      tags:
+      - Post API
+  /api/v1/post/{id}:
+    delete:
+      description: "\uD3EC\uC2A4\uD2B8\uB97C \uC0AD\uC81C\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      operationId: post/deletePostById
+      parameters:
+      - description: "\uC0AD\uC81C\uD560 \uD3EC\uC2A4\uD2B8\uC758 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uD3EC\uC2A4\uD2B8\uB97C \uC0AD\uC81C\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      tags:
+      - Post API
+    get:
+      description: "\uD574\uB2F9 \uD558\uB294 \uD3EC\uC2A4\uD2B8 ID\uB97C \uAC00\uC9C4\
+        \ \uD3EC\uC2A4\uD2B8\uB97C \uBC18\uD658\uD569\uB2C8\uB2E4. \uC774\uB54C \uBE44\
+        \uD65C\uC131\uD654\uB41C \uD3EC\uC2A4\uD2B8\uB294 \uAD00\uB9AC\uC790\uB9CC\
+        \ \uC870\uD68C\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      operationId: post/getPostById
+      parameters:
+      - description: "\uC870\uD68C\uD560 \uB300\uC0C1 \uD3EC\uC2A4\uD2B8 ID, (1~4294967295)"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                post/getPostById:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/post/1
+                      self:
+                        href: http://localhost:8080/api/v1/post/1
+                      update:
+                        href: http://localhost:8080/api/v1/post/1
+                      update-status:
+                        href: http://localhost:8080/api/v1/post/1/status
+                    content:
+                      editor_text: editorText
+                      plain_text: plainText
+                    created_at: '2002-08-28T00:00:00'
+                    enabled: true
+                    id: 1
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: name
+                    series:
+                      id: 1
+                      name: name
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: thumbnail
+                    title: title
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+          description: '200'
+      summary: "\uD3EC\uC2A4\uD2B8 ID\uB85C \uD3EC\uC2A4\uD2B8\uB97C \uC870\uD68C\uD569\
+        \uB2C8\uB2E4. (AUTH-LEVEL : NONE)"
+      tags:
+      - Post API
+    put:
+      description: "\uD3EC\uC2A4\uD2B8\uB97C \uC218\uC815\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      operationId: post/updatePost
+      parameters:
+      - description: "\uC218\uC815\uD560 \uD3EC\uC2A4\uD2B8\uC758 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              post/updatePost:
+                value:
+                  content: content
+                  enabled: true
+                  series_id: 1
+                  tags:
+                  - id: 1
+                  - id: 2
+                  thumbnail: http://springnote.blog
+                  title: title
+            schema:
+              $ref: '#/components/schemas/Post.Update'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                post/updatePost:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/post/1
+                      self:
+                        href: http://localhost:8080/api/v1/post/1
+                      update:
+                        href: http://localhost:8080/api/v1/post/1
+                      update-status:
+                        href: http://localhost:8080/api/v1/post/1/status
+                    content:
+                      editor_text: editorText
+                      plain_text: plainText
+                    created_at: '2002-08-28T00:00:00'
+                    enabled: true
+                    id: 1
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: name
+                    series:
+                      id: 1
+                      name: name
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: thumbnail
+                    title: title
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+          description: '200'
+      summary: "\uD3EC\uC2A4\uD2B8\uB97C \uC218\uC815\uD569\uB2C8\uB2E4. (AUTH-LEVEL\
+        \ : ADMIN)"
+      tags:
+      - Post API
+  /api/v1/post/{id}/status:
+    put:
+      description: "\uD3EC\uC2A4\uD2B8\uC758 \uC0C1\uD0DC\uB97C \uC218\uC815\uD569\
+        \uB2C8\uB2E4. (AUTH-LEVEL : ADMIN)"
+      operationId: post/updatePostStatus
+      parameters:
+      - description: "\uC218\uC815\uD560 \uD3EC\uC2A4\uD2B8\uC758 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              post/updatePostStatus:
+                value:
+                  enabled: true
+            schema:
+              $ref: '#/components/schemas/Post.UpdateStatus'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                post/updatePostStatus:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/post/1
+                      self:
+                        href: http://localhost:8080/api/v1/post/1
+                      update:
+                        href: http://localhost:8080/api/v1/post/1
+                      update-status:
+                        href: http://localhost:8080/api/v1/post/1/status
+                    content:
+                      editor_text: editorText
+                      plain_text: plainText
+                    created_at: '2002-08-28T00:00:00'
+                    enabled: true
+                    id: 1
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: name
+                    series:
+                      id: 1
+                      name: name
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: thumbnail
+                    title: title
+              schema:
+                $ref: '#/components/schemas/Post.Detail'
+          description: '200'
+      summary: "\uD3EC\uC2A4\uD2B8\uC758 \uC0C1\uD0DC\uB97C \uC218\uC815\uD569\uB2C8\
+        \uB2E4. (AUTH-LEVEL : ADMIN)"
+      tags:
+      - Post API
+  /api/v1/post/{postId}/comment:
+    get:
+      description: "* \uD398\uC774\uC9D5\n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\
+        \uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85\
+        \           |            \uC81C\uC57D            |      \uAE30\uBCF8\uAC12\
+        \      |\n| :--: | :---------------------: | :------------------------: |\
+        \ :--------------: |\n| size |      \uD398\uC774\uC9D5 \uC0AC\uC774\uC988\
+        \      |        \uCD5C\uB300 50\uAE4C\uC9C0        |        20        |\n\
+        | page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\uD130 \uC2DC\uC791 |   \
+        \                         |        0         |\n| sort |        \uC815\uB82C\
+        \ \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\uB2A5 \uD0A4\uB9CC\
+        \ \uAC00\uB2A5* | createdDate;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\uD55C sort\uD0A4\
+        \uB294 \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\uB4E0 Sort \uC0AC\
+        \uC6A9\uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74\
+        \ ASC \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\uBB38\uC790 \uAD6C\
+        \uBD84 \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\uBA85      |\n\
+        | :--------------: | :-----------: |\n|        id        |    \uB313\uAE00\
+        \ id    |\n|       user       |    \uC791\uC131\uC790     |\n|   createdDate\
+        \    |    \uC0DD\uC131\uC77C     |\n| lastModifiedDate | \uB9C8\uC9C0\uB9C9\
+        \ \uC218\uC815\uC77C |\n"
+      operationId: Comment/getCommentsWithPost
+      parameters:
+      - description: "\uD3EC\uC2A4\uD2B8 ID"
+        in: path
+        name: postId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                Comment/getCommentsWithPost:
+                  value:
+                    _embedded:
+                      comments:
+                      - _links:
+                          disable:
+                            href: http://localhost:8080/api/v1/comment/1/status
+                          self:
+                            href: http://localhost:8080/api/v1/comment/1
+                          update:
+                            href: http://localhost:8080/api/v1/comment/1
+                        content: test
+                        created_date: '2002-08-28T00:00:00'
+                        enabled: false
+                        id: 1
+                        last_modified_date: '2002-08-28T00:00:00'
+                        post_id: 1
+                        reply_count: 1
+                        writer:
+                          admin: true
+                          email: admin@springnote.blog
+                          enabled: true
+                          id: test
+                          name: test
+                          profile_img: https://springnote.blog
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/post/1/comment?page=0&size=20&sort=createdDate,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/Comment.PagedResponse'
+          description: '200'
+      summary: "\uD574\uB2F9 \uD3EC\uC2A4\uD2B8\uC5D0 \uB300\uD55C \uB313\uAE00 \uBAA9\
+        \uB85D\uC744 \uBC18\uD658\uD569\uB2C8\uB2E4.(AUTH_LEVEL: NONE)"
+      tags:
+      - Comment API
+    post:
+      description: "\uB313\uAE00\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.(AUTH_LEVEL:\
+        \ USER)"
+      operationId: comment/create
+      parameters:
+      - description: ''
+        in: path
+        name: postId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              comment/create:
+                value:
+                  captcha_token: captchaToken
+                  content: content
+                  im_not_bot: null
+            schema:
+              $ref: '#/components/schemas/Comment.Create'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                comment/create:
+                  value:
+                    _links:
+                      disable:
+                        href: http://localhost:8080/api/v1/comment/1/status
+                      self:
+                        href: http://localhost:8080/api/v1/comment/1
+                      update:
+                        href: http://localhost:8080/api/v1/comment/1
+                    content: test
+                    created_date: '2002-08-28T00:00:00'
+                    enabled: false
+                    id: 1
+                    last_modified_date: '2002-08-28T00:00:00'
+                    post_id: 1
+                    writer:
+                      admin: true
+                      email: admin@springnote.blog
+                      enabled: true
+                      id: test
+                      name: test
+                      profile_img: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+          description: '200'
+      summary: "\uB313\uAE00\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.(AUTH_LEVEL: USER)"
+      tags:
+      - Comment API
+  /api/v1/series:
+    get:
+      description: "* \uC0AC\uC6A9 \uAC00\uB2A5 \uCFFC\uB9AC \uD30C\uB77C\uBBF8\uD130\
+        \ (\uB300\uC18C\uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)\n\n|       \uD0A4 \
+        \      |                             \uC124\uBA85                        \
+        \     |                 \uC81C\uC57D                 |                \uAE30\
+        \uBCF8\uAC12                |\n| :------------: | :----------------------------------------------------------:\
+        \ | :----------------------------------: | :----------------------------------:\
+        \ |\n|    name    |                       \uAC80\uC0C9\uD560 \uC774\uB984\
+        .                             |                2~40\uC790                \
+        \   |                  x                   |\n\n* \uD398\uC774\uC9D5\n\n\uD574\
+        \uB2F9 API\uB294 \uD398\uC774\uC9D5\uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4.\n\
+        \n|  \uD0A4  |          \uC124\uBA85           |            \uC81C\uC57D \
+        \           |      \uAE30\uBCF8\uAC12      |\n| :--: | :---------------------:\
+        \ | :------------------------: | :--------------: |\n| size |      \uD398\uC774\
+        \uC9D5 \uC0AC\uC774\uC988      |        \uCD5C\uB300 50\uAE4C\uC9C0      \
+        \  |        20        |\n| page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\
+        \uD130 \uC2DC\uC791 |                            |        0         |\n| sort\
+        \ |        \uC815\uB82C \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\
+        \uB2A5 \uD0A4\uB9CC \uAC00\uB2A5* | id;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\
+        \uD55C sort\uD0A4\uB294 \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\
+        \uB4E0 Sort \uC0AC\uC6A9\uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0\
+        \ \uC54A\uC73C\uBA74 ASC \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\
+        \uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\
+        \uBA85      |\n| :--------------: | :-----------: |\n|        id        |\
+        \   \uC2DC\uB9AC\uC988 ID    |\n|      name       |  \uC2DC\uB9AC\uC988 \uC81C\
+        \uBAA9  |\n\n"
+      operationId: series/getSeries
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                series/getSeries:
+                  value:
+                    _embedded:
+                      series:
+                      - _links:
+                          delete:
+                            href: http://localhost:8080/api/v1/series/1
+                          self:
+                            href: http://localhost:8080/api/v1/series/1
+                          update:
+                            href: http://localhost:8080/api/v1/series/1
+                        description: test
+                        id: 1
+                        name: test
+                        thumbnail: https://springnote.blog
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/series?page=0&size=20&sort=id,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/Series.PagedResponse'
+          description: '200'
+      summary: "\uC2DC\uB9AC\uC988\uB97C \uC870\uD68C\uD569\uB2C8\uB2E4."
+      tags:
+      - Series API
+    post:
+      description: "\uC2DC\uB9AC\uC988\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. (AUTH_LEVEL:\
+        \ ADMIN)"
+      operationId: series/createSeries
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              series/createSeries:
+                value:
+                  description: test
+                  name: test
+                  thumbnail: https://springnote.blog
+            schema:
+              $ref: '#/components/schemas/Series.CreateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                series/createSeries:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/series/1
+                      self:
+                        href: http://localhost:8080/api/v1/series/1
+                      update:
+                        href: http://localhost:8080/api/v1/series/1
+                    description: test
+                    id: 1
+                    name: test
+                    thumbnail: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Series.Response'
+          description: '200'
+      summary: "\uC2DC\uB9AC\uC988\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. (AUTH_LEVEL:\
+        \ ADMIN)"
+      tags:
+      - Series API
+  /api/v1/series/{seriesId}:
+    delete:
+      description: "\uC8FC\uC5B4\uC9C4 id\uC5D0 \uD574\uB2F9\uD558\uB294 \uC2DC\uB9AC\
+        \uC988\uB97C \uC0AD\uC81C\uD569\uB2C8\uB2E4. \uC774\uB54C \uD574\uB2F9 \uC2DC\
+        \uB9AC\uC988\uC5D0 \uC18D\uD55C \uBAA8\uB4E0 \uD3EC\uC2A4\uD2B8\uB3C4 \uC0AD\
+        \uC81C\uB429\uB2C8\uB2E4."
+      operationId: series/deleteSeries
+      parameters:
+      - description: "\uC0AD\uC81C\uD560 \uC2DC\uB9AC\uC988\uC758 ID"
+        in: path
+        name: seriesId
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uC2DC\uB9AC\uC988\uB97C \uC0AD\uC81C\uD569\uB2C8\uB2E4. (AUTH_LEVEL:\
+        \ ADMIN)"
+      tags:
+      - Series API
+    get:
+      description: "\uC8FC\uC5B4\uC9C4 Id\uC5D0 \uD574\uB2F9\uD558\uB294 \uC2DC\uB9AC\
+        \uC988\uB97C \uC870\uD68C\uD569\uB2C8\uB2E4."
+      operationId: series/getSeriesById
+      parameters:
+      - description: "\uC870\uD68C\uD560 \uC2DC\uB9AC\uC988\uC758 ID"
+        in: path
+        name: seriesId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                series/getSeriesById:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/series/1
+                      self:
+                        href: http://localhost:8080/api/v1/series/1
+                      update:
+                        href: http://localhost:8080/api/v1/series/1
+                    description: test
+                    id: 1
+                    name: test
+                    thumbnail: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Series.Response'
+          description: '200'
+      summary: "\uC8FC\uC5B4\uC9C4 Id\uC5D0 \uD574\uB2F9\uD558\uB294 \uC2DC\uB9AC\uC988\
+        \uB97C \uC870\uD68C\uD569\uB2C8\uB2E4."
+      tags:
+      - Series API
+    put:
+      description: "\uC2DC\uB9AC\uC988\uB97C \uC218\uC815\uD569\uB2C8\uB2E4. (AUTH_LEVEL:\
+        \ ADMIN)"
+      operationId: series/updateSeries
+      parameters:
+      - description: "\uC218\uC815\uD560 \uC2DC\uB9AC\uC988\uC758 ID"
+        in: path
+        name: seriesId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              series/updateSeries:
+                value:
+                  description: test
+                  name: test
+                  thumbnail: https://springnote.blog
+            schema:
+              $ref: '#/components/schemas/Series.UpdateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                series/updateSeries:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/series/1
+                      self:
+                        href: http://localhost:8080/api/v1/series/1
+                      update:
+                        href: http://localhost:8080/api/v1/series/1
+                    description: test
+                    id: 1
+                    name: test
+                    thumbnail: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Series.Response'
+          description: '200'
+      summary: "\uC2DC\uB9AC\uC988\uB97C \uC218\uC815\uD569\uB2C8\uB2E4. (AUTH_LEVEL:\
+        \ ADMIN)"
+      tags:
+      - Series API
+  /api/v1/site-content:
+    post:
+      description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uB97C \uC0DD\uC131\uD569\
+        \uB2C8\uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: siteContent/createSiteContent
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              siteContent/createSiteContent:
+                value:
+                  content: test content
+                  key: test
+            schema:
+              $ref: '#/components/schemas/SiteContent.CreateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                siteContent/createSiteContent:
+                  value:
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/site-content/test
+                    content: test content
+                    key: test
+              schema:
+                $ref: '#/components/schemas/SiteContent.Response'
+          description: '200'
+      summary: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uB97C \uC0DD\uC131\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      tags:
+      - SiteContent API
+  /api/v1/site-content/{key}:
+    delete:
+      description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uB97C \uC0AD\uC81C\uD569\
+        \uB2C8\uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: siteContent/deleteSiteContent
+      parameters:
+      - description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uD0A4"
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uB97C \uC0AD\uC81C\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      tags:
+      - SiteContent API
+    get:
+      description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20 ID\uB85C \uD3EC\uC2A4\uD2B8\
+        \uB97C \uC870\uD68C\uD569\uB2C8\uB2E4."
+      operationId: siteContent/getSiteContentByKey
+      parameters:
+      - description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uD0A4"
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                siteContent/getSiteContentByKey:
+                  value:
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/site-content/test
+                    content: test content
+                    key: test
+              schema:
+                $ref: '#/components/schemas/SiteContent.Response'
+          description: '200'
+      summary: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20 ID\uB85C \uD3EC\uC2A4\uD2B8\uB97C\
+        \ \uC870\uD68C\uD569\uB2C8\uB2E4."
+      tags:
+      - SiteContent API
+    put:
+      description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uB97C \uC218\uC815\uD569\
+        \uB2C8\uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: siteContent/updateSiteContent
+      parameters:
+      - description: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uC758 \uD0A4"
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              siteContent/updateSiteContent:
+                value:
+                  content: test content
+            schema:
+              $ref: '#/components/schemas/SiteContent.UpdateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                siteContent/updateSiteContent:
+                  value:
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/site-content/test
+                    content: test content
+                    key: test
+              schema:
+                $ref: '#/components/schemas/SiteContent.Response'
+          description: '200'
+      summary: "\uC0AC\uC774\uD2B8 \uCF58\uD150\uCE20\uB97C \uC218\uC815\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      tags:
+      - SiteContent API
+  /api/v1/tag:
+    get:
+      description: "* \uC0AC\uC6A9 \uAC00\uB2A5 \uCFFC\uB9AC \uD30C\uB77C\uBBF8\uD130\
+        \ (\uB300\uC18C\uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)\n\n|       \uD0A4 \
+        \      |                             \uC124\uBA85                        \
+        \     |                 \uC81C\uC57D                 |                \uAE30\
+        \uBCF8\uAC12                |\n| :------------: | :----------------------------------------------------------:\
+        \ | :----------------------------------: | :----------------------------------:\
+        \ |\n|    name     |                     \uAC80\uC0C9\uD560 \uC774\uB984\uC785\
+        \uB2C8\uB2E4.                    |                   2~100\uC790         \
+        \          |                  x                   |\n\n* \uD398\uC774\uC9D5\
+        \n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\uC744 \uC9C0\uC6D0\uD569\uB2C8\
+        \uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85           |            \uC81C\
+        \uC57D            |      \uAE30\uBCF8\uAC12      |\n| :--: | :---------------------:\
+        \ | :------------------------: | :--------------: |\n| size |      \uD398\uC774\
+        \uC9D5 \uC0AC\uC774\uC988      |        \uCD5C\uB300 20\uAE4C\uC9C0      \
+        \  |        10      |\n| page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\uD130\
+        \ \uC2DC\uC791 |                            |        0         |\n| sort |\
+        \        \uC815\uB82C \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\
+        \uB2A5 \uD0A4\uB9CC \uAC00\uB2A5* | id;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\
+        \uD55C sort\uD0A4\uB294 \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\
+        \uB4E0 Sort \uC0AC\uC6A9\uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0\
+        \ \uC54A\uC73C\uBA74 ASC \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\
+        \uBB38\uC790 \uAD6C\uBD84 \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\
+        \uBA85      |\n| :--------------: | :-----------: |\n|        id        |\
+        \   \uD0DC\uADF8 ID   |\n|      name       |  \uD0DC\uADF8 \uC774\uB984  |\n\
+        \n"
+      operationId: tag/getTags
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tag/getTags:
+                  value:
+                    _embedded:
+                      tags:
+                      - _links:
+                          delete:
+                            href: http://localhost:8080/api/v1/tag/1
+                          self:
+                            href: http://localhost:8080/api/v1/tag/1
+                          update:
+                            href: http://localhost:8080/api/v1/tag/1
+                        id: 1
+                        name: tag
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/tag?page=0&size=10&sort=id,desc
+                    page:
+                      number: 0
+                      size: 10
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/Tag.PageResponse'
+          description: '200'
+      summary: "Tag \uBAA9\uB85D\uC744 \uC870\uD68C\uD569\uB2C8\uB2E4."
+      tags:
+      - Tag API
+    post:
+      description: "\uC0C8\uB85C\uC6B4 \uD0DC\uADF8\uB97C \uC0DD\uC131\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tag/createTag
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              tag/createTag:
+                value:
+                  name: tag
+            schema:
+              $ref: '#/components/schemas/Tag.CreateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tag/createTag:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/tag/1
+                      self:
+                        href: http://localhost:8080/api/v1/tag/1
+                      update:
+                        href: http://localhost:8080/api/v1/tag/1
+                    id: 1
+                    name: tag
+              schema:
+                $ref: '#/components/schemas/Tag.Response'
+          description: '200'
+      summary: "\uC0C8\uB85C\uC6B4 \uD0DC\uADF8\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4\
+        . (AUTH_LEVEL: ADMIN)"
+      tags:
+      - Tag API
+  /api/v1/tag/{id}:
+    delete:
+      description: "\uC8FC\uC5B4\uC9C4 Id\uB85C \uD0DC\uADF8\uB97C \uC0AD\uC81C\uD569\
+        \uB2C8\uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tag/deleteTag
+      parameters:
+      - description: "\uC0AD\uC81C\uD560 \uD0DC\uADF8 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uC8FC\uC5B4\uC9C4 Id\uB85C \uD0DC\uADF8\uB97C \uC0AD\uC81C\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      tags:
+      - Tag API
+    put:
+      description: "\uC8FC\uC5B4\uC9C4 Id\uB85C \uD0DC\uADF8\uB97C \uC218\uC815\uD569\
+        \uB2C8\uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tag/updateTag
+      parameters:
+      - description: "\uC218\uC815\uD560 \uD0DC\uADF8 ID"
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              tag/updateTag:
+                value:
+                  name: tag
+            schema:
+              $ref: '#/components/schemas/Tag.UpdateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tag/updateTag:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/tag/1
+                      self:
+                        href: http://localhost:8080/api/v1/tag/1
+                      update:
+                        href: http://localhost:8080/api/v1/tag/1
+                    id: 1
+                    name: tag
+              schema:
+                $ref: '#/components/schemas/Tag.Response'
+          description: '200'
+      summary: "\uC8FC\uC5B4\uC9C4 Id\uB85C \uD0DC\uADF8\uB97C \uC218\uC815\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      tags:
+      - Tag API
+  /api/v1/tag/{tagId}:
+    get:
+      description: "\uC8FC\uC5B4\uC9C4 Id\uB85C \uD0DC\uADF8\uB97C \uC870\uD68C\uD569\
+        \uB2C8\uB2E4."
+      operationId: tag/getTagById
+      parameters:
+      - description: "\uC870\uD68C\uD560 \uD0DC\uADF8 ID"
+        in: path
+        name: tagId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tag/getTagById:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/tag/1
+                      self:
+                        href: http://localhost:8080/api/v1/tag/1
+                      update:
+                        href: http://localhost:8080/api/v1/tag/1
+                    id: 1
+                    name: tag
+              schema:
+                $ref: '#/components/schemas/Tag.Response'
+          description: '200'
+      summary: "\uC8FC\uC5B4\uC9C4 Id\uB85C \uD0DC\uADF8\uB97C \uC870\uD68C\uD569\uB2C8\
+        \uB2E4."
+      tags:
+      - Tag API
+  /api/v1/tmp-post:
+    get:
+      description: "* \uD398\uC774\uC9D5\n\n\uD574\uB2F9 API\uB294 \uD398\uC774\uC9D5\
+        \uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4.\n\n|  \uD0A4  |          \uC124\uBA85\
+        \           |            \uC81C\uC57D            |      \uAE30\uBCF8\uAC12\
+        \      |\n| :--: | :---------------------: | :------------------------: |\
+        \ :--------------: |\n| size |      \uD398\uC774\uC9D5 \uC0AC\uC774\uC988\
+        \      |        \uCD5C\uB300 50\uAE4C\uC9C0        |        20        |\n\
+        | page | \uD398\uC774\uC9C0 \uB118\uBC84 *0\uBD80\uD130 \uC2DC\uC791 |   \
+        \                         |        0         |\n| sort |        \uC815\uB82C\
+        \ \uC635\uC158        | *\uC544\uB798 \uC0AC\uC6A9 \uAC00\uB2A5 \uD0A4\uB9CC\
+        \ \uAC00\uB2A5* | createdDate;DESC |\n\n\uC0AC\uC6A9 \uAC00\uB2A5\uD55C sort\uD0A4\
+        \uB294 \uC544\uB798\uC640 \uAC19\uC2B5\uB2C8\uB2E4. *\uBAA8\uB4E0 Sort \uC0AC\
+        \uC6A9\uC2DC \uBC29\uD5A5\uC744 \uC9C0\uC815\uD558\uC9C0 \uC54A\uC73C\uBA74\
+        \ ASC \uB85C \uB3D9\uC791\uD569\uB2C8\uB2E4. (\uB300\uC18C\uBB38\uC790 \uAD6C\
+        \uBD84 \uC5C6\uC74C)*\n\n|        \uD0A4        |     \uC124\uBA85      |\n\
+        | :--------------: | :-----------: |\n| lastModifiedDate | \uB9C8\uC9C0\uB9C9\
+        \ \uC218\uC815\uC77C |\n|   createdDate    |    \uC0DD\uC131\uC77C     |\n\
+        \n"
+      operationId: tmpPost/getTmpPostList
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tmpPost/getTmpPostList:
+                  value:
+                    _embedded:
+                      tmp_posts:
+                      - _links:
+                          delete:
+                            href: http://localhost:8080/api/v1/tmp-post/180f99f5-f28a-40f0-aa5b-6e2e8411f92f
+                          self:
+                            href: http://localhost:8080/api/v1/tmp-post/180f99f5-f28a-40f0-aa5b-6e2e8411f92f
+                          update:
+                            href: http://localhost:8080/api/v1/tmp-post/180f99f5-f28a-40f0-aa5b-6e2e8411f92f
+                        content: content
+                        created_at: '2002-08-28T00:00:00'
+                        id: 180f99f5-f28a-40f0-aa5b-6e2e8411f92f
+                        last_updated_at: '2002-08-28T00:00:00'
+                        post_type:
+                          id: 1
+                          name: postType
+                        series:
+                          id: 1
+                          name: series
+                        tags:
+                        - id: 1
+                          name: tag1
+                        - id: 2
+                          name: tag2
+                        thumbnail: http://springnote.blog
+                        title: title
+                    _links:
+                      self:
+                        href: http://localhost:8080/api/v1/tmp-post?page=0&size=20&sort=createdDate,desc
+                    page:
+                      number: 0
+                      size: 20
+                      totalElements: 1
+                      totalPages: 1
+              schema:
+                $ref: '#/components/schemas/api-v1-tmp-post696516523'
+          description: '200'
+      summary: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8 \uBAA9\uB85D\uC744 \uC870\uD68C\uD569\
+        \uB2C8\uB2E4. (AUTH_LEVEL: ADMIN)"
+      tags:
+      - TmpPost API
+    post:
+      description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uAC8C\uC2DC\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/createTmpPost
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              tmpPost/createTmpPost:
+                value:
+                  content: null
+                  post_type_id: 1
+                  series_id: null
+                  tag_ids: null
+                  thumbnail: null
+                  title: null
+            schema:
+              $ref: '#/components/schemas/TmpPost.CreateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tmpPost/createTmpPost:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/tmp-post/b8f12cf2-f72a-4b59-9ac4-5cd415a66507
+                      self:
+                        href: http://localhost:8080/api/v1/tmp-post/b8f12cf2-f72a-4b59-9ac4-5cd415a66507
+                      update:
+                        href: http://localhost:8080/api/v1/tmp-post/b8f12cf2-f72a-4b59-9ac4-5cd415a66507
+                    content: content
+                    created_at: '2002-08-28T00:00:00'
+                    id: b8f12cf2-f72a-4b59-9ac4-5cd415a66507
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: postType
+                    series:
+                      id: 1
+                      name: series
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: http://springnote.blog
+                    title: title
+              schema:
+                $ref: '#/components/schemas/TmpPost.Response'
+          description: '200'
+      summary: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uAC8C\uC2DC\uD569\uB2C8\uB2E4\
+        . (AUTH_LEVEL: ADMIN)"
+      tags:
+      - TmpPost API
+  /api/v1/tmp-post/{tmpPostId}:
+    delete:
+      description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uC0AD\uC81C\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/deleteTmpPost
+      parameters:
+      - description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8 ID"
+        in: path
+        name: tmpPostId
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+      summary: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uC0AD\uC81C\uD569\uB2C8\uB2E4\
+        . (AUTH_LEVEL: ADMIN)"
+      tags:
+      - TmpPost API
+    get:
+      description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uC870\uD68C\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/getTmpPostById
+      parameters:
+      - description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8 ID"
+        in: path
+        name: tmpPostId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tmpPost/getTmpPostById:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/tmp-post/eeef2080-8519-46de-a1d1-8901e8c4f04e
+                      self:
+                        href: http://localhost:8080/api/v1/tmp-post/eeef2080-8519-46de-a1d1-8901e8c4f04e
+                      update:
+                        href: http://localhost:8080/api/v1/tmp-post/eeef2080-8519-46de-a1d1-8901e8c4f04e
+                    content: content
+                    created_at: '2002-08-28T00:00:00'
+                    id: eeef2080-8519-46de-a1d1-8901e8c4f04e
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: postType
+                    series:
+                      id: 1
+                      name: series
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: http://springnote.blog
+                    title: title
+              schema:
+                $ref: '#/components/schemas/TmpPost.Response'
+          description: '200'
+      summary: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uC870\uD68C\uD569\uB2C8\uB2E4\
+        . (AUTH_LEVEL: ADMIN)"
+      tags:
+      - Series API
+    put:
+      description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uC218\uC815\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/updateTmpPost
+      parameters:
+      - description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8 ID"
+        in: path
+        name: tmpPostId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              tmpPost/updateTmpPost:
+                value:
+                  content: null
+                  series_id: null
+                  tag_ids: null
+                  thumbnail: null
+                  title: null
+            schema:
+              $ref: '#/components/schemas/TmpPost.UpdateRequest'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tmpPost/updateTmpPost:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/tmp-post/8cb09b2f-3bed-4fbf-888e-718a786c9cbd
+                      self:
+                        href: http://localhost:8080/api/v1/tmp-post/8cb09b2f-3bed-4fbf-888e-718a786c9cbd
+                      update:
+                        href: http://localhost:8080/api/v1/tmp-post/8cb09b2f-3bed-4fbf-888e-718a786c9cbd
+                    content: content
+                    created_at: '2002-08-28T00:00:00'
+                    id: 8cb09b2f-3bed-4fbf-888e-718a786c9cbd
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: postType
+                    series:
+                      id: 1
+                      name: series
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: http://springnote.blog
+                    title: title
+              schema:
+                $ref: '#/components/schemas/TmpPost.Response'
+          description: '200'
+      summary: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uC218\uC815\uD569\uB2C8\uB2E4\
+        . (AUTH_LEVEL: ADMIN)"
+      tags:
+      - TmpPost API
+  /api/v1/tmp-post/{tmpPostId}/publish:
+    post:
+      description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uAC8C\uC2DC\uD569\uB2C8\
+        \uB2E4. (AUTH_LEVEL: ADMIN)"
+      operationId: tmpPost/publishTmpPost
+      parameters:
+      - description: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8 ID"
+        in: path
+        name: tmpPostId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                tmpPost/publishTmpPost:
+                  value:
+                    _links:
+                      delete:
+                        href: http://localhost:8080/api/v1/post/1
+                      self:
+                        href: http://localhost:8080/api/v1/post/1
+                      update:
+                        href: http://localhost:8080/api/v1/post/1
+                      update-status:
+                        href: http://localhost:8080/api/v1/post/1/status
+                    content:
+                      editor_text: editorText
+                      plain_text: plainText
+                    created_at: '2002-08-28T00:00:00'
+                    enabled: true
+                    id: 1
+                    last_updated_at: '2002-08-28T00:00:00'
+                    post_type:
+                      id: 1
+                      name: name
+                    series:
+                      id: 1
+                      name: name
+                    tags:
+                    - id: 1
+                      name: tag1
+                    - id: 2
+                      name: tag2
+                    thumbnail: thumbnail
+                    title: title
+              schema:
+                $ref: '#/components/schemas/Post.Response'
+          description: '200'
+      summary: "\uC784\uC2DC \uD3EC\uC2A4\uD2B8\uB97C \uAC8C\uC2DC\uD569\uB2C8\uB2E4\
+        . (AUTH_LEVEL: ADMIN)"
+      tags:
+      - TmpPost API
+  /api/v1/{postId}/comment/{commentId}/reply:
+    post:
+      description: "\uB2F5\uAE00\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.(AUTH_LEVEL:\
+        \ USER)"
+      operationId: Comment/replyCreate
+      parameters:
+      - description: "\uD3EC\uC2A4\uD2B8 ID"
+        in: path
+        name: postId
+        required: true
+        schema:
+          type: string
+      - description: "\uB313\uAE00 ID"
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            examples:
+              Comment/replyCreate:
+                value:
+                  captcha_token: captchaToken
+                  content: content
+                  im_not_bot: null
+            schema:
+              $ref: '#/components/schemas/Comment.ReplyCreate'
+      responses:
+        '200':
+          content:
+            application/hal+json:
+              examples:
+                Comment/replyCreate:
+                  value:
+                    _links:
+                      disable:
+                        href: http://localhost:8080/api/v1/comment/1/status
+                      self:
+                        href: http://localhost:8080/api/v1/comment/1
+                      update:
+                        href: http://localhost:8080/api/v1/comment/1
+                    content: test
+                    created_date: '2002-08-28T00:00:00'
+                    enabled: false
+                    id: 1
+                    last_modified_date: '2002-08-28T00:00:00'
+                    post_id: 1
+                    writer:
+                      admin: true
+                      email: admin@springnote.blog
+                      enabled: true
+                      id: test
+                      name: test
+                      profile_img: https://springnote.blog
+              schema:
+                $ref: '#/components/schemas/Comment.Response'
+          description: '200'
+      summary: "\uB2F5\uAE00\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4.(AUTH_LEVEL: USER)"
+      tags:
+      - Comment API
+servers:
+- url: https://api.springnote.blog
+tags: []
+
